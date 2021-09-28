@@ -1,100 +1,63 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0774B3FCF
-	for <keys@linux.kernel.org>; Tue, 28 Sep 2021 03:29:15 +0000 (UTC)
-X-IronPort-AV: E=McAfee;i="6200,9189,10120"; a="310158975"
-X-IronPort-AV: E=Sophos;i="5.85,328,1624345200"; 
-   d="scan'208";a="310158975"
-Received: from fmsmga006.fm.intel.com ([10.253.24.20])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Sep 2021 20:29:11 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.85,328,1624345200"; 
-   d="scan'208";a="706500195"
-Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.159.162])
-  by fmsmga006.fm.intel.com with ESMTP; 27 Sep 2021 20:29:10 -0700
-Date: Tue, 28 Sep 2021 11:23:02 +0800
-From: Xu Yilun <yilun.xu@intel.com>
-To: keys@linux.kernel.org
-Cc: yilun.xu@intel.com
-Subject: yilun.xu@intel.com
-Message-ID: <20210928032302.GA10681@yilunxu-OptiPlex-7050>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3BF33FC8
+	for <keys@linux.kernel.org>; Tue, 28 Sep 2021 17:17:58 +0000 (UTC)
+Received: by mail-qt1-f179.google.com with SMTP id x9so20667359qtv.0
+        for <keys@linux.kernel.org>; Tue, 28 Sep 2021 10:17:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linuxfoundation.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=BxjCzzaS+ADNBixRH3ys3EM+TGmHPo4VlyhKVnSBhdU=;
+        b=QMInviQhLCeffd11ACqVpmyctvCNtv2d5/jp56JQWe4RnvK3yKwqeYpwws7mh3erC1
+         zrSZvw3NLNFgmZi1sUoV8Pdpuzt9KaTITaR9Afg7cFi9Zf3BoX5irbPasR4X4Ul7exiL
+         AycxA8JZmANYW+tRHqaE39tqPNtvWl9e+2BCs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=BxjCzzaS+ADNBixRH3ys3EM+TGmHPo4VlyhKVnSBhdU=;
+        b=EwmDbp9f0KkbyJlQHZkLfJ8W3yQ/ZLr4RSqH4yL3AGkuvmZ/wmtPC6DWM9xJvULK0W
+         DGttjtWK4OP+OlG6XDH/evL83vcyk15RIqg3DwpFi9w7TaPHz9fcdtYH+2YM1Eu8rqAK
+         0PkmFzwnuXO4lA/dr5lL7NqI9qHnz2xYhkeIpeR7DvtSKzc0bg5SaecDIEe9rPAYW5K3
+         /Pis7nXAK6DzCagR/cUZKlqKYDRPoPt51XfY7t/YAxsz00BD9F/4OEoxlpH/52pJW5Lr
+         UiJYkOy8DgIN9E7zgrqQWhHqT3Vy02vptD1BL4NIVUDHJxxodLiIuRJXdXRXbf67IAzD
+         O0ew==
+X-Gm-Message-State: AOAM533yVYPVeCNp7edn1y6EWxLtFcSEqroTqH9akZt2NVj8xGmfyVWe
+	6W7AJyWyoug8ZHef++2ECrk8yZbH7ewTdA==
+X-Google-Smtp-Source: ABdhPJz/8G2dc584HzS8jvc+DktvLhE71GcugexCBEWtb6EKcU33JoOzlIuRxUIz/kX5nIfnPx9+2g==
+X-Received: by 2002:ac8:4888:: with SMTP id i8mr6868785qtq.174.1632849477664;
+        Tue, 28 Sep 2021 10:17:57 -0700 (PDT)
+Received: from meerkat.local (bras-base-mtrlpq5031w-grc-32-216-209-220-181.dsl.bell.ca. [216.209.220.181])
+        by smtp.gmail.com with ESMTPSA id 19sm2786369qtt.20.2021.09.28.10.17.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Sep 2021 10:17:57 -0700 (PDT)
+Date: Tue, 28 Sep 2021 13:17:55 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Xu Yilun <yilun.xu@intel.com>
+Cc: keys@linux.kernel.org
+Subject: Re: yilun.xu@intel.com
+Message-ID: <20210928171755.jmj7zoaeh5fi7eva@meerkat.local>
+References: <20210928032302.GA10681@yilunxu-OptiPlex-7050>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
+In-Reply-To: <20210928032302.GA10681@yilunxu-OptiPlex-7050>
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+On Tue, Sep 28, 2021 at 11:23:02AM +0800, Xu Yilun wrote:
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
 
-mQINBGFRGvoBEACchEYM470fUG9AmGbiSQTcWfDV+mHlRnMxUFNswzaMQ3dfTeiq
-/yY3M6kWgGdAXkrb9cNMzF+7uq+2sl5eWuD30lig8EHdf9PYhbJG5qUOuDx7MI44
-/BnWusZULSVwbi2UBct1L9vsp1SNeFt0jBADESS29tMdWlh3nKe0RFg0FW0DilCn
-ywpmihTO8QYVDnvUYBJjKM1eti/G1HbJOtDUx54VzaRse9ZU1TLWxfH99tHgOUWh
-RliANYLGP81PWSU/W32RdSJa0Ylj8TAK3ga/5UB3R5fE+RmLk4tnKP3luI6xSg7g
-l5ebE4Jk4nXprTxPP8lvgNu3Z1GK210qjH9oYS2OLoB+hDf+hBwWqda9439ZxWm5
-E9iX/G+Wk25yz1XK82Kkd1/Y4Rt8jwj/h8IQCRT4c2Nxi6wSukii2ylEdXx8+pRU
-PYHmjHXZMCt6kzp9QTzwmXUTRVlw03sHPPqQbfr5RsnbiLn0q013qoqG4v4eYP4U
-D+OdaSjHCwZRnRthghi1Q8o1VnWM9pIp9wTN2/9q9dV51mdW9Mn3uKw+P3OGn6F6
-+3ABY1ORekAsOKCRbkMPAxPoLpbv60ztdbp+1pxAthW7ALwFE8gUFY49fhIOmATQ
-3ymwpw7wsL6tyrLefCUldsGjtV2rEal9YJJDKYTpR6ydg7/Rz52Ec8RvgwARAQAB
-tB1YdSBZaWx1biA8eWlsdW4ueHVAaW50ZWwuY29tPokCVAQTAQoAPhYhBKYS1E+p
-i6aZ/sxkK+LI1yGGrDlJBQJhURr6AhsBBQkDwmcABQsJCAcCBhUKCQgLAgQWAgMB
-Ah4BAheAAAoJEOLI1yGGrDlJNRAP/2yaTzMLHjyEbnzyR7JWCcLOqIn5g0Z01Oqe
-esI8kBX/Zg5G2T84aQ2ivfFv3Mdwfw3R3EA/eypRLNpqAPUANBM2GpoXW7ExOaXn
-qja6PA12Z2kLxkYaaAfNCOSOkyd3gKHiiyYf4e/fjiwR+hTZiVahw4VqkXKrYEd9
-9NMsxaptbFQ376zefAuNXbGvOpdUIUL+litMMfnYc5sk7cSnWa0GEqKqN1k0bF11
-SPM7ENVTFCqy6kQv3OC3K9uxLtR1H23Wrrj4l7teWQ5dQBlFYF8lEemaSvcleSFA
-YESsntobVVZdmR54LyIh0dtri5fV74+MfaxMUdrBLhdD59/Vp4/gwc7Ww8OdOg+a
-aA9hD401NVdX8Rm3vojPtBIpBr50myuNsHutoMLUAje91lbtbOWbRgFM+5SzJjFX
-A080JwKezlXMH7h6g452GiB8Bc/L6zsYB5o0/Y7ojfboKvrTdo8YjtUIN37b2/QK
-e+nHtg3bZWbeHtWlmMY4ci9YHI8La4QqRp39T+MQIGh+aGN8ytygPyez1nrvonTm
-j26NVZqwOeSQjXRcAVkSRjjWSlWVO3OKUBW4GXKGNL5xK8ydDt2iEkyKTaB8rUyT
-jlGecBrafDQPsOCqHd3Y3w+pBq6KDLaD0gejNMatUmM1NcEyyfjeKwjttt2L15Ie
-7e8D7tD9uDgEYVEp4BIKKwYBBAGXVQEFAQEHQD38jFRiIPN3OLv6R9OZGhKeLt4f
-hHJiOrBNl2deR4hNAwEIB4kCNgQYAQoAIBYhBKYS1E+pi6aZ/sxkK+LI1yGGrDlJ
-BQJhUSngAhsMAAoJEOLI1yGGrDlJ6dgQAIUvgwj8CCNd2Ug+Y+S3aov4Hr6WvgzP
-QlBxYPvLSxv/0z/SaZTs+2Lk1WZzOoeed9ZkH5bkwBgU9v8WNi5+a9IVcuG9UBS3
-qitPS3knfV3eyDunC1qqDGHHtX+goAwQcLhje2cLaE+VzRa0RamcVAvg1a0mdrcx
-fjrxqm8cMGJ4CRipuqATUISmAN7yHrlD53JDxWuRYxWAJQkMZDt1Aez3FX5dkCbw
-0bmellUAlGa9Kgo0BauWkOBulpC/1iYOg3bXQ4rwipPGBucQ0YgjFiDXa/MeIihM
-vMAI9+leuGWFpCZxH21+l9mrXDJdvoprAHj/e9BKm8+pMDuJUb3O1hMINXefMBpk
-yB7xYsHHsi5KZM1RBoAiWT4uYrg7qS+hSvUqdf8ezumTnyJ9hyl9Q6DHSGftuFHG
-4mDj9dgV4hnxGf+MOgplAnEsegC5Zg0l5en6eC5YC1YqcexcfxkFCVBRiyW2w4sN
-jcAlfEwe2nuU884Ttu255pNQhLTDxDV3XMcqZAskBBUexhz1DjaXl/iksnLfGnFR
-GKND9YNYyHup+9tH+5DJuNni8TQMLB7FhPr59Rv7ejeIaphG2vkLhizlmrwHlMJf
-J5qCvjn2oqpK9b0noPWETpLc9AQFX/GFOj2syl2QTZhfIdlFTSZ8MfnWC9FAzBh4
-Jr8h0jS9iyFwuDMEYVEqDRYJKwYBBAHaRw8BAQdAKzp20co2gNSzi2jwMNcspkzs
-SH5zd14eKoRn1fC6TrCJAq0EGAEKACAWIQSmEtRPqYummf7MZCviyNchhqw5SQUC
-YVEqDQIbAgCBCRDiyNchhqw5SXYgBBkWCAAdFiEEoEiaQpSHmgK18rnW/LcDgaSg
-jNoFAmFRKg0ACgkQ/LcDgaSgjNrv/wD/Yp/rE4SQZ+NcbQGqb8QNYf5Bn1diJr90
-iSLn3RcWA2cBAI63jeVe7dvvMIlFo+6e9WKji0uRadgPOfeKwtgcMFYDx4oP/3pK
-NZTjZ/8HUMV+09c1k9jOQLrFDp5N9yPxFtFpYLfhrI8TUQOnesxhntkbz+yI2xQz
-grnje+BN3JpZdIP6DVZmnTBeDqC1EHwvysvFtvQP2mugEYhXxXveuRMP5T5VvEiw
-lK3EFIxkXVr5gNyw88ah7JV1K3/TGqoRa/kWYLu+2V8eZ6r/jApcLylIxcZ5AmPG
-YgUkSCYkdMO3CpzwjG0IxqcM9dLAA+5lldhEfmk5J5QKHQBMn/fNoJAOX7oPobxw
-v/Y5De1gXGyetbtYJM06+z3H9jrAlv5UyJrFJLig122kK9Ux0+Z0TGxouz3+X8oP
-MXAPRKVJUe6Fjln9a4/toSty0p4cmxOmfj3Rvqq95Nd83ISCVdv/SS+7o3357wsM
-LjBBmgIXOnK/xOLreRfPa86Ywyo7PF4hwSTANz5vYS7PCDTnTv77TnZ6BiH1D2/9
-9/f0Zy1BWOF6nAVOd056TIE2vKysn8pvmyeDHoAM1Eu+kL4kWPIaicDpRYcyKgjd
-DMZO8ccHJTRHytm5iwh2O/JPBiYPbwTdfjggKVfEsvXpdCUvpbX7fRAeqXpwlpE3
-GFtDdAFVX510Qdiu9OUrHLhy+RONDuIXMk8LRRa1T7gtADGjNNKDcZit/2I7iT76
-ISA6I+BBZT7CDrzOQOZVRVDFQEnMR08o7R+q7doJuDMEYVEqLxYJKwYBBAHaRw8B
-AQdA6BAuq8pt/S+CR3FwnpcU4GQ/FC96qO8dGOIDiuQgndeJAjYEGAEKACAWIQSm
-EtRPqYummf7MZCviyNchhqw5SQUCYVEqLwIbIAAKCRDiyNchhqw5SfMUD/9Gg2jr
-wSiMDZv0wcm4FwYebbrh+Q01ketR8qX9Lc+RD5pL4AnzTw74r1gDxdkLi1K+tvOR
-apVK+ga1tFoS1W1BPVPL6E/H42nXMnuWz82kUL5H1z/256g+GWf8Is0BY3MX7YQP
-2395lWiIcBT72e2j8cZJpEEu8DE6oniA2J7uyJwCaupc3E3rz5bjHwSbAE+QVOs0
-8+x2W5iQ4Pru45ZAkZfQUWDyCwJEQRP7Sqv8owFP6pSPyI6yfdNHGc+JtbMhJeCT
-sHL5wDpM/CEp98wKiJkeDLwy15c1wH3A+hBDiXb6WpeHLT2fQIgHzEZEzHn2Qpmb
-6/RkAZRKLpusGGyrejWiPw7EcvHbnyzUXZcYYbQxG5CgLQQbQZyV2mnGBVaRVFP8
-GFb/X+Vhkd1iUL0pUZhb8L2stabFPOoQyJ/n0fX5h7Jg7q2a5XWV8QHXeIZD54z9
-QtGHaRCRoBPbk7rlskH4aL1nHAIgK0zNbd6PnzVKOoltOdMhDypzhsuDXeS2N3Zl
-SVjNLtLToEu6fZXyX8Ilb0sYOS9mnT73wQgeia1/xaiRRCrl0s2hufUPa48bQ7my
-eHY3ycZsrvkWUFDnfsJBzPd8IvmJO36Ny6yAk7+xVuWHCFWXYUzIhU3oFc4oClem
-3qtWdM+X3lyeXaOV9hj2McZocHfkponWBjCR5g==
-=jVJw
------END PGP PUBLIC KEY BLOCK-----
+Hello:
+
+Sorry, but there appear to be no signatures on your key. To qualify for
+inclusion into pgpkeys repository, your key should be signed by at least two
+other people who are already in that keyring (so we can trace paths to Linus
+Torvalds).
+
+-K
