@@ -1,54 +1,54 @@
 Received: from mail.efficios.com (mail.efficios.com [167.114.26.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77EC8657
-	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 14:35:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1604D256C
+	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 14:36:49 +0000 (UTC)
 Received: from localhost (localhost [127.0.0.1])
-	by mail.efficios.com (Postfix) with ESMTP id 5E6AD32D7D8
-	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:30:14 -0400 (EDT)
+	by mail.efficios.com (Postfix) with ESMTP id 3011F32D9CF
+	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:36:49 -0400 (EDT)
 Received: from mail.efficios.com ([127.0.0.1])
 	by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10032)
-	with ESMTP id HtC2vh684Gs7 for <keys@linux.kernel.org>;
-	Mon, 22 Aug 2022 10:30:13 -0400 (EDT)
+	with ESMTP id W1dNb4me8u4R for <keys@linux.kernel.org>;
+	Mon, 22 Aug 2022 10:36:48 -0400 (EDT)
 Received: from localhost (localhost [127.0.0.1])
-	by mail.efficios.com (Postfix) with ESMTP id A8E7F32DAC5
-	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:30:13 -0400 (EDT)
-DKIM-Filter: OpenDKIM Filter v2.10.3 mail.efficios.com A8E7F32DAC5
+	by mail.efficios.com (Postfix) with ESMTP id 6FDC732DD8C
+	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:36:48 -0400 (EDT)
+DKIM-Filter: OpenDKIM Filter v2.10.3 mail.efficios.com 6FDC732DD8C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=efficios.com;
-	s=default; t=1661178613;
-	bh=sCq+RDUOZ1OUITkqalGxwkw0cLmJRGigRIQI3BzNhUw=;
-	h=To:MIME-Version:Message-Id:From:Date;
-	b=mHedKL954F/2QaSKD9ozkmuDExT1WBqtjvXMpRsVplix3zw9sTXVmiSFW707kNhex
-	 ukxZjOrivJDvLmUo3BMSz8yZoGa1t6WRBX1mqZ2q9QhJyu8hBxOjky7rXDGU6/gwFd
-	 JbSR3dShINe6psUhEomS5oU/XO4rInZeQ+YsOZWzXhlFMtzmIXGkFVeDZbT2D8RWvN
-	 tYEWDbVMiu7Fe2vXnmnEVt9p59nBS2RU9PnKsfpQBYA8pTFdUXK218hQma4dQqz660
-	 RCDc5yMTK6kLlx9agyw+0v71Nq4poAkGF4Xa8KdUm0eLY/xBx63zFqJ1o9kd676ERV
-	 49e6W+65/tsyQ==
+	s=default; t=1661179008;
+	bh=HHsCPjwIl1bDbN+s/zjPbtZVvwdpd+tjnizKnx7fo8A=;
+	h=Date:From:To:Message-ID:MIME-Version;
+	b=Jv8zTdWJpCAkp4oCCyrBniY8ryYPbu1PclJp4dHajQ4fTd3jMK9FbBe3a4lVsQ1u2
+	 5AnF/OhgMFaWDc/773QQc08QdNgaeBuKo5JebvIlPdOGxsfeDlu68bJP8WI24tdwrD
+	 z+egeaCuyGt0F7UB53nvhrTumzx8hC1ADCSAoQGl06nowOIZc4nRkQ2RD8XVsWZnqP
+	 P0XpmBQl5AXaUH645iR+/JhO5uqHR+2LmMG/2UbjnhnKVF/0GSRlA3Yj+DakZBt9FT
+	 29eZYXk8kdqjooNZRJSoagvdUDhmhLgLNpycn1reeY+W7AKwzaBXYrkB3+GbsxkaW+
+	 6sULp/DpsFyfg==
 X-Virus-Scanned: amavisd-new at efficios.com
 Received: from mail.efficios.com ([127.0.0.1])
 	by localhost (mail03.efficios.com [127.0.0.1]) (amavisd-new, port 10026)
-	with ESMTP id tyNdWLb9Ajlb for <keys@linux.kernel.org>;
-	Mon, 22 Aug 2022 10:30:13 -0400 (EDT)
-Received: from thinkos (192-222-180-24.qc.cable.ebox.net [192.222.180.24])
-	by mail.efficios.com (Postfix) with ESMTPSA id 9D8D832DAC4
-	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:30:13 -0400 (EDT)
-Received: from compudj by thinkos with local (Exim 4.94.2)
-	(envelope-from <compudj@localhost>)
-	id 1oQ8S1-000Snt-Kr
-	for keys@linux.kernel.org; Mon, 22 Aug 2022 10:30:49 -0400
+	with ESMTP id daO-482QI9vJ for <keys@linux.kernel.org>;
+	Mon, 22 Aug 2022 10:36:48 -0400 (EDT)
+Received: from mail03.efficios.com (mail03.efficios.com [167.114.26.124])
+	by mail.efficios.com (Postfix) with ESMTP id 6996D32D718
+	for <keys@linux.kernel.org>; Mon, 22 Aug 2022 10:36:48 -0400 (EDT)
+Date: Mon, 22 Aug 2022 10:36:48 -0400 (EDT)
+From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
 To: keys@linux.kernel.org
-Subject: mathieu.desnoyers@efficios.com
+Message-ID: <1056758575.20546.1661179008326.JavaMail.zimbra@efficios.com>
+Subject: Updated key expiration for Mathieu Desnoyers
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="UTF-8"
-Message-Id: <E1oQ8S1-000Snt-Kr@thinkos>
-From: compudj <compudj@efficios.com>
-Date: Mon, 22 Aug 2022 10:30:49 -0400
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [167.114.26.124]
+X-Mailer: Zimbra 8.8.15_GA_4372 (ZimbraWebClient - FF103 (Linux)/8.8.15_GA_4372)
+Thread-Index: GlONr1WtIV0WRGG1kZjTPriwjKp3Tw==
+Thread-Topic: Updated key expiration for Mathieu Desnoyers
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -258,6 +258,6 @@ kgWNTUIC390dWNcWCSit/7RCSkaqOTAuC5gLYkZ9iBTuGQ0Ll6J5+5kRt5iO0D/i
 PuQcX4lR/TIOW8LZmjM8d2cO5PolUGwxaV2m/e5JFbUOZ27MnMjf4qXozdy9vdZK
 lLwNeKXZZvF+ytnjJdQBckTMATy/hrHWEMq0CafO1l6dr53ijcTqtwA310m00Zhu
 krpzh1e6KY6cfE50YAzds1ayfhE/UEvoJcx59a384bLPqWuJvBm6GJMosajcei0/
-wt24l2lRk30=3D
-=3DNVEw
+wt24l2lRk30=
+=NVEw
 -----END PGP PUBLIC KEY BLOCK-----
