@@ -1,61 +1,79 @@
-Received: from mail-qt1-f177.google.com (mail-qt1-f177.google.com [209.85.160.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gandalf.ozlabs.org (gandalf.ozlabs.org [150.107.74.76])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B00F736A
-	for <keys@linux.kernel.org>; Thu,  9 Feb 2023 20:41:17 +0000 (UTC)
-Received: by mail-qt1-f177.google.com with SMTP id v17so3521644qto.3
-        for <keys@linux.kernel.org>; Thu, 09 Feb 2023 12:41:17 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E919363
+	for <keys@linux.kernel.org>; Fri, 10 Feb 2023 00:06:59 +0000 (UTC)
+Received: by gandalf.ozlabs.org (Postfix, from userid 1007)
+	id 4PCYv608KYz4y0f; Fri, 10 Feb 2023 11:06:58 +1100 (AEDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=nbdvM/SbFkt1mnT4e3FITBRo9DS5xhAfxYA+SNWsf8U=;
-        b=XuiExktCrTgL9HaEXDXrFfiFMtayDjYVZbOrkSaM4fghtpke3o1B9DmCxJuQCM8Xre
-         JBgTzS6MsMaSD2vPJ1iJ19e3iRDdroP6nXZpRbnHiBpr/loHOjCrsFd2Ho2vAs0dL0kR
-         B7IaZ9Hje+KeaIwAv0+ZFEE2+KYvoW0KguFbs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=nbdvM/SbFkt1mnT4e3FITBRo9DS5xhAfxYA+SNWsf8U=;
-        b=eVZ3hJ7Ms0UlAdFaopvyZPjLzLXhZfmyyaWjJvPVSSPus6pKcc+ul3kvfJxUkzvaXE
-         3g/+NctRWP6sAwQjHcM3bLNlbKvqy303kWB2VQIW7X2vcb1OTg9Yic/lh9GmFH4YIjH0
-         ySBXvBwwYDccO0IT8HsLPqcpO+Cy8wk3Tyl0w0puLVmAM1gvJ8qXWh4bvHkJNjU8NaPS
-         ud++D0+DTo/XeWvTFK/f1elxWCCVxYKuHk4kP7NiACqScQY/a0r7q5DyhhkDM20Lonxb
-         UO+UEvBOejR1kmy/JRrucgOk3kPR50whdqQ3MZGTj+StKf0+jnKZD5a+q0jO7P2vhind
-         Q8mA==
-X-Gm-Message-State: AO0yUKWUC/3Zzo3zgFm52XVgV3oD1JobDlzixadZEmHgeHOshSJ9MeSj
-	gy0+3NFj4VqL60RmwjzMikx4aDqhXW/uQzOR
-X-Google-Smtp-Source: AK7set8Q1NTRpy2K2MNi3J9SeqUndPhYzzyCHaxGeihyNxIYruh/xma2CL2cChOZFMyXvaxHpd7GIA==
-X-Received: by 2002:ac8:7f89:0:b0:3bb:7677:2cb8 with SMTP id z9-20020ac87f89000000b003bb76772cb8mr13809541qtj.33.1675975276602;
-        Thu, 09 Feb 2023 12:41:16 -0800 (PST)
-Received: from meerkat.local (bras-base-mtrlpq5031w-grc-30-209-226-106-7.dsl.bell.ca. [209.226.106.7])
-        by smtp.gmail.com with ESMTPSA id i25-20020ac871d9000000b003a527d29a41sm1851167qtp.75.2023.02.09.12.41.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Feb 2023 12:41:15 -0800 (PST)
-Date: Thu, 9 Feb 2023 15:41:14 -0500
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: David Gibson <david@gibson.dropbear.id.au>
+	d=gibson.dropbear.id.au; s=201602; t=1675987618;
+	bh=51FaRdGW5Fozi9G7RIxmVNVE2tAukW1wzmZ1f8ds89A=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=D/RectOnzZNjm2bimJvRrUGhMcDm8Fc89MhoedT/v11kvx2h6/kH+r3b07/DtABRD
+	 IGBHinpW/yZ1AVAhgT/U2iW4QbZGt6fzsSLkpLO/dveozXXaLlHVNxz2D4VzsZojP9
+	 BWUtXF/F0QLF2rUfI3NM4FqypSSCQwAUmJesO69A=
+Date: Fri, 10 Feb 2023 11:06:44 +1100
+From: David Gibson <david@gibson.dropbear.id.au>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 Cc: keys@linux.kernel.org
 Subject: Re: New key
-Message-ID: <20230209204114.ynajycsawbmjugxj@meerkat.local>
+Message-ID: <Y+WKlLtsY4RkqEnV@yekko>
 References: <Y+TQqjEzhv0P1vwB@yekko>
+ <20230209204114.ynajycsawbmjugxj@meerkat.local>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="Ydl4DA3240r4t7MN"
 Content-Disposition: inline
-In-Reply-To: <Y+TQqjEzhv0P1vwB@yekko>
+In-Reply-To: <20230209204114.ynajycsawbmjugxj@meerkat.local>
 
-On Thu, Feb 09, 2023 at 09:53:30PM +1100, David Gibson wrote:
-> Accidentally revoked the old one :(
 
-Sorry to hear that, but as there are no signatures on your new key that we
-recognize, we cannot add it to the keyring. Would you be able to get more
-people to sign your key?
+--Ydl4DA3240r4t7MN
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
--Konstantin
+On Thu, Feb 09, 2023 at 03:41:14PM -0500, Konstantin Ryabitsev wrote:
+> On Thu, Feb 09, 2023 at 09:53:30PM +1100, David Gibson wrote:
+> > Accidentally revoked the old one :(
+>=20
+> Sorry to hear that, but as there are no signatures on your new key that we
+> recognize, we cannot add it to the keyring. Would you be able to get more
+> people to sign your key?
+
+I'm working on it, got my order of operations a bit mixed up.  It is
+signed by my old key... but alas only after it was revoked, so that
+probably doesn't count.  I should be able to get a signature from
+Stephen Rothwell in the nearish future.
+
+--=20
+David Gibson			| I'll have my music baroque, and my code
+david AT gibson.dropbear.id.au	| minimalist, thank you.  NOT _the_ _other_
+				| _way_ _around_!
+http://www.ozlabs.org/~dgibson
+
+--Ydl4DA3240r4t7MN
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCAAdFiEEO+dNsU4E3yXUXRK2zQJF27ox2GcFAmPlin8ACgkQzQJF27ox
+2Gebzg/+L+ql/AT5EU0HtW41UKxUVfYiVb5hJ49UgiLckjk3At5tzhA7JjMPGpAS
++nB4dlftNIAVocZmVLhKLNM6y4uo3IgwKwt0V5r5XJHw9L/DfHuIlL8676yrj/+O
+KilFXWgkPTk8wDJRam9aPTB05A4XetVhZ2UTMU9S9QgsWoRRP4PVN3xgoZdQbuLI
+3VWHThkDhKLQAPiaxbGd6s7X3uCaWk/jw9ARZqKog/Q8tCTj1KroT+K5hlc0DdAQ
++Sui14PPxP07OsL9oTkW47Odg2FPk3VnSP3GhUlQzAWoGmzosamFCoDPcc68zHWv
+/dWD9Seeic2aw/SYvOrif4yjZoAR8mGP/PiriT+FKRYTvhBMCZNyV1+NkR3Qhtn0
+4i5XDPc4qqNBlcH/FyeIyErHPyP1iT/9Dq9ShdBJx9+BtzBS3Cu6uUt9APDd8WU2
+mUZIFpZmo1HuAYLEQG2io7Swsy+ajf4qgUKptBgLgHZ4CDs8fqZbOfm04jhFUF7W
+QGxgw4vNqqWM+TK/PMfSSIUwAlKfv9HxSV8l1tDrLBvX5VJSDLgn7B1zSGwpzTHG
+4hggHxuWsvSgzO6NPxwGQoUQYm6G5GFmsy9Uj2TnBYxGAXxdWo8rAfJovY5MQVgE
+vB+1Kz0MZKitrXMjgWkwkHCy1otSrlmdVDpWB6VKi/m/qAr2sbc=
+=BzZM
+-----END PGP SIGNATURE-----
+
+--Ydl4DA3240r4t7MN--
