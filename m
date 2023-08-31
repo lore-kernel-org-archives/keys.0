@@ -1,46 +1,49 @@
-Received: from mail-qk1-f174.google.com (mail-qk1-f174.google.com [209.85.222.174])
+Received: from mail-qt1-f179.google.com (mail-qt1-f179.google.com [209.85.160.179])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C3A78F57
-	for <keys@linux.kernel.org>; Thu, 31 Aug 2023 20:07:49 +0000 (UTC)
-Received: by mail-qk1-f174.google.com with SMTP id af79cd13be357-76ef8b91a4bso80823685a.2
-        for <keys@linux.kernel.org>; Thu, 31 Aug 2023 13:07:49 -0700 (PDT)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BCEC8F57
+	for <keys@linux.kernel.org>; Thu, 31 Aug 2023 20:31:17 +0000 (UTC)
+Received: by mail-qt1-f179.google.com with SMTP id d75a77b69052e-41206fd9717so7497621cf.3
+        for <keys@linux.kernel.org>; Thu, 31 Aug 2023 13:31:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google; t=1693512469; x=1694117269; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=G1IHORdKdbV9mWzNMWRdfjLaZCXPRWNCLVXUEhDatgs=;
-        b=TG6csaDTa6wRbnoUJvVnwefp/yxMbYv42q+zUlYfaZEDxjQTMlkm/+t7GYNC5gGIe/
-         QlGGwacmM/gVn/0GQVoI8k8DItsvb+LGh2sMRKTnKxCJbRXk8qx4s5Dkeg8S/3i6HXHu
-         KK8I9BR+UnqP0oF8U2rg9iWwn6zs8elAmp4to=
+        d=linuxfoundation.org; s=google; t=1693513876; x=1694118676; darn=linux.kernel.org;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=yAETymeoOgUqiFgLWwz6CNqKb3ZtXPyJ/KP5gQqqgg4=;
+        b=R2kV9xt6MovGgEgn2VtRx/AbqDnF0psNm2TPzvasXUDR5SWm1HLG2oT0e1QWFtadtx
+         dnHMbVqQiNNtt/na2zm+VXcM/wfkHUjEFQBiD7KzpiDfsZwto7GAm4pcxOr2qgJqJdUc
+         9QL3kX8eLmi+Lr2rgFq56R8JHYvXdTF9W8Wts=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20221208; t=1693512469; x=1694117269;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=G1IHORdKdbV9mWzNMWRdfjLaZCXPRWNCLVXUEhDatgs=;
-        b=Ywk5PAznEAkuI6XGNI9VAwLFT5EuURg4JvGv5SL9Y2N0U348gS3L5vQ1gAWtmwaMtk
-         JfOD65SFWx7dtpA31iR7hLS4VmURpP+Ay1UmKQdrfUwXK/j+N/7l6sbrFhr7xOLwiLYk
-         gfeOflhaB+UUj1eal+2ys1tok+4AMfcCADnhdvlnWCMi1Zu3n4O6QNFui5qJqOaN9G/k
-         YPUIVf99WBeXQ4QqVpWQUiXswnu8r+Vi9AwYQGfr2jv1WYaYHusjes1vk7R9DLgBjBX5
-         bObP6GwsS7onOnW9mnPPC1YM4IWOozEx6qIIRZvTaKTCecvokfPkgEhF817jFGfV7kjh
-         MhPw==
-X-Gm-Message-State: AOJu0YyIuUOMkMtrPodacMfimcNuLMVghZa7Yvl5e7NN90KvXHxJuoWR
-	6E/3AdQdcWRJiXN/iunuR1HZSRASw9m4yk9fsYs=
-X-Google-Smtp-Source: AGHT+IEmYcbyQxap6Y04f9zmIhOBlynkrRM5ujDu8az9ndRwP8gZmQuQA9PXBht8cWgdNzddnD452A==
-X-Received: by 2002:a05:620a:22e8:b0:76f:2f7b:cf61 with SMTP id p8-20020a05620a22e800b0076f2f7bcf61mr315921qki.61.1693512468810;
-        Thu, 31 Aug 2023 13:07:48 -0700 (PDT)
+        d=1e100.net; s=20221208; t=1693513876; x=1694118676;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=yAETymeoOgUqiFgLWwz6CNqKb3ZtXPyJ/KP5gQqqgg4=;
+        b=Rk0VGnF+bmUjWIJ92viZH1vUNyi3ty2s0A66d/jcgAdPB48wG2u3R9oRHrZw1fSPjN
+         HigiGDQ2hTX3svl7yOZF9RcP9MO1Nif0pYfjOTmEPKYNPxLcDK4DFnEw3nn+pzlzGfcC
+         6GF4pW4UMrkaXnKnueljBM9c087RVXAPt87CAzo4mQyaVjVkA4CQ48Bey0QQ9ZzjCmGY
+         SdHgUdN6nD3LN+mSoLffBOZZ9XmIlWFc0Ij2mHDG+i73p4W6zy44Bcn86zcnUnehmQBa
+         sGknDeD8yMjkHgpHba4BfKBK8nHv6ZMORiqDuojIV1R5na+YFLzYpBxDTV3vQp5hA4vg
+         2cQQ==
+X-Gm-Message-State: AOJu0YxDVJB50cfcH7ew/te/PiKCj/Z3FSXas0SoREXy+mrWy6IHTfVx
+	OEzfSeZuLMvHbxVeAJdoW8d+eORRQUJ+O4/mJbc=
+X-Google-Smtp-Source: AGHT+IEQ22k065j1466CCi7Rpx0LZ9/wyBAq5KUCMN+kVjrsLqSAXomt4mOr4OT1lREYcXnog/7/Gw==
+X-Received: by 2002:a05:622a:1c3:b0:412:27a1:88d9 with SMTP id t3-20020a05622a01c300b0041227a188d9mr690748qtw.26.1693513875995;
+        Thu, 31 Aug 2023 13:31:15 -0700 (PDT)
 Received: from nitro.local ([204.48.79.90])
-        by smtp.gmail.com with ESMTPSA id u1-20020a05620a120100b007675c4b530fsm861718qkj.28.2023.08.31.13.07.48
+        by smtp.gmail.com with ESMTPSA id y21-20020ac85255000000b004109928c607sm890226qtn.43.2023.08.31.13.31.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 31 Aug 2023 13:07:48 -0700 (PDT)
-Date: Thu, 31 Aug 2023 16:07:46 -0400
+        Thu, 31 Aug 2023 13:31:15 -0700 (PDT)
+Date: Thu, 31 Aug 2023 16:31:08 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc: keys@linux.kernel.org
-Subject: Re: srinivas.kandagatla@linaro.org
-Message-ID: <20230831-bone-yamaha-jugs-490652@meerkat>
-References: <703bd322-e37c-47da-bc81-924a9d3038ea@linaro.org>
+To: Ahmad Fatoum <a.fatoum@pengutronix.de>
+Cc: Ahmad Fatoum <afa@pengutronix.de>, keys@linux.kernel.org
+Subject: Re: a.fatoum@pengutronix.de
+Message-ID: <20230831-liter-compact-aegis-b53ff6@meerkat>
+References: <E1qQjev-004bn0-32@dude05.red.stw.pengutronix.de>
+ <20230801-outspoken-uncut-13b63c@meerkat>
+ <366e7960-6b2d-ec8f-9893-424f29619243@pengutronix.de>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -49,12 +52,18 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <703bd322-e37c-47da-bc81-924a9d3038ea@linaro.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <366e7960-6b2d-ec8f-9893-424f29619243@pengutronix.de>
 
-On Wed, Aug 23, 2023 at 08:46:23AM +0100, Srinivas Kandagatla wrote:
-> Can you please import my key for srinivas.kandagatla@linaro.org and
-> srini@kernel.org
+On Mon, Aug 14, 2023 at 08:00:08PM +0200, Ahmad Fatoum wrote:
+> > There's only one signature that we recognize on this key, from Uwe
+> > Kleine-König, and it's already too far removed from Linus Torvalds to work for
+> > web of trust purposes. If you get your key signed by someone else with a key
+> > already in the keyring, it should help.
+> 
+> Thanks. Please find below the key with two more signatures that are
+> less removed from Linus'.
 
-Key updated, thanks.
+Added to the keyring, thanks.
 
 -K
