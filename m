@@ -1,64 +1,63 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
+Received: from mailout1.w1.samsung.com (mailout1.w1.samsung.com [210.118.77.11])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E88B15ECD4
-	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 16:44:10 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D533A17555C
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:26 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.11
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1719333855; cv=none; b=Cwt8/dxnxnt2sesWDO6Z8rPtYgK9vQM0HDT3FP1eIiIJvRLLsACl4K+QeFjgbk8bsAlk78nagsFig7Q6+XWtMv+/jJPI9ydITYZ5hlklrRDR8VPDf7pY6i/mgHsXgZjcitmOJeQpwCIrQWSr9Om+XUFTn7IkRtvA4AbiLTL/OsU=
+	t=1719337710; cv=none; b=Bi3Ne+izmqnS95ukp8O0TB7Z4zggl88jfHk5ra+Pk2zsI5qH27hWickOh1Cmio5GbMZMA9xRIzs+BsY4vX/6cyV9pRPGlMFATpnbxCL/O/fOFm4lRKK8z8V/MXAvocVQcfWjeKqxuRnzg6wsQmrUT2Mp3XZUgEAq74qHfyD15Dc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1719333855; c=relaxed/simple;
-	bh=1FaAm6wHRvkUO0jVgXyY1Jaga4Xi0Lt8mMS2stRwwC8=;
-	h=Date:From:To:CC:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:References; b=e7uT0PLRP6dxrzqxHOxRVLp0nrv8WL9psjPslG8sVElK8bJ3q11/PDxThCxL3XWmlhzu89Qaky+qfuBITTDaWVOLpY74wF6vwi0KaGEooa0bTznHxttzupLeh+PHh/OozJg8dHlkcU8ns2vEc5dH/SnwLLB7plqbe/a4cLx+2Z8=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=OUYSDS8J; arc=none smtp.client-ip=210.118.77.12
+	s=arc-20240116; t=1719337710; c=relaxed/simple;
+	bh=4x+hRrlNIqfy0DtDyIz4pHEoF1Eta1OVJKt/mDgfMmw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition:References; b=B1+uPafnOoZXZ964I7uw7jLI9++gKt9XWsmcsGMIX6OpXAE5rWp5n65o/M5sDRM03jEJGapirU247srh6TUl8JUeaJ4BBbOTsJevTnwOUIYJp4MaGpdGwW0g/BU6QN7AGo57Fgjdosl5tXSmDcd39+QnH5d98SV5dwyaMMlz/n8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=ZR+95VHD; arc=none smtp.client-ip=210.118.77.11
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="OUYSDS8J"
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20240625164402euoutp028ce3d880552676b9309dac57dc6840b7~cTQUowIZv0207702077euoutp022
-	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 16:44:02 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20240625164402euoutp028ce3d880552676b9309dac57dc6840b7~cTQUowIZv0207702077euoutp022
+	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="ZR+95VHD"
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+	by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20240625174819euoutp01ab70bb2331685e70c92300888a617bc6~cUIc6XDRM2909129091euoutp01w
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:19 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20240625174819euoutp01ab70bb2331685e70c92300888a617bc6~cUIc6XDRM2909129091euoutp01w
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1719333842;
-	bh=oaMRASKy6ugRdOE/5rm7/qFo3NNaYgRvrr7oj4EBdaA=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=OUYSDS8JQjk6C2V4+vYlDEmSUxGG1rf44wl//LUA/qijYYQvSA1+pN4RsD+RM4Txk
-	 RmLb3bndnjVJJJRZmkQjHJoUsiiBxF+riejsUJ5YZTAFkOVR+dqp9vG93M14LI2M+G
-	 3XqiIXcjyAsBpmeN/Gu66D2qGdOST087a2OZcWtI=
-Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+	s=mail20170921; t=1719337699;
+	bh=OHNhQ7CBlhz5+MuJRq/eboBFHjY8LsOUJyTmNr9ARp0=;
+	h=Date:From:To:Subject:References:From;
+	b=ZR+95VHDeLpbBbhqUWcV16uSGG46i1JsMgFGJYXHdy8S3pAXczwrbBr2rwpVDe9zH
+	 tyMb2Jxj4bD9rl+/JCuNRiWdYJDI7ZeZGSD3g7t08gV6niPw1q/dXrFnS81K2nA/YZ
+	 74Msn2gPou9p2fZ/aEUiM7gSd/P85F4cezkGigsk=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
 	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20240625164402eucas1p2de08b30be7b63cb2e11ee24bbe86d1aa~cTQUjcDYj1949519495eucas1p2y;
-	Tue, 25 Jun 2024 16:44:02 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-	eusmges2new.samsung.com (EUCPMTA) with SMTP id 86.60.09875.2D3FA766; Tue, 25
-	Jun 2024 17:44:02 +0100 (BST)
+	20240625174819eucas1p296ef266a747f2fca33c48088674ba733~cUIc1O43_2565725657eucas1p2-
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:19 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+	eusmges1new.samsung.com (EUCPMTA) with SMTP id 17.18.09624.3E20B766; Tue, 25
+	Jun 2024 18:48:19 +0100 (BST)
 Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
 	eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-	20240625164401eucas1p1b8c72057fd6cf63deff4f79a26d49f1d~cTQUQ3Q8V2802328023eucas1p1F;
-	Tue, 25 Jun 2024 16:44:01 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+	20240625174819eucas1p18333f76246456867bbcaaedacbc26060~cUIclDX-W2190621906eucas1p1K
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:19 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
 	eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-	20240625164401eusmtrp270a8bf45fc8090d6e20aafc24ca674c2~cTQUQUPha1423514235eusmtrp2P;
-	Tue, 25 Jun 2024 16:44:01 +0000 (GMT)
-X-AuditID: cbfec7f4-131ff70000002693-2a-667af3d2835d
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-	eusmgms2.samsung.com (EUCPMTA) with SMTP id 10.CA.09010.1D3FA766; Tue, 25
-	Jun 2024 17:44:01 +0100 (BST)
+	20240625174819eusmtrp2aab53869d3ea384e60876c851b511176~cUIcklGtE1657816578eusmtrp2b
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:19 +0000 (GMT)
+X-AuditID: cbfec7f2-c11ff70000002598-f2-667b02e3143e
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+	eusmgms1.samsung.com (EUCPMTA) with SMTP id 1F.60.08810.2E20B766; Tue, 25
+	Jun 2024 18:48:18 +0100 (BST)
 Received: from CAMSVWEXC01.scsc.local (unknown [106.1.227.71]) by
-	eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-	20240625164401eusmtip27be39665f5b6e965952530b6a10a1460~cTQUEOhcr0991109911eusmtip2n;
-	Tue, 25 Jun 2024 16:44:01 +0000 (GMT)
+	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+	20240625174818eusmtip1b2f40804781c0ac89b6cb931ccf540cd~cUIcVHhPN2573925739eusmtip1D
+	for <keys@linux.kernel.org>; Tue, 25 Jun 2024 17:48:18 +0000 (GMT)
 Received: from localhost (106.210.248.245) by CAMSVWEXC01.scsc.local
 	(2002:6a01:e347::6a01:e347) with Microsoft SMTP Server (TLS) id 15.0.1497.2;
-	Tue, 25 Jun 2024 17:44:01 +0100
-Date: Tue, 25 Jun 2024 18:43:56 +0200
+	Tue, 25 Jun 2024 18:48:18 +0100
+Date: Tue, 25 Jun 2024 19:48:14 +0200
 From: Joel Granados <j.granados@samsung.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-CC: Linux Kernel Keys <keys@linux.kernel.org>
-Subject: Re: Revoking a subkey
-Message-ID: <20240625164356.h656ilkhvc3w3d6e@joelS2.panther.com>
+To: <keys@linux.kernel.org>
+Subject: update Joel Granados' key
+Message-ID: <20240625174814.7ehla3amxfio2l7w@joelS2.panther.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -67,79 +66,244 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <20240625-brawny-resolute-partridge-ad5976@lemur>
 X-ClientProxiedBy: CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347) To
 	CAMSVWEXC01.scsc.local (2002:6a01:e347::6a01:e347)
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrJIsWRmVeSWpSXmKPExsWy7djP87qXPlelGbw9w2nxdFcLu8XOz18Y
-	HZg8jl3pYPPYP3cNewBTFJdNSmpOZllqkb5dAlfG+97FjAVbuSraVms1MDZxdDFyckgImEjs
-	aupn7mLk4hASWMEocW/nJhYI5wujxM2XsxlBqoQEPjNKdG3kgumY+mQ5I0TRckaJbxseIBR9
-	nxcIkdjKKPG0ZRcTSIJFQFXi4d+1zCA2m4COxPk3d8BsEQFLiX27PoDZzAK6EvNurAYbJCwg
-	J9F46B6YzSvgIHH09hcWCFtQ4uTMJywQ9ToSC3Z/Yuti5ACypSWW/+MAMTkF7CTWLCmGuFNZ
-	Yvr3n0wQdq3E2mNn2EFOkxBYyiHx9OgPqISLxLIth1ghbGGJV8e3sEPYMhL/d85ngmiYzCix
-	/98HqO7VjBLLGr9CdVtLtFx5AtXhKNG28Co7yBUSAnwSN94KQtzJJzFp23RmiDCvREebEES1
-	msTqe29YJjAqz0Ly2Swkn81C+GwBI/MqRvHU0uLc9NRio7zUcr3ixNzi0rx0veT83E2MwNRw
-	+t/xLzsYl7/6qHeIkYmD8RCjBAezkghvaElVmhBvSmJlVWpRfnxRaU5q8SFGaQ4WJXFe1RT5
-	VCGB9MSS1OzU1ILUIpgsEwenVANT1ZfN151NRHvqy3sOsK+8u8W5fKl+r2dwz6yC3/80Z5Vu
-	2xqyLazEkfntQs8b7Pv4/+x9Jta2evGRlKC2ypPXGQx3Xtfxrjrnmd953vvQ8kUP+VgWmWV/
-	WO8ufHiJuOuKjV+6LjT57r98fN//69zVBaJfFl+9rhDnu/9Xeu+8OZ1pkh/7S/5sYlN9MdPk
-	89HpIQd3yinvjuM5NPfX5n9dHO9CI1YaFbJ+ZTZ6JJ3EbXPjwnqR1ntzudPTpkYzpTmcr2F6
-	mOIsKW96OftX84zMjREeh1bNDtPiY430jf2ac8Jx5+QpP7Xdd5ywKrhrrND4+TLznqUC9Xk3
-	K0KO7px/52Kv07uur0HPrRnkvCbmKrEUZyQaajEXFScCAIRk/R18AwAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFmpjkeLIzCtJLcpLzFFi42I5/e/4Pd2Ln6vSDB7uMbZ4uquF3WLn5y+M
-	Dkwex650sHnsn7uGPYApSs+mKL+0JFUhI7+4xFYp2tDCSM/Q0kLPyMRSz9DYPNbKyFRJ384m
-	JTUnsyy1SN8uQS/jfe9ixoKtXBVtq7UaGJs4uhg5OSQETCSmPlnOCGILCSxllLgyhQsiLiOx
-	8ctVVghbWOLPtS62LkYuoJqPjBLPP01khXC2MkqsaHnPBlLFIqAq8fDvWmYQm01AR+L8mztg
-	toiApcS+XR/AbGYBXYl5N1aDbRMWkJNoPHQPzOYVcJA4evsLC8TQE4wSJy49YodICEqcnPmE
-	BaJZR2LB7k9AyziAbGmJ5f84QExOATuJNUuKIQ5Vlpj+/ScThF0r8er+bsYJjMKzkAyahWTQ
-	LIRBCxiZVzGKpJYW56bnFhvpFSfmFpfmpesl5+duYgRGyLZjP7fsYFz56qPeIUYmDsZDjBIc
-	zEoivKElVWlCvCmJlVWpRfnxRaU5qcWHGE2BITGRWUo0OR8Yo3kl8YZmBqaGJmaWBqaWZsZK
-	4ryeBR2JQgLpiSWp2ampBalFMH1MHJxSDUybAy8qvq1llJ/7K0Q6vrz7wOdfLyd0l6fL1S28
-	xnJ7qRz3ouu3zn+0/HCgoP2MpXDYnmuf712v+TDpp+KhLQ39sb7NlRxGEqGX9LbohcxbV7op
-	xujalLfNytnz/P7ae0s//RFdmFpQL9U3p2X6/e9f4wL8Pk58lj31kVqv7s61Nt1Cve0rY0UY
-	8q91zqgV/rYwx6+ybZ+9qkQV05rKKxkPn6u7TRcSufmQ42dHdsWirfIVNX+WLGPvWNRcvr5z
-	ade2vrL3DFMufIlrWtEWeriVJbfiUNrzeGdfz38/vz1qa3Dt0M7straVmSG7UvS66tHO3OCD
-	QnJut0/MPH1wybn0ZndfmceT/nAcfd+9IFWJpTgj0VCLuag4EQCBcKXXGQMAAA==
-X-CMS-MailID: 20240625164401eucas1p1b8c72057fd6cf63deff4f79a26d49f1d
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFnrAIsWRmVeSWpSXmKPExsWy7djPc7qPmarTDCZfELJ4uquF3YHR49iV
+	DrYAxigum5TUnMyy1CJ9uwSujPcdUxkLHiVWHGxuZG5g3BjXxcjJISFgIrHy3wW2LkYuDiGB
+	FYwSL9fcY4FwJjBJzJnwixHC6WeSmHR6LiNMy4TWF+wQieWMEkd/fkCoujJlPSuEs5VR4vT3
+	RqAyDg4WAVWJX1dyQLrZBHQkzr+5wwxiiwhIS1xecpUVpERYQEmi+5c8SJhXwEHi4YYOZghb
+	UOLkzCcsIDYzUOuC3Z/YQMqZgVqX/+OAuEdZYvr3n0wQdq3E2mNnwG6TEPjILrFuzUY2iISL
+	xMwJfawQtrDEq+Nb2CFsGYn/O+czQTRMZpTY/+8DVPdqRolljV+hxlpLtFx5AtXhKHHmfyML
+	yBUSAnwSN94KQhzHJzFp23RmiDCvREebEES1msTqe2+gqmUkzn3igwh7SHx7v5BlAqPiLCRf
+	zkLy5SyELxcwMq9iFE8tLc5NTy02zEst1ytOzC0uzUvXS87P3cQITASn/x3/tINx7quPeocY
+	mTgYDzFKcDArifCGllSlCfGmJFZWpRblxxeV5qQWH2KU5mBREudVTZFPFRJITyxJzU5NLUgt
+	gskycXBKNTBNWqC1qtm7hLflgLeMrNeEl24XJyoJnfBotL/kukGQc6tAi2f1M8ETtXmCOheC
+	pkZfX/3ZYIf1642izhk3rW4EHlJ9cnZ95oHTLC9CRDlntxVdF153SFNX5sf9RQr5C3KsOmwN
+	HvXf2Gy0QOPmGpeoxcduLDdRf2B0YKOGecgvr1+mnEc55TkrpZJ0Lt18+J37nPlZgUTOpfPP
+	PuS8/F3d2K55U9w36UkLo+tu9Bk8bW22ODZJeZd42U/fyt2xCW3f9Y+pK61QiGEt5NnXc2L2
+	xAVJbjXOcvYXHYyU/OZsLTlr/zH43ILtF75YiexfURGpy/OBPavBpI7Z2+bHJvvfBdXLj66v
+	q/G8WFcirqXEUpyRaKjFXFScCACCXUOMcwMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFrrBLMWRmVeSWpSXmKPExsVy+t/xu7qPmKrTDBomWls83dXC7sDocexK
+	B1sAY5SeTVF+aUmqQkZ+cYmtUrShhZGeoaWFnpGJpZ6hsXmslZGpkr6dTUpqTmZZapG+XYJe
+	xvuOqYwFjxIrDjY3MjcwbozrYuTkkBAwkZjQ+oK9i5GLQ0hgKaPEvjObWSASMhIbv1xlhbCF
+	Jf5c62KDKOplkvj25DAjhLOVUWLxy+1A7RwcLAKqEr+u5IA0sAnoSJx/c4cZxBYRkJa4vARk
+	EAeHsICSRPcveZAwr4CDxMMNHcwQtqDEyZlPwPYyA7Uu2P2JDaScGah1+T8OiBOUJaZ//8kE
+	YddKvLq/m3ECo8AsJN2zkHTPQuhewMi8ilEktbQ4Nz232FCvODG3uDQvXS85P3cTIzCItx37
+	uXkH47xXH/UOMTJxMB5ilOBgVhLhDS2pShPiTUmsrEotyo8vKs1JLT7EaAr040RmKdHkfGAc
+	5ZXEG5oZmBqamFkamFqaGSuJ83oWdCQKCaQnlqRmp6YWpBbB9DFxcEo1MAWWekf71/oqLC2w
+	1Tucf7xxkT1jWPOBo7euR8tNv2JwT3nZwTClhvQ1vP9s+zwzGnr3eDF8ikx6z9N9x71rSkFg
+	HfvduLdfDRsCpXp/238plzZXjv5kfnJ939naotM+DvPXaL9SKl60i0U44P4ED2v2K333y55t
+	zp85car2Oz9Fpvb2lkyrsgNzxTMr/7Pty39a9nFv0P3IV39v/nkZfdyr49h7fa8Dv5W/rVzh
+	Z7Ag0HiK0o9YdVPTz4eyuZ0NV28QDN4idKws8eCsfzuUvmqeP2loMN1CeO1HNndBhbJVJ9QS
+	JLP3Mntr8GUf3xO+2yKz5GPd9ZCuOQ8b+dkPHz9ZlxHy+a5LsbKigKeNEktxRqKhFnNRcSIA
+	h85/GOsCAAA=
+X-CMS-MailID: 20240625174819eucas1p18333f76246456867bbcaaedacbc26060
 X-Msg-Generator: CA
-X-RootMTR: 20240624195935eucas1p2e50f4be03654cb8051b2dec45ce7a52c
+X-RootMTR: 20240625174819eucas1p18333f76246456867bbcaaedacbc26060
 X-EPHeader: CA
 CMS-TYPE: 201P
-X-CMS-RootMailID: 20240624195935eucas1p2e50f4be03654cb8051b2dec45ce7a52c
-References: <CGME20240624195935eucas1p2e50f4be03654cb8051b2dec45ce7a52c@eucas1p2.samsung.com>
-	<20240624195918.dhbonudmhnayiggu@joelS2.panther.com>
-	<20240625-brawny-resolute-partridge-ad5976@lemur>
+X-CMS-RootMailID: 20240625174819eucas1p18333f76246456867bbcaaedacbc26060
+References: <CGME20240625174819eucas1p18333f76246456867bbcaaedacbc26060@eucas1p1.samsung.com>
 
-On Tue, Jun 25, 2024 at 10:18:08AM -0400, Konstantin Ryabitsev wrote:
-> On Mon, Jun 24, 2024 at 09:59:18PM GMT, Joel Granados wrote:
-> > Hello
-> > 
-> > I'm looking to replace one of my subkeys with a new one. I have one that
-> > is E and another that is A. My third one is SEA and I want to just
-> > have it as a signature key to avoid the annoying situation where there
-> > is no consistency in the use of my encryption keys. Unfortunately I have
-> > not found documentation or precedent on how to do this for the kernel
-> > 
-> > Does anyone see an issue with me just:
-> > 1. Revoking my SEA subkey
-> > 2. Creating a new S subkey
-> 
-> You can also just use gnupg's "change-usage" to drop E and A capabilities on
-> that subkey. This would be slightly better because this won't require everyone
-> relying on your signatures to update their keyring. See the manpage for gpg.
-> 
-This is way better than the revocation. I'll give this a try.
+Hello
 
-> > 3. Updating my key through this list
-> 
-> There are no technical reasons why this wouldn't work, but there will still be
-> a long tail end of people using your SEA key for encryption because their
-> keyring just never gets updated.
-Indeed. Its good that I don't receive much of those :)
+I have added my new joel.granados@kernel.org uid and removed the
+Encryption and Authentication from my signing key.
 
-Thx for the help!
-Very much appreciated.
+Thx in advance
 
 Best
+
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+=9ZPp
+-----END PGP PUBLIC KEY BLOCK-----
 
 -- 
 
