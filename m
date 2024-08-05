@@ -1,140 +1,48 @@
-Received: from frasgout12.his.huawei.com (frasgout12.his.huawei.com [14.137.139.154])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D0D7156F4A
-	for <keys@linux.kernel.org>; Mon,  5 Aug 2024 15:51:09 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=14.137.139.154
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2567B17C64
+	for <keys@linux.kernel.org>; Mon,  5 Aug 2024 16:39:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1722873073; cv=none; b=akMwS7ZGKgR/VpvbEcYq3JKy4JBJvGumbQ0BVBzVCQqHMOAr78x9d0nZXYsB/f4EyvnGJeA/JSJxiWX+e2UE2y3VEaB2FwZKshGctKxgxem0xOKFzQ6h1oQQF64hKIwqb8SkMXC38KfESmFbcc+x/KuGumW4r+9OIhH84hrxnpQ=
+	t=1722875962; cv=none; b=seVkI2Ahl7se7xYzBUkw67/aWfiuQjHdUgQdjFRlGqPS9PPyWp/VEz7u9Q/pSVGPbkrU3LPG7RRrffqWeVcdvC0nBUnR5CgTqGyF3A+HoAa5HPe+RUSVpqsMRKp3dWgArO1RMrH0FIoaYb3JGYLKBHcO35PVCh/hf/uGjNuE0Hc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1722873073; c=relaxed/simple;
-	bh=jphFeiuiBWkPrDiXu3HyDsXirM9FkBh0A/S227KG/Fs=;
-	h=Message-ID:Subject:From:To:Date:Content-Type:MIME-Version; b=KlJBFG3Fe2/fbpj1ZJXn99ZKsgKhxxKIjcfyp7DOXCIyIyryLkXJL93lI0CJVpBWw0MHraqlNmb3hEQrQhoUogQpGs4zzmj8wfdcV1OK838cA2apQWyuPWYmjg/eqgw+qEs4EoWptTceC996YxaUaSbLV3/L3bA3uSdCzf/w79w=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com; spf=pass smtp.mailfrom=huaweicloud.com; arc=none smtp.client-ip=14.137.139.154
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=huaweicloud.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=huaweicloud.com
-Received: from mail.maildlp.com (unknown [172.18.186.51])
-	by frasgout12.his.huawei.com (SkyGuard) with ESMTP id 4Wd0fP2q9nz9v7JM
-	for <keys@linux.kernel.org>; Mon,  5 Aug 2024 23:26:53 +0800 (CST)
-Received: from mail02.huawei.com (unknown [7.182.16.27])
-	by mail.maildlp.com (Postfix) with ESMTP id C79EB1404C7
-	for <keys@linux.kernel.org>; Mon,  5 Aug 2024 23:50:55 +0800 (CST)
-Received: from [127.0.0.1] (unknown [10.204.63.22])
-	by APP2 (Coremail) with SMTP id GxC2BwCHV8Tb9LBm7tiaAA--.54242S2;
-	Mon, 05 Aug 2024 16:50:55 +0100 (CET)
-Message-ID: <ffc6a5a7542271f008ec497f1f13a29f6b9d83bf.camel@huaweicloud.com>
-Subject: Add Roberto Sassu's key
-From: Roberto Sassu <roberto.sassu@huaweicloud.com>
-To: keys@linux.kernel.org
-Date: Mon, 05 Aug 2024 17:50:48 +0200
-Content-Type: multipart/mixed; boundary="=-1s5X+K2OrtwxqTXLnnz0"
-User-Agent: Evolution 3.44.4-0ubuntu2 
+	s=arc-20240116; t=1722875962; c=relaxed/simple;
+	bh=/IS1Ow9Chd2CcLZi6zDg7kThK2ydh0ctooiDixLZlco=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=AMIFfDYaeH6yHNdkFV6OIwwfZ9BLiqHGO2PLb86LkUcLTAnIl80AbQMS+vcuGVof3z9TeJBXT6PnWYURUF4STTt5uAifvvW0t6ZxXdF5UH3IvkwwGcBEV3g93ea6cw0pv0WBrEG5a05mG5y6dESYrJeQycr3NeKZ2yvxd1qsTDM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=S82mb8tC; arc=none smtp.client-ip=10.30.226.201
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="S82mb8tC"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B758C32782;
+	Mon,  5 Aug 2024 16:39:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1722875961;
+	bh=/IS1Ow9Chd2CcLZi6zDg7kThK2ydh0ctooiDixLZlco=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=S82mb8tCSdtDupIGtpnf3CnHClh3RkoS7TA+PSxMsbLibSNLpRvEOGfbXUXBEV7Rx
+	 cbNQSCv6eHlyBM7HyBkhiJvl0CrdQK6OgPFPkvcSZAh8UcnEquzx++KBSCBP3r6+oC
+	 6feCtFcSdrO4Y0SZI4xI3+cXTf21GaEkhPnXfurc=
+Date: Mon, 5 Aug 2024 12:39:20 -0400
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+To: Roberto Sassu <roberto.sassu@huaweicloud.com>
+Cc: keys@linux.kernel.org
+Subject: Re: Add Roberto Sassu's key
+Message-ID: <20240805-impetuous-wildebeest-of-fruition-f2b79d@lemur>
+References: <ffc6a5a7542271f008ec497f1f13a29f6b9d83bf.camel@huaweicloud.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-CM-TRANSID:GxC2BwCHV8Tb9LBm7tiaAA--.54242S2
-X-Coremail-Antispam: 1UD129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7v73
-	VFW2AGmfu7bjvjm3AaLaJ3UjIYCTnIWjp_UUUYB7kC6x804xWl14x267AKxVWUJVW8JwAF
-	c2x0x2IEx4CE42xK8VAvwI8IcIk0rVWrJVCq3wAFIxvE14AKwVWUJVWUGwA2ocxC64kIII
-	0Yj41l84x0c7CEw4AK67xGY2AK021l84ACjcxK6xIIjxv20xvE14v26r1j6r1xM28EF7xv
-	wVC0I7IYx2IY6xkF7I0E14v26r1j6r4UM28EF7xvwVC2z280aVAFwI0_Gr0_Cr1l84ACjc
-	xK6I8E87Iv6xkF7I0E14v26r4j6r4UJwAS0I0E0xvYzxvE52x082IY62kv0487M2AExVA0
-	xI801c8C04v7M2AExVAIFx02aVAFz4v204v7Mc02F40EFcxC0VAKzVAqx4xG6I80ewAv7V
-	C0I7IYx2IY67AKxVWUJVWUGwAv7VC2z280aVAFwI0_Jr0_Gr1lOx8S6xCaFVCjc4AY6r1j
-	6r4UM4x0Y48IcVAKI48JM4AKrsIEjI02j7AqF2xKxwCF04k20xvY0x0EwIxGrwCFx2IqxV
-	CFs4IE7xkEbVWUJVW8JwC20s026c02F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r10
-	6r1rMI8E67AF67kF1VAFwI0_Jr0_JrylIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxV
-	WUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG
-	6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_Gr
-	1l6VACY4xI67k04243AbIYCTnIWIevJa73UjIFyTuYvjxUzsqWUUUUU
-X-CM-SenderInfo: purev21wro2thvvxqx5xdzvxpfor3voofrz/1tbiAgAGBGawNXYL6QAAs3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <ffc6a5a7542271f008ec497f1f13a29f6b9d83bf.camel@huaweicloud.com>
 
---=-1s5X+K2OrtwxqTXLnnz0
-Content-Type: text/plain
-Content-Transfer-Encoding: 7bit
+On Mon, Aug 05, 2024 at 05:50:48PM GMT, Roberto Sassu wrote:
+> 
 
+Added, thanks.
 
-
---=-1s5X+K2OrtwxqTXLnnz0
-Content-Type: application/pgp-keys; name="export.asc"
-Content-Disposition: attachment; filename="export.asc"
-Content-Transfer-Encoding: base64
-
-LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUdOQkdSNTltMEJEQURLalJH
-dGxnVmtNYndwTmtsVmU5a3FKSjJRV1hYZFZnbGJBT1Fzb0lGQlBBbGFhd1ZUCmFIVHFNQXpsUW9Z
-c253Z3dES3hDd0NxeVlna1NMZTRabGVIaEVDeEo2TE5HS3dicEUvVGdQU3BPU2hSYXI5cU8KUUxG
-d1Q4a2ZVVnI3ckNaTFJ1ZmZhL3UrSStJQzE3dTVUays5M0J1M2pqeThvTTc4YlRGWG9uK2Fsbm5Q
-T3lEMQpqaHZxeTZXQ0VlVWxYQk9rM0kva3hwcTdoNW9lNU1oSUp6VnRUYTdaK0g4cnRIckRLdmhq
-RmZlZk41bXk0YkZ1CkErd0htN0NyNS9OcHJRYU5RYmdqNjZVUlZ3akFDdGJFbWhlc0ZSMGkxN1oz
-WHhBaDBRcGYvMDVueXdaYm8yeHUKWXFqVFE5WnNWaEo1Q2pjTERpaHlTWG5WdDliZExGa04yQXRs
-NHoyUkNlR1p5SGpiNDJOc2dzdkFaT0k1QzFoVgoyYWJYQ20zdWNIUTVINVMvMGUva3VZOWpoUXow
-NGZtSjBQb3Q4N2NXdmNUMWZjZmMyTTZ4cnIzbVVLRnI4M0NECmJ0OVRlUnZGNmVCTEt1bXpWM0JY
-MU9MRzBraWpqZHU1eXZaZ2hzdytwY2JXL1ltTEt1a01lM0hFRzh2UHZaVHYKc3NrNVpmc25BMDlM
-aDgwQUVRRUFBYlFvVW05aVpYSjBieUJUWVhOemRTQThjbTlpWlhKMGJ5NXpZWE56ZFVCbwpkV0Yz
-WldrdVkyOXRQb2tCMUFRVEFRb0FQZ0liQXdVTENRZ0hBZ1lWQ2drSUN3SUVGZ0lEQVFJZUFRSVhn
-QlloCkJFOSs1MHkzOVhiMVd4UTJzQlFLdms3Q3lNQjhCUUptalVHZUJRa1UzMDR4QUFvSkVCUUt2
-azdDeU1COEVMa0wKL2loRWpQVW1zTVArNTZRUndzN24rQTh5VG1GeWlwYXZ0VVFZQUlGZWpVdU5O
-MWlEQWViNE1xVjNsY1diZm1obApIemFSVGFtcEdmWmZFV2FBekhEVXBBYXhLb2V3b3UyTG9MNWZV
-YnJJb29CY1hBUVJtZ2lXYUtOaDNYQXlSSW0vCjlEV1lZcGdrM0Njc2xuV2NOVWh0SHJtV2loZjc4
-WVk0eGZUS1B3RVVlVjE4cjhRZUlZUzR2OWFkMit0Ti85akYKa3ZCRWNpNURWS3FmV3NramZEdXdQ
-MElISGxaR3AremMrSDdGTmYrbnJkeVhWNW9OU3ozSzFJVk4yV20yVUErMgpyaTNsVGtwMXVaLzRZ
-bHlyT0hSYmZ6Ymw1dXhsRit5L1BKOUlRL0hiRnJ0a0RyYU4rRU0xdlEyTVhDWHNTTStyCkdDNGhv
-YkNGOVhSd3ZTVUJlVG1zQzF1OE1Od2FTTUtjdUs0a1V3aUYzSEFOTGpaRXlLZ05QZkFoTjcxRUZ2
-eTcKSFdlVUpIdzVsK1VJbThJekIxZ2R0eTNRdmRCbGljV1JTLytLNTZINWtSTXBKTFVFU3BmdEN4
-dnpialFLUm1GbApSRFdlclVvL2RDc2RJWnJJcC9XVU9JZWlmWFBWelZGeFZsZG1sWURnaVNMN0hj
-ZW1BYmpyWUdHbW9hSEpQenZzCkRva0NNd1FRQVFnQUhSWWhCSEVBcXQrdWJtNlVEUzRLMWxYa1ds
-cm95bnlLQlFKbWtGRFBBQW9KRUZYa1dscm8KeW55S1BrRVArd1NSYXhLZVhiV0JiSEcyWnhNKzF1
-MXB5eG9xSENucDJ5bytiTzZuTkZaVjkvd3NjMEVJYVA4MQpNN25QdFBoRm0vMjRIc3BaMldJcjBh
-a2QyL2RFYjJUQ2JKcVpaUmZkalF6MkVHTWpLS3dDYU9vM2dNNnphSkJQClVOaitGUVFXSjNhQU1C
-UFNhOFRaTmYwM1MxdHdlNUlPVytIY1BzVEhGMXFPSW9ra3BTM3RScGs1NmdxUVJsSk8Kb0FoRS9I
-VmhxV01xMzA2clhWaTRJdWRKOCtyT2NBdFYyWTkwbEJHQk80dkZFYllXbFRUbVd1SFIvRlAzWHFQ
-TgppMTVEdFJ1U2N2SStRTlBCV0dhSXYrMGtpQUhKeFdlU1p5Q1VTb1djSmhwWUU3ZWd5enNMdExL
-YmtKUzZEQ0MvClBBT2x3VS9rY3lOa3NFSHJLU0UzQWZsMHlMbVNMR3BGYXNTWVBpazdjRm5aNWlr
-NW8rTy9WRU44bG04ZWFDSWEKWVpjWjB3S0xQN1NMRnlpcGhGZUozRVJjWEVWNThhZTdaTnNLMFYy
-OGhyMnNDQ1F5dXZvWXUvS1F6ZDUyT0dhUwpTeXVBRHhWMlRpc1VLaXBvTytXbi8veHRSMy9yQWlN
-WVBHcmNITlBFVlpIMTdtNmd1RGFYQUZmNU4rWjdRbS9WClRIY1hyMXc3Y1F4eXRlamYyYTBhbHdm
-S2xvNmJ2VzJaaVpvT0JOVlRvaytnWjB5MENnd1dQNS84Q0dzQ29XRE8KRFVBUzBscnBvUXNWT3J0
-Z3I0NjJNVzFKNVNzYzIrUGFsYU0vOG8va3ZEWkx4aWxqVE00YnBxR2tPVzhDdjI1TwpTQWNXS01C
-T1hYQW83SjYrZ2QyRmVWUHNlQnM1NzFlTkl1Uys0RUl2S1FhMXFEbGdhZnVvaVFJekJCQUJDQUFk
-CkZpRUVqU01DQ0M3K2NqbzNuc3pTYTNra1pyQStjVm9GQW1hVkFUb0FDZ2tRYTNra1pyQStjVnBT
-d3cvK016TmEKRmh2SjcyUTNrQ0dzR0JxejJiMXNKM3FySTVya1JrTzVuYjZlMUwzaCtKbjJOZXFj
-UEU0QndHMFpGclJXNWE4TgpjSk9BcWRJSDdEUkNtWWJGdkxaY01zT3FCYmFpNDhXVjhxVHU1ditO
-ZkFoc3NhVVBYMVBnQnZBUEFZZEpQTURoCmpvTG0wUFQ0Q2ZkL1hhVVBHTVVTVVlKbjdQVmNmNEtV
-YzN3Y1dHMXI4ZUdwRUh2VXJoZDhqZEt5SFFMRWZvNXQKZkxjZHdPR2hFZ1Rta2dhbmNTS0l6RVVU
-dlNGSWM1N2grUFVXMzU2UzdBcHp3UUhvdUVwM1k0R3VocTZKNmhxVwpLUGFHVmhkR0YvT0pOV3pD
-QTN2VmQyL0dvcEdsbmhTSXlkTVNvbFhqNVF1dkNMZm50NkdEdXBxeTdnWmZhWFdWCnVpSWtNTzBl
-eXZndFpaK1UvN2hqQ2RJaloxYXR5NXlybjA4YWtVWUhoak9VaVhnZVVDc3FkNnFaL2IzTG1sUXQK
-bGI2dTNVdkY4NlpUcndIL0pSS3pnRk9nNXAzU0c1UjlhMVYxbDRjYXJqMFpCT2J5MzhBcEVGNE5O
-eDJSU2tlTQpjdmM4cmRSS2lnVWhrS3FVNFlqSXdQNlNZb0pjalQzd0pJdGVzQkZoQmxmeUtFeldR
-K1d2UXFSekpOdGErSXVXClZxc0lEVVQyUERmR2FuMFpuU0REK3AwNlNtVHVxK1AxbHJ6empmRWM2
-d3VObGhwSElweVFSdzFaMGIvRHdrd2kKSmo5ZGFMaWF3djI2TEwza2svOG83RmZGZWsrcnlsVHZO
-T3QzcFhkZVRoOVg1SGlvRm1EbDY2bkhzNC9GZ2RVRgpMQWFrNjlyUEhzWlRzcklXL1RuS3FadzNx
-RktXOUt6aFFyaGp5MGk1QVkwRVpIbjJiUUVNQUt6VEw3M2k0QkxJCk1SdWk3TFFhN3NVQTF6ZUtM
-UTdPTW5IcWk5dk9lWERDbFE0SXVnNnRXWmFZNGxLNzJ1ZGw3R1pNUU1VV0JNalMKUnQxRmhZWmtD
-WFVNVWl6RWZWVXlVTGtwNnd5a3JkVlphMmJ6WFJyUmR4TUNnYUxEN2FtY3cxbktmNHVhOS9hdQpY
-Z2pPaU1udmNXL1RBYXIraTU2a1d2ak1tdDdVOVdiR1FlY05FM1hwZ2VwZDJXMW9IWDVxUTd3Y2cr
-bEhmbG5FCk16WVpHR0hzdmdlQk5BTjI4eXZlcDF5L2d3blFROUljZlBJTWtoM3JyeDVMZC9LUGN0
-ZWxFRWxZNWhJV3B2eksKdFc3T21QaUNrYVFITTh0RGpPTVp3MjJRZ2NBYU9SaDVPYVRWV0xQR2ll
-VVpNYld3RGkyNk9DRXkyWGp6dkZKcgpPR3dSaFZUNjVVNkdCMUtEOHVCbXZkYWJ4UnBsSDA4Tzl6
-UXZhYXQ1eDA1RlUrandiY0QyaWZ4aVlocGFHbHhHCmI0Z2lOczd0TXZBclBTM2JHei9FS2ZmZXVX
-cTlEVCtQV1FHSmhqOVJnNHJtTkYvM3hpNURrWjg0OXVaMmlzM2QKd2tQYjZ4dE5qeGtWUXRGOE5l
-RUlKN1Y3Yy9neHg4S1pVbVFEalozTGhSbHZYUVBmaFN4UFd3QVJBUUFCaVFHOApCQmdCQ2dBbUFo
-c01GaUVFVDM3blRMZjFkdlZiRkRhd0ZBcStUc0xJd0h3RkFtYU5RYlVGQ1JUZlRrZ0FDZ2tRCkZB
-cStUc0xJd0h3eU5Bdi9TdElKdU80ODFuSDRNK1RwdmQrOGtTOWVnaHJWaEdZUTdJZHlCdHF6enJ4
-THkzWnMKQU1GeXVzMTV6dkFKRjZJMHZpWUxwUHFaemtBQnpwKy9tckxvVDNyQVQvRTg2KyswOVNM
-UG5ibVJva1hma0RYNgpoTzU3ck8rTDd6a1JJQ2hsQXlYTGRWa2hXOEJIY1puazNva0lCcys0b3lV
-MzdISjQxWXlsTWpWdFFxeUNTdHdQClJmY2lqMk0zZmNRK0lMWEZtdGFkQ2Z5eGVvdDdkRmR5NkQy
-RTJLdDFDQWFsTFN6US9PUzhIMU1FYzNlK3Q5aXMKaG11cG9CbjFubmFzaFZPcGg4bTdNanpDTk5F
-RHUrekU5RGFwSGhBMTdRRDhYaW00bVdCVUw4WUt1eHRYcU5UeQpXSjRVV0NtL0Y2c2UvdSswcGZs
-amhOYnNGMmh1b2pzUUtaTTgrQll0VmRZcTJVU0hicmplSzY0ME02YUlFR2hZClE0ODhOUDlSVzdG
-T0hoVnEwT0hiV2lWRkVTUkxFRG5WTm5pR3N4TDJVSG1mSXZjd2dCYkd2eFc4NW9QZ0lKY20KUklk
-elcvdkFIUGtSdkVxcytyRy9TSkliZW9QazR0VlVKNXprUEtid2RxY3VsSVM5aUNveTFJV3hkbXFH
-dWZLNwpIVWFESmsvS3JmYXlTN2xjCj1RbzVWCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NL
-LS0tLS0K
-
-
---=-1s5X+K2OrtwxqTXLnnz0--
-
+-K
