@@ -1,130 +1,104 @@
-Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.133.124])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AD8F44C8C
-	for <keys@linux.kernel.org>; Tue, 27 Aug 2024 14:46:56 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=170.10.133.124
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B31F21EC01E
+	for <keys@linux.kernel.org>; Tue,  3 Sep 2024 22:54:21 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1724770018; cv=none; b=j6skdmyBhKX3ZsdmOdX92h27uX4E/tModt9ortxOOEYXy4uaQ/SDDjZQehVGRwo6ZBfByO4eHxmaeyTFQGYWWx8AgQr4h0r4FejqvRvZOweX68Hy6cDCV8WVYcRVFuYoqfkOhuBsYRD+MPB3DIqhv+Ump+3vwYfLMT5/oUFpZ9I=
+	t=1725404061; cv=none; b=DLX2FAC8pL1iqQGg9UyCjEHF5UxDcsYNYFwQ9fd3wXRPn+304/XjeKgc+Q6Cp/8o5xCEdW2e/KswtP92r8UDyVYsOviCTlIe359vNM2EbbmF3pFdeeZ8gm0nDID9aAkq6+16lKDxlOxY5XXtLFRGTDw6JM7gwp5lrx1OOS2F9d8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1724770018; c=relaxed/simple;
-	bh=9zsj8Se6fP29AymNrWFgp+zs5k0Qy5t2JKpAfmk/2wI=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=pAvwIru75ypobRw228ys+79GHsuNOVIaUWnJbe0tyM0yz3fC9tL8GLFC+rnZKR6GBOykcsp2lL9VDGlZXAHzHmH5BKEBLCF4lHhMknJcV2ywgfVUTbjak38XT9TeZv4B71fqF0yLD0bg+dDqvKF7ByxhvUxS1OfiCxp3MLjPuZg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com; spf=pass smtp.mailfrom=redhat.com; dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b=OLdx+FDQ; arc=none smtp.client-ip=170.10.133.124
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=redhat.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=redhat.com
+	s=arc-20240116; t=1725404061; c=relaxed/simple;
+	bh=uQSd4lOFYpMS+gP4SsUw68Tl5bho3MfSpLlBJtC7LRY=;
+	h=MIME-Version:From:Date:Message-ID:Subject:To:Content-Type; b=oTucTLadplSSkJiy1aelwkIBSmTy9PgyQc8mQl/RHkctycWva7PaQsec5dc6faYqN9sslSSHiVlACJhUnBwrIgbWahm+rn88ITpKEYdM4NbIx+MFW5UJpzBpnqnyT6C+3quAOp+pX9EdIX0wA47Zf1Ahw14120aOtgEqM/LAIhE=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b=CPh1m4h2; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=redhat.com header.i=@redhat.com header.b="OLdx+FDQ"
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1724770016;
-	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-	 to:to:cc:mime-version:mime-version:content-type:content-type;
-	bh=gRqVgh+4enXmWIcBA7gYWp87lAnVP7uc/cAOTMJfyLU=;
-	b=OLdx+FDQWcidTxdCqe4recLhL6P4jE6W0LPVjPGIUuTSNJXIje4DAoDXi8aA09AqRcpOCo
-	KJ01Uy8ln3j32MCuPUReK9e8k/pkh4fyohcn7Xgzzsm9nOvPbgMxXxN8Qzzq2aja8fL+mj
-	3yjQ6djI/WqDRCS+aFDsSPpkDWLEnLY=
-Received: from mail-ed1-f72.google.com (mail-ed1-f72.google.com
- [209.85.208.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-346-Z-zp0cOeNEa_enewDok2Mg-1; Tue, 27 Aug 2024 10:46:54 -0400
-X-MC-Unique: Z-zp0cOeNEa_enewDok2Mg-1
-Received: by mail-ed1-f72.google.com with SMTP id 4fb4d7f45d1cf-5bec65fd3bbso4225930a12.2
-        for <keys@linux.kernel.org>; Tue, 27 Aug 2024 07:46:54 -0700 (PDT)
+	dkim=pass (1024-bit key) header.d=linux-foundation.org header.i=@linux-foundation.org header.b="CPh1m4h2"
+Received: by smtp.kernel.org (Postfix)
+	id 4AB6EC4CEC5; Tue,  3 Sep 2024 22:54:21 +0000 (UTC)
+Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(No client certificate requested)
+	by smtp.kernel.org (Postfix) with ESMTPS id F0260C4CEC4
+	for <keys@kernel.org>; Tue,  3 Sep 2024 22:54:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.kernel.org F0260C4CEC4
+Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=linux-foundation.org
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linuxfoundation.org
+Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-a83562f9be9so567836266b.0
+        for <keys@kernel.org>; Tue, 03 Sep 2024 15:54:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linux-foundation.org; s=google; t=1725404058; x=1726008858; darn=kernel.org;
+        h=to:subject:message-id:date:from:mime-version:from:to:cc:subject
+         :date:message-id:reply-to;
+        bh=NbCtwcjO8ZcGvDOdkUKIs1FaIkHtJFj3TbWdmMqyKCY=;
+        b=CPh1m4h2IMzTISLnsBOXHXcqLWWkCb9xl8TrG1wso35N+kbOnadYzGgdFf1D+rfdxB
+         LKVp/8BHMpmyxdDpGAqbWERp0xNEsShdXpkD01YAfjgixRH3XyUfGuEMv5K207bStH2R
+         Il6Fl/4oQ1kiQlPfBvGtY/1AtcZ/KfhRLSYXM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1724770013; x=1725374813;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=hXrCQiDHu626lqUe/fqgQt1Lf6k+lX1L4e0I8JHTp40=;
-        b=r8TH5hUMt8rZHYB1/J591frtIFC9vFG4tbeFthrw14WfRkSLZR1l1UXcVD4Iu6K3Ot
-         jTK3oUWxnBU/qr5P7dLCYn7I21jQDvKmQM1/PY30HfwOdhdNsGNVtiATgwodl7qHg/De
-         PJaJ8ilZdNn/nWUD8Xx0GE4fO7fLYfQVbQnX9cZdssO0YXNWmOos02/RBFa1aDfQ7GyK
-         wTwXdrlJys1impETfsYbT+fz2eGi3Fs1Ag/jPUwcHkFJyXB5v/R8kyhA2u1/5AlTifQ6
-         n/bXyh96IAGrSREPfBvx/Jy74IycDDWW3yVSNyHicxEXxD+qzkxNVivHLY5dtAYyeb8a
-         xVAg==
-X-Gm-Message-State: AOJu0Yzh+VqllPVUrErd5wTp1vBhlMbqtNWC7+ZujDnlDzgmgdqsPYKv
-	K+mSZAaV9Yx3pCsyXoemOVCXC080IVXHpfQ+4jblE4/TzvnhTLmob9baa2J1zr5ydy1Yurn2omE
-	myGU5QuGRCGsDJtQOOpta3ZSNnO/GH2xiMhK9YadaPJmCC+1ML07hQsLOdUtbb3jk2ebHjVHi/M
-	tQZpAjXaXMHm1LX8EhNRLkZSOLBlTAV+RF3TE=
-X-Received: by 2002:a17:907:1ca4:b0:a86:a6ee:7dad with SMTP id a640c23a62f3a-a86e3be5ec8mr213558566b.52.1724770013114;
-        Tue, 27 Aug 2024 07:46:53 -0700 (PDT)
-X-Google-Smtp-Source: AGHT+IEgTXRRiA0aEJdEWPq+BBlRrnsPzXBrcAxjn06okIEJrOK77+rZo1sQr4ay3LVL6TOiE0LvDQ==
-X-Received: by 2002:a17:907:1ca4:b0:a86:a6ee:7dad with SMTP id a640c23a62f3a-a86e3be5ec8mr213555166b.52.1724770012283;
-        Tue, 27 Aug 2024 07:46:52 -0700 (PDT)
-Received: from thinky (ip-217-030-065-002.aim-net.cz. [217.30.65.2])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a86e5487aa5sm119857266b.31.2024.08.27.07.46.51
-        for <keys@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Aug 2024 07:46:51 -0700 (PDT)
-Date: Tue, 27 Aug 2024 16:46:50 +0200
-From: Andrey Albershteyn <aalbersh@redhat.com>
-To: keys@linux.kernel.org
-Subject: Key for Andrey Albershteyn
-Message-ID: <d4mobsmcvkp7lhllwlaptprvdtgble6q6xriu4jdqnn24ifhhv@nioldn2nd5yp>
+        d=1e100.net; s=20230601; t=1725404058; x=1726008858;
+        h=to:subject:message-id:date:from:mime-version:x-gm-message-state
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=NbCtwcjO8ZcGvDOdkUKIs1FaIkHtJFj3TbWdmMqyKCY=;
+        b=nZxehCm27EAJnxATkvKPJSp+9IFTy8nGmjELzktKRtuNygMbuL++lQXIUcxCOp3/Tp
+         tjOfe0Enfz8uB+m7ZIyUbBNpjdymbEGfspmu78qNvvpGf6W7EGbkGDLhzctaPXA6eEYH
+         TBQs1cCtk972M73CdWgKgINE033cebPKbigX4jG8+Q+qqwC/C5cfOaTpDbIMzNPuN7Zy
+         1hzTKxXSiENZAEHDiTSGhBZNNediWSlbGfW5L0Cxi3HgQK6VV70ewYH4pYwnqFaZiLNU
+         +NDLmDFvx1gZdRT1ToPyY6+dwU1axGymnmppBcIFFkVdbOr0O4Tkl3JQBGGM9mDA5IQu
+         kmMA==
+X-Gm-Message-State: AOJu0YwNYW2BEqqJo0kdH5hKOchbiQgTT/ZazwyU49cB5dIvE6481pUb
+	Cdc5cTo9Fbsti8VtZ3sAFb7eHCHCgF+XzXlcWFJD9AfG8oiopS6agbTrxfWkz/s1/YPCWa5RaeF
+	0Ckri1g==
+X-Google-Smtp-Source: AGHT+IE6p0GMUUUzwAVmd3gQWok3Ix3dlpRCzao1XEun/bXr9gF6Wiz+tTwABIE/7xbjGWzmolfp8g==
+X-Received: by 2002:a17:907:d112:b0:a8a:3e34:1285 with SMTP id a640c23a62f3a-a8a3e341535mr39453166b.58.1725404057387;
+        Tue, 03 Sep 2024 15:54:17 -0700 (PDT)
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com. [209.85.208.44])
+        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-a89891964f0sm735447866b.136.2024.09.03.15.54.16
+        for <keys@kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Sep 2024 15:54:16 -0700 (PDT)
+Received: by mail-ed1-f44.google.com with SMTP id 4fb4d7f45d1cf-5c2d7ad97c6so249828a12.2
+        for <keys@kernel.org>; Tue, 03 Sep 2024 15:54:16 -0700 (PDT)
+X-Received: by 2002:a05:6402:1e89:b0:5a2:6e1c:91e9 with SMTP id
+ 4fb4d7f45d1cf-5c242350decmr8013411a12.7.1725404056074; Tue, 03 Sep 2024
+ 15:54:16 -0700 (PDT)
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Mimecast-Spam-Score: 0
-X-Mimecast-Originator: redhat.com
-Content-Type: multipart/mixed; boundary="kzhc4vznmcfkqy27"
-Content-Disposition: inline
+From: Linus Torvalds <torvalds@linux-foundation.org>
+Date: Tue, 3 Sep 2024 15:53:59 -0700
+X-Gmail-Original-Message-ID: <CAHk-=wh1NszuHi0R6mxGnT7MsCaT+HtRiufTWpMspmFX-AFymQ@mail.gmail.com>
+Message-ID: <CAHk-=wh1NszuHi0R6mxGnT7MsCaT+HtRiufTWpMspmFX-AFymQ@mail.gmail.com>
+Subject: Yubikey trial
+To: keys@kernel.org
+Content-Type: multipart/mixed; boundary="000000000000db6bd106213eefd7"
 
---kzhc4vznmcfkqy27
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+--000000000000db6bd106213eefd7
+Content-Type: text/plain; charset="UTF-8"
 
-Hello,
+Ok, doing just one of the keys for now, just to see how it works...
 
-Please find my key in attachment for addition, signed by
-Darrick J. Wong and Eric R. Sandeen.
+                Linus
 
--- 
-- Andrey
+--000000000000db6bd106213eefd7
+Content-Type: text/plain; charset="US-ASCII"; name="signed.asc"
+Content-Disposition: attachment; filename="signed.asc"
+Content-Transfer-Encoding: base64
+Content-ID: <f_m0n0zdfh0>
+X-Attachment-Id: f_m0n0zdfh0
 
---kzhc4vznmcfkqy27
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="andrey.kernel.asc"
-
------BEGIN PGP PUBLIC KEY BLOCK-----
-
-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
-1OmvS52Zk7eABR0apAi2szMSpYNJmmFITK8sAg==
-=lNIZ
------END PGP PUBLIC KEY BLOCK-----
-
---kzhc4vznmcfkqy27--
-
+LS0tLS1CRUdJTiBQR1AgU0lHTkVEIE1FU1NBR0UtLS0tLQpIYXNoOiBTSEEyNTYKCnNrLXNzaC1l
+ZDI1NTE5QG9wZW5zc2guY29tIEFBQUFHbk5yTFhOemFDMWxaREkxTlRFNVFHOXdaVzV6YzJndVky
+OXRBQUFBSU1FM0ZJV2FTQ1JOYk9EUXBPeWVHVkpnb2VKb3lZOWJ1dGs1ZkxIMjE4Z2hBQUFBQkhO
+emFEbz0gSG9tZSBZdWJpa2V5Ci0tLS0tQkVHSU4gUEdQIFNJR05BVFVSRS0tLS0tCgppUUV6QkFF
+QkNBQWRGaUVFcTY4Unhsb3BjTEV3cStQRWViNCtRd0JCR0lZRkFtYlhrdDhBQ2drUWViNCtRd0JC
+CkdJYUFaZ2dBZzJPVG5RRUZWdzBpWTRqMnZ5L1B6eG9nR3FYbElWQ09wajlUekFDaGhGM3pzOSsw
+aHl1bm5Lei8KY2ptTUNyM2w0OFBtQnovcXdBdjhub29RQndOZFlxOC9VdHNWNE13NlVlVW40L21U
+eXVrTEVldzc5NmJ3Y1FxTQozN3Z3cjJKOU0wWWRFUnZPU29vaDF3a0oyb2JKeVdET3JVWlJZbyt5
+UWxaODV1VHVBUGFscVdmVzA5UkQ5Y1dOCm83aUVXTzlzWU1Pb2p6U1VjcWxiNUdKcjEyUnZ3ejZw
+d0dTVTkwMmhhd25POE85SXFIZHRmNTNJU05waUhQR0YKaXNjV252M0w4clRLK2NSRUtGM0s0ekJx
+Y2RCVE9GbzJXbU1KbC9pNC9SMjBtQk9oNFJpRWtoWGtCSDIxeHBFWApGQUZaRy9JQTE2MnNMNUd0
+a2tHVS9NLzJyRXdkOFE9PQo9OUVHMQotLS0tLUVORCBQR1AgU0lHTkFUVVJFLS0tLS0K
+--000000000000db6bd106213eefd7--
