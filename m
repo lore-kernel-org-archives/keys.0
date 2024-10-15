@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAC481FC7C3
-	for <keys@linux.kernel.org>; Tue, 15 Oct 2024 13:46:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDC2614AD19
+	for <keys@linux.kernel.org>; Tue, 15 Oct 2024 13:47:23 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1728999978; cv=none; b=j1dwU+d7Bs5nNROIrNLE8+caWKEizGDI/LAYDs4NdoVRgLcW0ItJPx5AHsQlC/3mGoLq3oxhl6PCYosHcWF6rUvC4ghFms9SWR78yroRUbwWAbQH+HhnQMDKJqlGaoRzzmML2/4dsg13P3efzt3cV374v7rheUyMBpvqXTQ7aD8=
+	t=1729000044; cv=none; b=MlaY01QDhGFgaGr35oKWmCg2qfOoalweJKbsxGFs6mjGM0obpYMV5JXUkFrl6YyIviuGWEZTPnCs5/Fy8euj3fVi3cAfmtLYpBo7a6cIWOfPlbssil3d01F8C+rScQygcE9+Hxnqj93sJOhbFnGbd6Foxp3W7igrL+bqhoURcOY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1728999978; c=relaxed/simple;
-	bh=jjlyamQHuK1G8m+stbedBwAlDxqV8hiYmkSlqz1Hp/o=;
+	s=arc-20240116; t=1729000044; c=relaxed/simple;
+	bh=CCZMOjUXqmo0so+CZYI+W1A3CsROQewzxeMJTs9pzUE=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Dehu5RQoaTI2xYQt2UQv34tzCH0yn8liymtf1DWL5zBNKwNfKG4MfsCVEq4ZQ8qh8XyZGUNGSmBIgerUB8bhp3dfpt6ZLZtMViVt5WU4hZZFtImdeZFSz/6n9FEue59MVvscEitiRbwMWLn5y12xMVo3E6+XMMsr35jFVjaosYw=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=a+bjPmtJ; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=gUQjYWOA7un7V6F67e+TuWKrZEnLffCrW+Kngx/383Xp+YxSVKv5LmTrwEfRQAGYQLbJCo+L3ZMa8Ykg1BGFx59rZM6i/f7VJQM050Evy9yicf269NOROxhZcosOLnAp7Pu4osNlcdPuMMsgeEMKaFaopnAKHGtjplHWSUFeQw4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=BlsVFyKD; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="a+bjPmtJ"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A7F1C4CEC6;
-	Tue, 15 Oct 2024 13:46:17 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="BlsVFyKD"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 612D9C4CECF;
+	Tue, 15 Oct 2024 13:47:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1728999977;
-	bh=jjlyamQHuK1G8m+stbedBwAlDxqV8hiYmkSlqz1Hp/o=;
+	s=korg; t=1729000043;
+	bh=CCZMOjUXqmo0so+CZYI+W1A3CsROQewzxeMJTs9pzUE=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=a+bjPmtJTaVrtRSKK7ZB3vFYWE0Mi8+y4YyFsJla0TSOy5hahHHx4/1KyQBVFhf6R
-	 DQv+lyYxT+Nomie/fZYdqbSQlI3MRTbkl322T1N3nHG4Z8ouKAOiKNv/b3c3Vtd86o
-	 lQsFdbashEGk/2T2ERkPdQc/PV9e9OH6CdEV05dY=
-Date: Tue, 15 Oct 2024 09:46:14 -0400
+	b=BlsVFyKD1KWu3+4dweuhpkPgsuHyBOEeaenJI0moR5a3yyjbG77AQvj4LQRol378Y
+	 DqQlGrHyZbC9WcG+SvX1lGVtSYLbisw5TsTY4hVh0G3TQNjk2LRwY97UctueijY0RQ
+	 AMBbCgUSWdSizNjCgsgRFxFzIA4aVfBpG44bIg4o=
+Date: Tue, 15 Oct 2024 09:47:20 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Markus Schneider-Pargmann <msp@baylibre.com>
-Cc: keys@linux.kernel.org
-Subject: Re: Add my key
-Message-ID: <20241015-important-moth-of-chivalry-f9bedb@lemur>
-References: <nxmur7ve62ocgjit5hs54lck2dktljr6tfg3qvouquhypb645y@k5sw35pi2dbs>
+To: Madhavan Srinivasan <maddy@linux.ibm.com>
+Cc: keys@linux.kernel.org, Michael Ellerman <mpe@ellerman.id.au>
+Subject: Re: Submitting key
+Message-ID: <20241015-auspicious-maize-avocet-09d8fe@lemur>
+References: <61aba19e-6496-4273-8427-a228af23e2e3@linux.ibm.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -38,20 +38,18 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <nxmur7ve62ocgjit5hs54lck2dktljr6tfg3qvouquhypb645y@k5sw35pi2dbs>
+In-Reply-To: <61aba19e-6496-4273-8427-a228af23e2e3@linux.ibm.com>
 
-On Tue, Oct 15, 2024 at 10:41:22AM GMT, Markus Schneider-Pargmann wrote:
-> please add my key to the keyring. It has one signature.
+On Mon, Oct 14, 2024 at 09:35:28AM GMT, Madhavan Srinivasan wrote:
+> Hi,
+> 
+> I have exported and attached my pub key to this mail
+> as mentioned here 
 
 Hello:
 
-It's a valid signature, but unfortunately Uwe's key depth is already 4-deep:
+Your key is already in the keyring -- it was added when you submitted your
+kernel account request.
 
-https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/plain/graphs/E2DCDD9132669BD6.svg
-
-So, with just his signature your key is too far removed from Linus to make the
-web of trust work.
-
-Would you be able to get your key signed by someone else?
-
+Best regards,
 -K
