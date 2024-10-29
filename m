@@ -1,35 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EA381FE108
-	for <keys@linux.kernel.org>; Mon, 21 Oct 2024 20:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DEC4AEE0
+	for <keys@linux.kernel.org>; Tue, 29 Oct 2024 15:13:05 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1729543918; cv=none; b=LtusK9FGR5uSqQ0TS/Pj8h/inmcSpASRnt7hMqVQjA6HOPjMofih0LXzzCe/jhkZc1WyFtRcfqAKwtvrnuJvinjwhFszGbUw44FmFmk+PPmClQgOcA74eo0HzPiSFeHI8rjYCsRZIS4NRdloB4oVB20GzN/9qb/2kJweGn+5tvI=
+	t=1730214786; cv=none; b=s/GHnLVtEB9ZHLgG6Q2L9xdQkz9g1FgqxyoNPGZ6ozFt8/HxOgp70X5JyyCMjYgHeHZxrotQx1w+6ahVNzd1LvxVbMWGCvBsd7Dnj56HZzWC/qoAkkgjux7OSyINUjtHO3tH/FinRL7XxStkaRM2UsZcHU28kdxzVyTmqroC9PA=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1729543918; c=relaxed/simple;
-	bh=50XbvqtbjtiackRVv2/RB1wXZBGkGwaqgkXZspZyU10=;
+	s=arc-20240116; t=1730214786; c=relaxed/simple;
+	bh=YkdMX7LjtdK1s/3kw6No1gyP4zbco6Mhg6zhVWmeGIs=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=JXVH3Qz2j2kM4qIJckRdcIQKki+KLQRBwFLHBPb2/br/9uTGAM2P0YD/gHhVmt8mrwmh5LnhLDpuxBy3Ai8f2IzdQgO+NTwR4XHBfejI2RFY51fz6oQF4Dkgpq71KvUHHu2hVtYRrZCHOwSh9Iy1fUIAGXEy4R8nvvnxhGIW3EU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=F5KmmU86; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=AlWGmUxzU45anI2GOSB4ema/SBbPJ+qVVBb/M34UX1+qF0awd44jVif/q7dmtzlFR+g4jNoswPVgMIb41OITz0i06cWMoql4oV9e6q/ZIp6AsYwsoj3ntgCwXMe553uRtdvhu3cx5QkUu4EyVaJxftIjRBhxvEXV6L7bdVph6nM=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=KlBtfD2k; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="F5KmmU86"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D37DC4CEC3;
-	Mon, 21 Oct 2024 20:51:57 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="KlBtfD2k"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A1CDC4CECD;
+	Tue, 29 Oct 2024 15:13:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1729543918;
-	bh=50XbvqtbjtiackRVv2/RB1wXZBGkGwaqgkXZspZyU10=;
+	s=korg; t=1730214785;
+	bh=YkdMX7LjtdK1s/3kw6No1gyP4zbco6Mhg6zhVWmeGIs=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=F5KmmU86q5BJBYPZrReSOH+suR35FiNsMPLo0unGJ3PxGutfX4ZyptKJO/y2VS07t
-	 1A3L289iBQfHiq46QbtQpMjSFTpRkx3iwXUOJsDVhokR6F/Fkq0pZHFpsssg2Y4rpX
-	 YGAyu32VDwknuOrG/3vY5AXeJs2WD25JwwBl+yCw=
-Date: Mon, 21 Oct 2024 16:51:53 -0400
+	b=KlBtfD2ksa5YX1gWnst/VYjeakGXLXwzY45VGrg1gBwUhOAtgEY/0/wMo/48ffcV5
+	 E0D1EduvL0FxmYtObjlDgww2dreTuGR0JrUGGpx33zbmYAKsEO2gsXJb5I+Q7pEts2
+	 HVlvs0rLk7AuNFqo3DyDbpV62evQUQz0Z+/3l9aE=
+Date: Tue, 29 Oct 2024 11:13:01 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: Philipp Zabel <pza@pengutronix.de>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 Cc: keys@linux.kernel.org
-Subject: Re: p.zabel@pengutronix.de
-Message-ID: <20241021-cerise-seriema-of-order-84df6a@lemur>
-References: <E1szCHv-00C4Zt-35@dude05.red.stw.pengutronix.de>
+Subject: Re: About revoked uids in the kernel keyring repo
+Message-ID: <20241029-conscious-knowing-cormorant-06085c@lemur>
+References: <kh5aupxlnhnszkhs44pworjawui6mhwck6zbhsh7wssbumdtq7@yexqh3pb5h5h>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -38,11 +38,15 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <E1szCHv-00C4Zt-35@dude05.red.stw.pengutronix.de>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <kh5aupxlnhnszkhs44pworjawui6mhwck6zbhsh7wssbumdtq7@yexqh3pb5h5h>
 
-On Fri, Oct 11, 2024 at 11:50:23AM +0200, Philipp Zabel wrote:
-> -----BEGIN PGP PUBLIC KEY BLOCK-----
+On Fri, Oct 11, 2024 at 08:25:32AM +0200, Uwe Kleine-König wrote:
+> some time ago I revoked one of the uids of my key. This revoked uid is
+> available on the ubuntu keyserver. Still after the last refresh from
+> keyserver.ubuntu.com (10e718223d7e ("Periodic update from keyservers"))
+> the uid is still tracked as ok:
 
-Updated. Sorry for the delay.
+I just did the refresh again and I believe the latest updates look ok.
 
 -K
