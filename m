@@ -1,68 +1,70 @@
-Received: from mail-ej1-f48.google.com (mail-ej1-f48.google.com [209.85.218.48])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 20EF51DE2C5
-	for <keys@linux.kernel.org>; Fri, 28 Feb 2025 22:12:16 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.218.48
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F975191F77
+	for <keys@linux.kernel.org>; Sat,  1 Mar 2025 09:37:23 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1740780741; cv=none; b=kFJRpqm/8k1937YjT52z7Z74OFMY1yXIC3qYIyK0L2H4NdGCXKbQkCLUUzyyCESy7WbeTs/rvjG0XPV9l2vm9qPdVtXyCgOKvxLvZuJ7r3zQUJ79kvqAhe0+AcvWXNY6/N5SCZZVo+tL2hKX7AKX7Qal5oy2QsK2Yj8P6RsjsMo=
+	t=1740821848; cv=none; b=UnOf9lmXeL/IcIeIgWcwO8W6w5unZjfMYnvnfAQSSY2sMBdiM1YNsazbYcbTPTKR+IIo5Ig4hO5yL8hQ62qmQdrURs85JtDDy8mPIz46R6esAW4zFVq1xMHjD/X9wM1L7RSoyByr55U7iYKbrX6Bl4blZk2xMCpWeqUHqoVT3Rk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1740780741; c=relaxed/simple;
-	bh=dWSVgEoHNPopXmgqa6tsn/nJC3BNb3qTJn73+0+RgWk=;
+	s=arc-20240116; t=1740821848; c=relaxed/simple;
+	bh=J1bJH6Q8StagcFJcDYCYQeXynFzfqNJdYa6RqeeQyuI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=Toxd86Udq5cyncWACp+RXqEW75MIiizIsvlqaaUXZyHQtxaLMG+5qShCqJOyHxyUAf8YKQHqD4XcbARmxMg4hkG4nZFFZVQWTHQckwxJW7UDQKJuKqhRhrXICACb2oAjVCehVk8LsBowaJvBudLTSchaHphMW6yUzPRru5EliwM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=JgMxGlhH; arc=none smtp.client-ip=209.85.218.48
+	 Content-Type:Content-Disposition:In-Reply-To; b=V3csoIvojpuI9e8Dvbb5znZ0RgrEZ8paUrOf2BZh7XqF1KY634NDYnrW5IhGZTC3TVmHIhZJSxu3YTwv/mq0E4hR7/ohyJb0UJZZrSdwG2XqiG908BjoMrYfwisP9cdk0HFRPeRb1sf1TG1c6e3R9i5DDwyu178KHeNmcU35V80=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=M6VabPJW; arc=none smtp.client-ip=209.85.208.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="JgMxGlhH"
-Received: by mail-ej1-f48.google.com with SMTP id a640c23a62f3a-ab78e6edb99so354316966b.2
-        for <keys@linux.kernel.org>; Fri, 28 Feb 2025 14:12:16 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="M6VabPJW"
+Received: by mail-ed1-f53.google.com with SMTP id 4fb4d7f45d1cf-5e04cb346eeso5032200a12.2
+        for <keys@linux.kernel.org>; Sat, 01 Mar 2025 01:37:23 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1740780735; x=1741385535; darn=linux.kernel.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1740821842; x=1741426642; darn=linux.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=9CkGNQVM/OFxLhvt3vtK8SdBPO9BeOIsd7dHRc4ajFk=;
-        b=JgMxGlhHkwxf68KlBqm/5QpikU/T89mZ0DbN+QRKkE3WPg60uq0AoAUh9lYiJdHGAt
-         Jl/5VE/rS9UkkdrYMWj6e2Y8U64ZAfjvoEusm0ubDb1A2iFs3m+QFStCX5omGnceadn+
-         zB8prAFqrijReu1fUhAq9zANmMuXKwMveGiJ9FD+qIE3r6FO5eQUBgFEvV2d8f86GTaG
-         Mx0BF9pT5+RlsIfnJF6UcwGEHGOdBCsz3bQQC2BB0HgP90XQTlglijpd6BXO74zjZ9Gp
-         SrAlaIfbIb8UnlYLHzCr4/O723vMcXXt73k0lYrxfGCTQFmPLWhBIh3JUP0T2CBh61fD
-         y9Fw==
+        bh=QntUuZAAyGg+dYstDYAER8VTKCIwTI5GyUMGehKv17Q=;
+        b=M6VabPJWYzHVS8qCkvmioizuwgFa7mQbGK+wZt6MpqbKK/x/hp+ctnrBg7vWj0lGEl
+         seqxj5QRXqT9Ge+Qjbz3nsmRtwW8HrycJvkzNAtI2rTXiLGA85SNp7LWJ35rGShNfN0u
+         T9XtVn6YeYTP0YpRjQPa5zG+IAT1oMr0uWDUq9uVgd0ySJefTBEsJdrUntccaywHp3ik
+         vuy8Q5s9xeodaUzR9qMNHOQeHrAr9Te4xxWEhpxqyii7pAHiJkuhZMu6Fz0y0bxBVEue
+         v3f3/JI4O+grfEZmgj5yZSwvdiZ3JsP6TZGBHhKrH9s0b2D8umPDRKDr7wYMswiaFRSW
+         7ktQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1740780735; x=1741385535;
+        d=1e100.net; s=20230601; t=1740821842; x=1741426642;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=9CkGNQVM/OFxLhvt3vtK8SdBPO9BeOIsd7dHRc4ajFk=;
-        b=Xw8MYtQF93WDtMOr3JVBVxCeQb+VAaNCyD2+akWHdPR4lxq6ozXnYf7aY858W56nbc
-         ST2bQUXjfjMCGjvLgH6FEo8+kL9AW/SIbhYK9+LpZ03M5SVmHaDkZDmyV3SlGEcpXB+m
-         eAFvl0edC2vojmvHm9+r1h5fsbKX6HxsrevFqIL5f5UuFekOPOjIT7AMYLs/CYp7Yvcu
-         3CYkX4pqodHPe4vNmkSC2Aq1HTCSML43eookI304bUUpzuZ1H1LTl+41RV0Js+ITFZwT
-         GABf5vurX8zrpTsGyu9ZSSXg7TgPqP4PpjhqryBJ00ElZkEahZCSMdtjERWKwN9a6ol/
-         oIOQ==
-X-Gm-Message-State: AOJu0YwsF1IX5KRU3p16kfXtibPG4OzuM360YIydo044ILYp2SE7jmPJ
-	f/Pad4wF7bgc+vtbrGq8Vee8128C8JTKoixuOtVOBLp1kPnamIAZxum7l8OxjV7A2wph11/CUV7
-	z
-X-Gm-Gg: ASbGncs4DxBHBe7f2hNYtRPQDqQoV59RU/0QpYEBNM7251s5oSAjJt5jNAn7o1xKSgs
-	nzv5kq9XVx9DaGxTgdLnbgcWRepPer4OEzHh8G5Pzw+Dn21KZ6mfwBltW5ncnlIoQ78zBlbs+S/
-	PZ7l3LdYNazdNWyo/UslmPguE8Ga1XC9xYu7ej+zoQdXG5o4y2Rab1k643nKscHZD2LZMN3L1PG
-	ZTzpNy2cBtTaqAGurEszv9xv843I4qXU8zgkhQkiKEQyz7BMWD5TFQj2qWp+GeB832N6szePuEd
-	sevb92uH/JLpNwkqT5WeLtd6nJLjBao=
-X-Google-Smtp-Source: AGHT+IFvNhMOHmzoZz1ptw/OsWF0m7oUmjY1SMi3WmTALN5ce//6SOcOJnzUuTwxF7RxcErfKyC5Mw==
-X-Received: by 2002:a17:907:94cc:b0:abb:d9c6:ecb2 with SMTP id a640c23a62f3a-abf25fae466mr539093566b.21.1740780735171;
-        Fri, 28 Feb 2025 14:12:15 -0800 (PST)
+        bh=QntUuZAAyGg+dYstDYAER8VTKCIwTI5GyUMGehKv17Q=;
+        b=CutiQQ4fyJZkQu6FvFEqOY+wAE6kOCM1aoiZKQOg7m4/ULo4obyjZXP8UFxpj+gmCY
+         JA82VnYpTamYhB7fX8lM4XVrOd8GR/WIk1UPle+qtuLMK/V6IUwjTTrPpmRrVR1mn5j6
+         XKd9F5RhuHr8tgPmFafGUjW5yqxvCtajO1hZmBPiMGONwW7Loonzic97TYUaTz7MZX+q
+         hOYMl4ZNUp2x1fhfSfGGA+iQrM+sgYVOVq4KQxNaeeKZ/yYihIclDYlPx+TRi+yEEM5S
+         QZkCpR7dHcKcdys9fWUiRB+OsQbwLkvPFsjQw+Tro4B39i6tN5A4lu3O1zBhpPIbTOw6
+         ibrw==
+X-Forwarded-Encrypted: i=1; AJvYcCXQgQhfxeG4rJvMZ+aewXGfFeayMJf8x8PQVofklwZAyUIDErELoPnfCIws6Fts8wnr0pO+@linux.kernel.org
+X-Gm-Message-State: AOJu0YxlULc+tknP15H51VnJshCkuV6fF2eRikZOIY7vjn+k/h4phrhq
+	g2q3OX0TKDXUY+EqOxdG2GB4gmXGzP48Za+MUP2V2G5MOsFtqN3JM7KbXNEshPg=
+X-Gm-Gg: ASbGncutoqybE/zIyXmCk/2Fmts/oBwks2Ay8vqx2yFmvQ0sQC1fRITB9gsLD9dXOrD
+	hVvHAVLz2+CAdE8B8Qcz8d4DFZlflLpq+BQdFXMDhaCHmoVteiLs1AueMnfsqIooJIuDTrVTOmJ
+	HMCsR+hjGPRMXv8+9Yz8NCWNfDE7IphnNmDomVDmRgE6njjLvl2j29eI+w/2nL52I3EwpSAjQKR
+	usziMQlmsHbqQDEB1/tmuhzJekqFGIWKtUbqjb+Sa0vsZEwNn+ghxasGa3i4alddLiKjRWCqzbl
+	iguPuhgPlXMq9ZLK5fyruc8/H4G3gr2um/Ii6UbvQm5gK3pqxA==
+X-Google-Smtp-Source: AGHT+IEXaWzA+myOUUlVEy14QT4bKl09ZAfdOus0vxjCo1YsWfOKux51tSDU3ATcyPRA5OdLzIOIPw==
+X-Received: by 2002:a05:6402:35ca:b0:5db:f5e9:6745 with SMTP id 4fb4d7f45d1cf-5e4d6911563mr5487846a12.0.1740821842179;
+        Sat, 01 Mar 2025 01:37:22 -0800 (PST)
 Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
-        by smtp.gmail.com with ESMTPSA id a640c23a62f3a-abf4cbd77b3sm35544266b.74.2025.02.28.14.12.14
+        by smtp.gmail.com with ESMTPSA id 4fb4d7f45d1cf-5e4c3bc8800sm3928768a12.48.2025.03.01.01.37.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 28 Feb 2025 14:12:14 -0800 (PST)
-Date: Fri, 28 Feb 2025 23:12:11 +0100
+        Sat, 01 Mar 2025 01:37:20 -0800 (PST)
+Date: Sat, 1 Mar 2025 10:37:17 +0100
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: keys@linux.kernel.org
-Cc: Kevin Hilman <khilman@baylibre.com>, Ahmad Fatoum <ahmad@a3f.at>
-Subject: Re: Keyupdate for Kevin Hilman and me
-Message-ID: <b2il74ut2kchr2iqbtqtfoekrwyyhilxqxm3ufizxu5xumxerz@qhxiqpbuksw3>
-References: <2ope4rjik7vfubpc5e6s3q3x3yeuwuwfagk7qm2ii7bshz45vn@zwknoaf7whoj>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: "Kirill A . Shutemov" <kirill@shutemov.name>, 
+	Tony Nguyen <anthony.l.nguyen@intel.com>, keys@linux.kernel.org
+Subject: Re: [PATCH pgpkeys 0/2] Restore and refresh two keys removed by
+ 2dd67ee0231c
+Message-ID: <2vqevtgpsuxr47p73bdkx4fgstatewg4riyb6wiyqiqcilufgx@lrwbweedqwur>
+References: <cover.1739880058.git.uwe@kleine-koenig.org>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -70,60 +72,54 @@ List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rvnltz3lyw5x42sm"
+	protocol="application/pgp-signature"; boundary="7xoqykzdipomkslj"
 Content-Disposition: inline
-In-Reply-To: <2ope4rjik7vfubpc5e6s3q3x3yeuwuwfagk7qm2ii7bshz45vn@zwknoaf7whoj>
+In-Reply-To: <cover.1739880058.git.uwe@kleine-koenig.org>
 
 
---rvnltz3lyw5x42sm
+--7xoqykzdipomkslj
 Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: Keyupdate for Kevin Hilman and me
+Subject: Re: [PATCH pgpkeys 0/2] Restore and refresh two keys removed by
+ 2dd67ee0231c
 MIME-Version: 1.0
 
-Hello,
+Hello Konstantin,
 
-On Tue, Feb 18, 2025 at 04:47:55PM +0100, Uwe Kleine-K=F6nig wrote:
-> find attached the recent version of Kevin's and my key.
+On Tue, Feb 18, 2025 at 01:07:20PM +0100, Uwe Kleine-K=F6nig wrote:
+> commit 2dd67ee0231c ("Drop all keys that expired in 2023 or before")
+> removed a bunch of expired keys. Shortly after sending the patch that
+> later became 2dd67ee0231c the keys by Kirill A. Shutemov and Tony Nguyen
+> were updated. With the updated expiry date they fulfill the criteria
+> again to be included. So restore them.
+>=20
+> Best regards
+> Uwe
+>=20
+> Uwe Kleine-K=F6nig (2):
+>   Restore two keys from the previous cleanup
+>   Update the recently restored keys to get new expiry date
 
-With the recent changes to wotmate[1], Kevin's key as attached to my
-mail won't be importable any more. However in the meantime he fixed his
-key and so an improved update can be applied using:
-
-	korg-update-pgpkeys --refresh --keyserver keyserver.ubuntu.com --keyserver=
--options no-self-sigs-only E2DCDD9132669BD6 5937189AD3FBC665
-
-=2E The other relevant change here is that my key has a new expiry date
----the key currently in pgpkeys.git expires at 2025-03-16, so an update
-would be welcome.
-
-Other keys that would benefit from an update are:
-
-	E289A1F4351A51B3 (updated expiry date 2024-10-05 -> 2027-02-18)
-	39CB544D6527CF60 (revoked two old uids, two new subkeys and SHA-1 issues f=
-ixed)
-	2EADC69438E476F9 (updated expiry date 2025-01-29 -> 2030-02-21)
+This patch series didn't make it on the list. Do you have doubts about
+it?
 
 Best regards
 Uwe
 
-[1] https://lore.kernel.org/tools/56371be75e13d288fd61e4b1d5ddf228fe01461c.=
-1740729275.git.u.kleine-koenig@baylibre.com
-
---rvnltz3lyw5x42sm
+--7xoqykzdipomkslj
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfCNLkACgkQj4D7WH0S
-/k6aUAgAhNACC85XYCxGdwRddVIP9k3sobNrtnFG6MqSLsWVZPvz0KSOieQKrRom
-OP+u+nZghUntz/a5DyLRgKCInFanjJnP+hVgKhsBmJObzohLdjE0ComJDTmI6zvC
-D8wvdavjUo7qtwp95tqsPyZ38LIA7Is9HoIi5zEN4+z5OBo9SFM/cR0RdVClQKtV
-U9PXqzFZ5pWQqw8Lw3zESAg38NtXvOEYXMRomOLxmAmvqhHWyp/Ty0tCCgBzDcV8
-XKcSHZ4MEEDeywBY99SL3j3dWqYcHhWeYkftnBQgWjCBv2twsq5jGq/9cT8suzBi
-Y+YEPQmP+1/JC9g/DEzzPBwVyB7POw==
-=E3vu
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmfC1UIACgkQj4D7WH0S
+/k7iHgf8ClR4Fk0t9rEytQuWl6BT6SfN/hBxbfTERBFCGD5BRncj1cAmvJR9OLoZ
+BTX0r/siFgbzVqS+2IJxB2eXKyFd72ATeW5MWJvPzZu2O4n+jEJ7zvg9LdGaXCAg
+zJAhG8o8CTFdQvOJg25E+QwZidabzY4Y1gmZNTxA1O6u2gXOxKBV9M+DKkIBb/VI
+5aKvyHlSfhRZOu1uwxTkmID6PJjZSt9YKaZyucLIB5rc2BtKDVFgWEOEYbg/1lQ1
+WmJ4pemGnmAQRFIZCkzEg2dMzzfLgL7c6CvsN+TaQ0nv8hMvEv0mlanl1gTV1Dn0
+Tcw6JDakyDK/fy+5UXicxbV805Ng6w==
+=tFkg
 -----END PGP SIGNATURE-----
 
---rvnltz3lyw5x42sm--
+--7xoqykzdipomkslj--
