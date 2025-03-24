@@ -1,34 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A913746E
-	for <keys@linux.kernel.org>; Mon, 24 Mar 2025 19:47:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3815B17E0
+	for <keys@linux.kernel.org>; Mon, 24 Mar 2025 20:27:58 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1742845649; cv=none; b=e60Nl5IORzcfenbarL4+U7DNUMVzAOJNg7+WLK4Frw9CXcqYgohAgVCUDwPDLJzDDOSCCtGjtzJPj9qMnnz6RYFgbfn3Q4U/yvcWlurbDFYvBP694vh+IJjr+FgbMEtLXGhu3MZVQDgSYrCboeIJiGvP0QHYwc/4vWT/Br1BENs=
+	t=1742848080; cv=none; b=ebTTFJApLUSsQzjMBDwAsEw+C2lxX1QOecXZ3G5/aMP8Ria5TD1Yco0XN0Z+XZB6ih3H4DQRtgUSLjtEliA+mPK9Rl62agbRRzfVqNDV/GWpxKtNf3hXzLMxtHve/ArMfb3fNGnE0lq3BweOcuLaCBcPo92j7FMdoT4bnq7rILk=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1742845649; c=relaxed/simple;
-	bh=IXj4U4PDksrWPaRRTu1VVt4YjEKlTdHW+TWtRmsJceQ=;
+	s=arc-20240116; t=1742848080; c=relaxed/simple;
+	bh=57jLRnkqxqht3PnvSnulboLrCSP/Yi525D++B5JCThU=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=q15CvFXiagGli4aR+hnr/l503DqvglEZ589CX1tRu+t018mUPmS4hqW5SOjx8Lwca3h5iT3ca9bi4JM6/fn8/25x3rQ8vOSW5sHIaDmZy0IMj7DW1cYz4yCJrZUlm4ltZ+APSpq+tFHbd9PnXJk48trVpf0m1UCdhhRixLeyDOY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=sQ88xtqv; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=Wgt56JSMvRgYGRso6CJ3H5dOFkCTCqco97ahJRPn7jdEvXy4CWGB9TkjyTxWagxxUr0q33dZQ/FsZx8Ij1i8XMsP5WcD+MdC5G8mGdOsMjPRUVaxzE8/Vh2eMaU/9Lu1Ogb10sR1x1ut4+cPGRyBAnKwsIA6wqPWV98DJoa779g=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b=yDVUhbrq; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="sQ88xtqv"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A2DC4CEE4;
-	Mon, 24 Mar 2025 19:47:28 +0000 (UTC)
+	dkim=pass (1024-bit key) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.b="yDVUhbrq"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EB45C4CEDD;
+	Mon, 24 Mar 2025 20:27:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1742845649;
-	bh=IXj4U4PDksrWPaRRTu1VVt4YjEKlTdHW+TWtRmsJceQ=;
+	s=korg; t=1742848078;
+	bh=57jLRnkqxqht3PnvSnulboLrCSP/Yi525D++B5JCThU=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=sQ88xtqvrTJkxKR74bJFpIJvcoDIm6vY5LUlqeneRKe7+XhE+jk0PFQj1kWwiOamp
-	 +/Tj3lvj4DplPX3BDYuhhLtsfzZDMmu350vK/+7uJrIMO3S2EJxAklXNXMDp1f3SJS
-	 jGdGpRGe8ZpAz4a57e+PfovS9JpicD12B4k8VVck=
-Date: Mon, 24 Mar 2025 15:47:27 -0400
+	b=yDVUhbrqBKBryJFoW8eqiXwPUUAId+p2TMZC2Rjohg91jjxeh8hMnfq5Fm3ya6OnO
+	 R23/rCdE5qp20/6tekegJm61jv2+vdlxZczCJI8JN21sYGR6QZCQCH9tkGk5ZPL8pZ
+	 t6HZRhUYteA56C/cPC8EnOSuG8pciRKv50c6pYqw=
+Date: Mon, 24 Mar 2025 16:27:57 -0400
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 Cc: keys@linux.kernel.org
 Subject: Re: Keys using SHA-1 in the kernel keyring
-Message-ID: <20250324-vegan-urban-gazelle-fdab4e@meerkat>
+Message-ID: <20250324-crouching-charcoal-agouti-d33ff5@lemur>
 References: <c7klbj6xvzcfx63gid5iancjg6cv4krgm2wk6wfijwebq7bxtr@songleund4fm>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
@@ -48,16 +48,10 @@ On Fri, Feb 07, 2025 at 06:09:40PM +0100, Uwe Kleine-König wrote:
 >                 sq cert lint --fix --cert-file=- |
 >                 sq cert import
 
-For the record, it's not easy if your keys aren't all in ~/.gnupg. For
-example, I have just subkeys in ~/.gnupg, and my C key is on detachable
-storage that I mount only when I really need it. Unfortunately, `sq` ignores
-$GNUPGHOME, and passing `--keyring /mnt/keys/gnupg` doesn't appear to do the
-right thing.
-
-I've poked at it for a bit, but as I'm unable to make it work, I'm backing off
-for now. I'll start conversation on the gnupg list about ways to do the same
-fixes as `sq` does to rebind UIDs and subkeys with a stronger hash, but I'm
-not sure doing it with a combination of sq and gnupg is going to do the right
-thing.
+So, I was able to do it in the end using a series of --quick-set-primary-uid
+commands. I've updated my own key, which I believe should make the linter
+happy. I've also asked the gnupg list what is a better way to go about it, so
+hopefully this will either result in someone pointing out the obvious solution
+that I've overlooked, or implement one.
 
 -K
