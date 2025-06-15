@@ -1,106 +1,116 @@
-Received: from mail-pf1-f179.google.com (mail-pf1-f179.google.com [209.85.210.179])
+Received: from mail-pl1-f173.google.com (mail-pl1-f173.google.com [209.85.214.173])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8777618C00
-	for <keys@linux.kernel.org>; Sun, 15 Jun 2025 21:59:58 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.210.179
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0225B2E11A4
+	for <keys@linux.kernel.org>; Sun, 15 Jun 2025 23:02:57 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.214.173
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750024801; cv=none; b=WK0l24eg1WgStDDiFb0NEKgIF5FUZZ7MQGf7lrXFGNyo/p/aB9bEKNmpETp+7PuJOXZu9sD1L4XZoRNB1YD6+I7BKVVzdfYv3wQA5+zrZAad6CYWJ9kW2Y++Lth0kixgJUh5QxcgaGHgFCHlpcRblqLYcrSjSpiWAzGKIAjc8Ok=
+	t=1750028579; cv=none; b=D3RGzKhnZ5WcmiUZInU6diOEdKAo66wUuAALRZCySGEJr6/Eq4lX2cnnRQ2jFyI+idPqN4FbQOuMbK3CfnYJKEOVHM9AroMNEVWl9fAdxzBBwTUW/wPVGHnN5Wp0m7wN2vPfVDXLXpt3zmvJ/XZ02Qq9lMtdYANjY1JOajjlLSc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750024801; c=relaxed/simple;
-	bh=xrvvmn2iaOQ4NbEXp0/uhdM0aruYomEQpNCWpldRdMY=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=oLrZfr6Tk5zn7aJhHGRc7Fs5QmEiDXgZmLHosgWQ2vwTvSlM6ZTFyfWy74Z4DqumJUC1AKdDHdrF/vTPB1qcAUYFJZM3cEXvD6qyXGAtF7LYAu4N6oWordhqM+KDY3N37o1kBhLqvm+GdnKteRib5w6ZaExwCIHpSoAVYccF89Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pdp7.com; spf=none smtp.mailfrom=pdp7.com; dkim=pass (2048-bit key) header.d=pdp7-com.20230601.gappssmtp.com header.i=@pdp7-com.20230601.gappssmtp.com header.b=MNrrO0s+; arc=none smtp.client-ip=209.85.210.179
+	s=arc-20240116; t=1750028579; c=relaxed/simple;
+	bh=stF6JbZPWIs8UlyhUo66NVPp3r8XuFbq2sa3h1mTamo=;
+	h=Date:From:To:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=tMbppe30KWcwi2WTPag6nFFhrwBOtbL0tq4VqKBCxX0bfL/k5BoVh3rUimCrHyfep7tCGDUFzAgzJQPv6EGWP3yCDp/C8pDeYigrHzcJ4tPWxDg/+oov34NFXVjX8jZYZ7fEqHEV1iBhm1/4HU4HLM7lW3upaqWAKSZZg8GGu7w=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pdp7.com; spf=none smtp.mailfrom=pdp7.com; dkim=pass (2048-bit key) header.d=pdp7-com.20230601.gappssmtp.com header.i=@pdp7-com.20230601.gappssmtp.com header.b=xwAgW1Zj; arc=none smtp.client-ip=209.85.214.173
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pdp7.com
 Authentication-Results: smtp.subspace.kernel.org; spf=none smtp.mailfrom=pdp7.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=pdp7-com.20230601.gappssmtp.com header.i=@pdp7-com.20230601.gappssmtp.com header.b="MNrrO0s+"
-Received: by mail-pf1-f179.google.com with SMTP id d2e1a72fcca58-742c3d06de3so4620853b3a.0
-        for <keys@linux.kernel.org>; Sun, 15 Jun 2025 14:59:58 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=pdp7-com.20230601.gappssmtp.com header.i=@pdp7-com.20230601.gappssmtp.com header.b="xwAgW1Zj"
+Received: by mail-pl1-f173.google.com with SMTP id d9443c01a7336-235ef62066eso57136855ad.3
+        for <keys@linux.kernel.org>; Sun, 15 Jun 2025 16:02:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=pdp7-com.20230601.gappssmtp.com; s=20230601; t=1750024797; x=1750629597; darn=linux.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=XZ+AavFjJAYZlwjGSh6pqKDG1MWA8NO8acCsjD852rI=;
-        b=MNrrO0s+iGJEIiNtEZipuvvZ7qHYquvOpg9HLACMy/fgBAiO6tpSIAHNZCbfyBy7DC
-         XCD1G2A+/5rWUwlgXbg2cBJGX0x/xqOBnc6P7wbZi+Hn+REEhGfKyWfck6IISmdvhPBF
-         6oFqxkFWr6bgxl17sb9TT50fC86T6KFAIgBopwneWe+ZHyPCvL8EJFFBor9Mw1nMVN6W
-         jUwTTPaQP6/ldnFhuquyzNUF6DpqglBavY4XxtEHwtA0bBHmpwRzYlDiLMfgfgAEoxNj
-         5h54nV8IsedhByW6rExstbmhUdJ+p2Z/DvO5d0EMZQ4fs0G3dIp/G8SWcPSFsyDZ5ib1
-         nv8g==
+        d=pdp7-com.20230601.gappssmtp.com; s=20230601; t=1750028577; x=1750633377; darn=linux.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=PsJ/zTKCfHbDZ2jQKgUdp+yAgckWDq0+iFF8QDf1glQ=;
+        b=xwAgW1ZjjnN4ZNzWfOmvIoI2JCrsQSX19KGcZwS2rNPds4vegVnyffV84PvMq493BN
+         qXmRKPVqU/WNTYARw13gF8Q3tvpItYoxRpPgxrnRZforgKzAaw4jl2wIOIRR44n13Ine
+         2MQSfs3oR2vkgi1QI+VEa+teKs3viYsSwi7W0mL7T+DDsQi6E04WOXWVym6kRufGgsk2
+         7SwAtw3NxlLczBSC7Bc9hKwl0w7CEeOgg5PlrrecEiRmfoND739IMX5pVlUUcNGMmfKE
+         ZXFPXJ36DRU5v/MQ3jxGGx+XsFShHy+aS+fDuaXyvcmGX5cvMlgC5LiL7fTJ2tWWVuPF
+         nEug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1750024797; x=1750629597;
-        h=content-disposition:mime-version:message-id:subject:to:from:date
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=XZ+AavFjJAYZlwjGSh6pqKDG1MWA8NO8acCsjD852rI=;
-        b=pohK2wv6Qd8lsWW5Nyl6NRXgVjgkPy82whhguu6jMbPN82aVmKFb+RgrVken3GNmF4
-         Aj8nVAH5F/1J2dhK2LCjlDwBAAzI4947Fh5Ub8nlHz55BAXBqS8TmoMdXNdJWap+M1Vo
-         5lBzhi+tZpol3rjqW+GqlmUpy4vF9wVGZbohYJ1d6KMVXcI0++99xKOiiPnwdq7W9Hg2
-         8nG7/DRa24jF1Xx7iJPmAdQQqKl8vPLxPyS54vkx9HnzNR8smXt12xJBucJ8vCgp4s3e
-         SLlcF03ULl1hUheVtUY8u6vy8y1AJ7wqn1dNdTF7wvMo6L64+k6pVgthg5Z40Coqtm1C
-         bqyQ==
-X-Gm-Message-State: AOJu0Yzn/LPTgpWSOekMDdVq2WowmmeYFug2FYcc2zkgDINT6Ptopyy5
-	/DeMJTJhZZSHZD1KIQxzpfh0D4P5GvKKl820Siu7CTxxBdGt4fnZOcEjAWIjvKURmXFFaax21Lo
-	MAHSsaqU=
-X-Gm-Gg: ASbGncsCWmqtxjaxilCuJECIaUFXewmDFgc94Y3XXfd7KLHhVQ9sogWiHIomKqfUw4E
-	hvEJ2/QQPxK89shEnvDGeYoEviXrDJaBWySwB/XhQiIJ+YcESQXAuxrYSBOCvBS/Ad2glMEYvQ0
-	i9ScwlEUTOJI71KZ5a65RhwCVaCr93lPVM2oUk1YZuHUiXGd75IYgD5MrttZVFinbyoANBlQkLr
-	sMv5xozsU7rDZKm1r2ViIAwllmihL78hQ2suzFL5T433tNuZxeP9NlWzEUhyA78SK/Une+Hsb6a
-	XgIExcZmrOTZZob7QziGKMh7tye7GJ1T8vcMAeFWAgj8D3/M7efhuTVbKCIC7OHHbOsBB1FtYQ=
+        d=1e100.net; s=20230601; t=1750028577; x=1750633377;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=PsJ/zTKCfHbDZ2jQKgUdp+yAgckWDq0+iFF8QDf1glQ=;
+        b=WBJoJp+/xrpBHYbsXP7Q8CKpwqKPtyMnWz6Ry/I3hHBvWBS1p5XFK5+q5jf6f3+6tX
+         bS0NDlnADhslRZ1tZbQBBs1ei4YXVmUBDRO9RDX0/wPBKITZNNOoU1LUztYSGxROIhrD
+         5HgCNq8ecWAW3kvCVrhPwiJJUH5+NOXZmOcMeT6JO6WwVqWHKBQF13g0RjnNnkQDQgcH
+         fbO44AeZ8xFPdaf0s/l9cQ0TAnuOrNAIsQ7BzmgmxGVyuvo9bgGJWDW68cwU35Fy43pg
+         /WUodBHXxJDFZ8PvYt0MyjLJLAcaiZsKWCYKoB9YdDgMCV1r/8vMrh+iqk4ODqyNcaKt
+         H6+g==
+X-Gm-Message-State: AOJu0YzzY4vjyQrW330a84XYCmoXoRwluqV5RB8Ax6tJerPLPkkgqmWy
+	YdonQZydPoW6YfC9JO9/vf7R+qFLInJX1QuX+qZyU9LM8VSpOd/AcG1Lz31qG3aEAL3NiwhA5sV
+	wF53qS1E=
+X-Gm-Gg: ASbGnctYUEBxSsj0x97Pb5DqApoRuhVxMRK5oFVQzLLAxZ1W7Lj2JFcZqjxp99iJL0Z
+	upetl/U7FD6STR7I26bOqrRInLvVWal+WQq0hR9T4U7ZlER5AaPELDHaOamnU0XnI94OJ4fhIWY
+	tiEt5r6jI28Xe2apCy/qJYut9DOVHBq3VSMUZUTNmBH07CAgcLsPyqsLESDh1PEL0pgi96Czcdl
+	F8GOyN4OoO04PtsKXxaQRIYtQqBYXG+HGdlXMNYdwBUy34xPkrxJu/+VwCgVeBH5VwOmehVQ1Uk
+	KzBLKv4hEa1XZFqDQy+Jvt256188/6WluB+hffliPdYtQpuhyMDF92YWnoIX3qd5OAB8AR/fjg=
 	=
-X-Google-Smtp-Source: AGHT+IFkz91ssHwT9AwhBz7f7bFBRHecp6fSofDqmNioLc6M30x0ASg3Ne7N/SS3aCXa+oPEKoFFCQ==
-X-Received: by 2002:a05:6a00:1acd:b0:746:199d:525f with SMTP id d2e1a72fcca58-7489cfdadf9mr8909402b3a.7.1750024797508;
-        Sun, 15 Jun 2025 14:59:57 -0700 (PDT)
+X-Google-Smtp-Source: AGHT+IFmC7f7muczyT8VLw9LrKplQotWm14C+g9WPMGTe1IGoEWzsoNN8Db7cTS57NYNXlYqUAv7gQ==
+X-Received: by 2002:a17:903:1c6:b0:234:a139:1208 with SMTP id d9443c01a7336-2366b35021amr112772805ad.16.1750028577012;
+        Sun, 15 Jun 2025 16:02:57 -0700 (PDT)
 Received: from x1 (97-120-245-201.ptld.qwest.net. [97.120.245.201])
-        by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-748900d0d90sm5323808b3a.155.2025.06.15.14.59.56
+        by smtp.gmail.com with ESMTPSA id d9443c01a7336-2365deca008sm48839275ad.193.2025.06.15.16.02.56
         for <keys@linux.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Jun 2025 14:59:57 -0700 (PDT)
-Date: Sun, 15 Jun 2025 14:59:55 -0700
+        Sun, 15 Jun 2025 16:02:56 -0700 (PDT)
+Date: Sun, 15 Jun 2025 16:02:55 -0700
 From: Drew Fustini <drew@pdp7.com>
 To: keys@linux.kernel.org
-Subject: Updated key for Drew Fustini
-Message-ID: <aE9CW1hJZ08QkUav@x1>
+Subject: Re: Updated key for Drew Fustini
+Message-ID: <aE9RH0aFpmtmLdyk@x1>
+References: <aE9CW1hJZ08QkUav@x1>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="DuWaEX0uZatkfCUb"
+Content-Type: multipart/mixed; boundary="Xd44YaorYuuL2SUJ"
 Content-Disposition: inline
+In-Reply-To: <aE9CW1hJZ08QkUav@x1>
 
 
---DuWaEX0uZatkfCUb
+--Xd44YaorYuuL2SUJ
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
-Hi, I have attached my GPG key: 1B6F948213EA489734F3997035D5CD577C1E6010
+On Sun, Jun 15, 2025 at 02:59:55PM -0700, Drew Fustini wrote:
+> Hi, I have attached my GPG key: 1B6F948213EA489734F3997035D5CD577C1E6010
+> 
+> I now have two kernel maintainers: Dan Williams and Palmer Dabbelt.
+> 
+> pub   rsa4096 2024-07-25 [C] [expires: 2026-07-25]
+>       1B6F948213EA489734F3997035D5CD577C1E6010
+> uid           [ultimate] Drew Fustini <drew@pdp7.com>
+> sig 3        35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
+> sig          1ED2916A667D8802 2025-05-30  Dan Williams (djbw) <dan.j.williams@intel.com>
+> sig          3373170601861969 2025-06-01  Michael Halstead <mhalstead@linuxfoundation.org>
+> sig          EF4CA1502CCBAB41 2025-06-15  Palmer Dabbelt <palmer@dabbelt.com>
+> sub   cv25519 2024-07-25 [E]
+> sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
+> sub   ed25519 2024-07-25 [S]
+> sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
+> sub   ed25519 2024-07-25 [A]
+> sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
+> 
+> 
+> Thanks,
+> Drew
 
-I now have two kernel maintainers: Dan Williams and Palmer Dabbelt.
+I think that I may have failed to correctly attach the key. I'm trying
+again.
 
-pub   rsa4096 2024-07-25 [C] [expires: 2026-07-25]
-      1B6F948213EA489734F3997035D5CD577C1E6010
-uid           [ultimate] Drew Fustini <drew@pdp7.com>
-sig 3        35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
-sig          1ED2916A667D8802 2025-05-30  Dan Williams (djbw) <dan.j.williams@intel.com>
-sig          3373170601861969 2025-06-01  Michael Halstead <mhalstead@linuxfoundation.org>
-sig          EF4CA1502CCBAB41 2025-06-15  Palmer Dabbelt <palmer@dabbelt.com>
-sub   cv25519 2024-07-25 [E]
-sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
-sub   ed25519 2024-07-25 [S]
-sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
-sub   ed25519 2024-07-25 [A]
-sig          35D5CD577C1E6010 2024-07-25  Drew Fustini <drew@pdp7.com>
-
-
-Thanks,
+Thank you,
 Drew
 
---DuWaEX0uZatkfCUb
+--Xd44YaorYuuL2SUJ
 Content-Type: application/pgp-keys
-Content-Disposition: attachment; filename="drew_pdp7_com_gpg.asc"
+Content-Disposition: attachment; filename="drew-fustini-update.asc"
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -208,4 +218,4 @@ MNFqQ0AACPRHrUbx7AYwoMnYnkMDc93ZCuHlv/ScL93FMJv3dsQrcaxQwwoR
 =kL8q
 -----END PGP PUBLIC KEY BLOCK-----
 
---DuWaEX0uZatkfCUb--
+--Xd44YaorYuuL2SUJ--
