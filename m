@@ -1,198 +1,178 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84CD7294A15
-	for <keys@linux.kernel.org>; Tue, 17 Jun 2025 22:41:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E9E023BCF4
+	for <keys@linux.kernel.org>; Thu, 19 Jun 2025 04:03:55 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1750200115; cv=none; b=Z5MuGEPRyMoby+OKMR9B8P13L2ESsGzJj0Xq9R4wReKTSLY/LUQ0sN6SpWKEb/x18m9vck+IjFQIgotGCZ085HTjL3u0MFVJHAramovyLbPPKd0NW2fdW/MCY0Q+eZF6DB1CTxlXj0irRTmTdeRsQjZD7D5RbFqzK9j/qWka0hA=
+	t=1750305835; cv=none; b=pLYqUvRm5wOeEOn7g2BJpq2sVkKjvZcCVqwgyuPSM7Be+MFoZ51y1ZBmVqFIoxezDEoAGIPOPNzFLPuSomhKiLQdCwBD7xyUlHP/Q7vPeWIEieu6bYbZPdOEbuiTnRy8cKI1jaxJq11hzWWmkyonOahfNeAr+TX1xmptw/nL8r8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1750200115; c=relaxed/simple;
-	bh=xK57DqQKEMmKAQwjpwbz9npi43jnZBJy9kmCWZotQ/g=;
-	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
-	 In-Reply-To:Content-Type; b=nySppAr5xDljk1GzjDlUrOqFqIk4IdY3MVIfKUb/uws8Z+fwit3jE1Mf3xikDvEEsempB9IM/1PVd6oik/wTtLh0Nb+GMupzZfzdZ+kdzCEaeFR6e1KZHC8Vkt8nuECbIRSXGo3+lM9XC9Ko5FyQSm/wTdfd++YDkYW+qqX1ztU=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=ii3vE9po; arc=none smtp.client-ip=10.30.226.201
+	s=arc-20240116; t=1750305835; c=relaxed/simple;
+	bh=lEMmyRq6s2NFgH6RCKHxirDLOeFNURKnbaH0bhJsIXw=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=QYopAyahX/MH4KVx4dHhFr88qkISDePTAt61Q+jFurdviYCcq+5Lxq3RBnPO0aEOKopcxUGwoY8CbJrlP9vNQw//X2P8os+lBiuDZGVL2ku6mrIsJdgOJk1Iu5txRGHrjvt9kTP8ZFs+DXZV0pG7MgKDNMxDE0oCgUBuDL3u/C8=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=QtFk+HKR; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="ii3vE9po"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FC46C4CEE3;
-	Tue, 17 Jun 2025 22:41:55 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="QtFk+HKR"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED0EAC4CEEA
+	for <keys@linux.kernel.org>; Thu, 19 Jun 2025 04:03:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1750200115;
-	bh=xK57DqQKEMmKAQwjpwbz9npi43jnZBJy9kmCWZotQ/g=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=ii3vE9poEdZM5LqrmgHMzl0IOuncMNw7TlMWzXT9TI5kekCysNJrnFr8bw56unAht
-	 HUnsd2XDu/Wf4HjVUjSdkNc1mlL5sGEtfj8BcMcbxjrvvKT4rJVSSHdH2UsIQjqkda
-	 +3BEAGMc0msxBY/Adc+sQ1HfpqQukLYUl+4KR9lMs++n7lp39USB5L+OW0U8E+CbdU
-	 Z6pSNJ3VMtWVRtiuvQw1K7KFzEm6yQazZSTV2+WByJybuhVVGwZ0pOjCAAz0RUruez
-	 JkC/z23YHh+TAeM9gcbbavA2rkSo/TMS6nxP/wEPHaMI/8bqoE0Hix+yZkZf+z9yt9
-	 uODTtid2pmQiA==
-Message-ID: <44898d39-ca32-48e4-a7eb-8f572c12c488@kernel.org>
-Date: Tue, 17 Jun 2025 15:41:54 -0700
+	s=k20201202; t=1750305835;
+	bh=lEMmyRq6s2NFgH6RCKHxirDLOeFNURKnbaH0bhJsIXw=;
+	h=Date:From:To:Subject:From;
+	b=QtFk+HKR6U4dYDumRNv2xnZGttdOXuBgczmbxiUnMwwsIoSlBMhtV1lLbeC3reiWE
+	 SYQkvtIsvxOZW84vNSLDci6jqF2bFnJav148YyVaK2V0CAbgJxljdx9KkUhM5MhRLW
+	 0Onbt1qYzb76L9HdLzUjMwcwTY6e90nJJHh4rprB3hvQzxrlUoRyhyVWaKK67wYEk2
+	 C6MM2eZVme8fkHqbeYawyXf8KTFkMDqidYrMbz2n4MyUjhEBOe+5BddIiauLuTRqP5
+	 57wvt9zL0d/mOqRklqcMkJisgkAEWE2XwUz98ZYARcKWmhIN2iX0CU8CuVmw16DeVC
+	 lHG98nrOfpesQ==
+Date: Wed, 18 Jun 2025 21:03:53 -0700
+From: Drew Fustini <fustini@kernel.org>
+To: keys@linux.kernel.org
+Subject: Update Drew Fustini key with korg email
+Message-ID: <aFOMKW71bfPg22Fi@x1>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Please add key for Vineet Gupta (ARC maintainer)
-To: =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Vineet Gupta <vgupta@kernel.org>,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>, keys@linux.kernel.org
-References: <b4bad496-3b0e-4925-bdf5-4368180fcf9b@kernel.org>
- <ft3kdxdnwnj5u4drrl2rtgbir4zzpl6woky34drik4n3wrqoz3@npljuav53pxe>
- <917f4fc2-ac6b-4d0a-beb5-9db340d62563@kernel.org>
- <CAMwyc-TV9r1NNx5BPPjtqbdpLuXkT0oyqLb+S9yEcxFdOhB8Og@mail.gmail.com>
- <6776b85f-a616-43af-a16d-e891a86b1a7d@kernel.org>
- <mxya6iam6nhrdhj5ens4j3ll6mth7uwwygari3wvbpanxllbgg@pv5nte4y56nt>
- <d622b123-1a1d-490f-b008-6e68954b0dda@linux.dev>
- <2bcs4mgkrycgqfydfxt3cucw2cd6vvbpq3snbsprf27fyc72hd@ihikzjxerftf>
-From: Vineet Gupta <vgupta@kernel.org>
-Content-Language: en-US
-In-Reply-To: <2bcs4mgkrycgqfydfxt3cucw2cd6vvbpq3snbsprf27fyc72hd@ihikzjxerftf>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-
-Hi Uwe,
-
-On 6/16/25 01:46, Uwe Kleine-König wrote:
->>>>>>> Before creating your next UID is suggest you read
->>>>>>> https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-harmful.html
->>>>>> Thx for the pointer. It makes sense.
->>>>>> Shall I remove them from existing key and send it over again (I see it hasn't
->>>>>> been pushed yet to the repo)
->>>>> Yes, if you want to do that, I will hold off on processing this request.
->>>> Thx, here you go !
->>>>
->>>> pub   rsa4096 2013-02-16 [SC] [expires: 2029-12-08]
->>>>       397A6E0AE47A85E76B74B08969D7F1DDE28AC25E
->>>> uid           [ultimate] Vineet Gupta <vgupta@kernel.org>
->>>> uid           [ultimate] Vineet Gupta <vineet.gupta@linux.dev>
->>>> uid           [ultimate] Vineet Gupta <vineetg76@gmail.com>
->>>> uid           [ultimate] [jpeg image of size 24452]
->>> That looks better now. The scripts used to maintain the kernel keyring
->>> will accept that key update, however your new primary UID has no
->>> 3rd-party signatures. And also note that the signatures on your older
->>> UIDs are all done using SHA-1 so they will be discarded on reimport. In
->>> sum there is no valid trust path from Linus to your key.
->>>
->>> It would be great if you could get a few fresh signatures on your
->>> kernel.org UID. The guys who signed your other UIDs earlier might be
->>> good candidates to sign that without the need to arrange a meeting in
->>> real live.
->> Sure thing. I was thinking of asking a couple of my current colleagues (Bjorn,
->> Alex) to do that instead. As long as signers are in the web of trust it should
->> be fine ?
-> From the POV of the kernel pgpkeys repo yes, signatures from people
-> within the keyring are preferable. Still better from those who are
-> "near" Linus. The graphs generated in the pgpkeys repo only consider
-> paths of length four, so ideally let it sign by someone with distance <=
-> 3. Not knowing which Bjorn and wich Alex you mean, see e.g.
-> https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/plain/graphs/E2DCDD9132669BD6.svg,
-> my key has depth 3 as there is a path of length 3 (John Hawley -> Ben
-> Hutchings -> me) and no shorter.
-
-I've reached out to the folks who originally signed (but that was circa 2011)
-and also to my existing Colleagues
-Alexandre Ghiti
-Bjorn Topel
-
-both seasoned contributors.
-
->>> Also your key is affected by SHA-1 self signatures on the older UIDs.
->>> The respective output of `sq cert lint` is:
->>>
->>> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (alias) <vgupta@synopsys.com>) protected by SHA-1
->>> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (official) <vineet.gupta1@synopsys.com>) protected by SHA-1
->>> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (personal) <vineetg76@gmail.com>) protected by SHA-1
->>>
->>>
->>> See
->>> https://www.kleine-koenig.org/~uwe/resign-sha1/?certid=69D7F1DDE28AC25E
->>> for some details. Also
->>> https://lore.kernel.org/keys/fxotnlhsyl2frp54xtguy7ryrucuwselanazixeax3motyyoo3@7vf7ip6gxyvx/
->>> might be good to understand.
->> I tried to fix the sha-1 concern, but ran into some issues.
->>
->> First up I presume this is all pgp2 as I have that alias in my bashrc from an
->> early/old users.kernel.org recommendation.
-> Not sure what you mean by "pgp2". My links above assume that you use gpg
-> 2.2 or 2.4 which today is usually installed as "gpg" in your PATH.
-
-Sorry I keep mixing GPG with PGP.
-gpg 2 is default now, way back when they were transitioning from 1 to 2 and
-preferred 2.
-
-> I'm not entirely sure that the indicated command (i.e.
->
-> 	gpg --force-sign-key --quick-sign-key 397A6E0AE47A85E76B74B08969D7F1DDE28AC25E "Vineet Gupta (alias) <vgupta@synopsys.com>" "Vineet Gupta (official) <vineet.gupta1@synopsys.com>" "Vineet Gupta (personal) <vineetg76@gmail.com>";
->
-> ) also works for self-signatures. The test is:
->
-> 	$ sq cert lint --cert=69D7F1DDE28AC25E
-> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (alias) <vgupta@synopsys.com>) protected by SHA-1
-> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (official) <vineet.gupta1@synopsys.com>) protected by SHA-1
-> 	Certificate 69D7F1DDE28AC25E contains a User ID (Vineet Gupta (personal) <vineetg76@gmail.com>) protected by SHA-1
-> 	Examined 1 certificate.
-> 	  0 certificates are invalid and were not linted. (GOOD)
-> 	  1 certificate was linted.
-> 	  1 of the 1 certificates (100%) has at least one issue. (BAD)
-> 	0 of the linted certificates were revoked.
-> 	  0 of the 0 certificates has revocation certificates that are weaker than the certificate and should be recreated. (GOOD)
-> 	0 of the linted certificates were expired.
-> 	1 of the non-revoked linted certificate has at least one non-revoked User ID:
-> 	  1 has at least one User ID protected by SHA-1. (BAD)
-> 	  0 have all User IDs protected by SHA-1. (GOOD)
-> 	0 of the non-revoked linted certificates have at least one non-revoked, live subkey:
-> 	  0 have at least one non-revoked, live subkey with a binding signature that uses SHA-1. (GOOD)
-> 	0 of the non-revoked linted certificates have at least one non-revoked, live, signing-capable subkey:
-> 	  0 certificates have at least one non-revoked, live, signing-capable subkey with a strong binding signature, but a backsig that uses SHA-1. (GOOD)
->
-> 	  Error: 1 certificate have at least one issue
->
-> If the above command doesn't work, `sq cert lint --fix
-> --cert=69D7F1DDE28AC25E` should do the trick for sure.
-
-Im on Ubuntu 24.04 and upon apt install sq, the only ommands supported are
-import and export, lint doesn't.
-However I was able to uses pgp - although I was able to elide the sha-1 issue
-due to a different reason.
-
->> Per your link [1] above I was able to refetch the keys of others, force sign
->> them and --send-key
->> However my refetched key brought back the locally deleted old UIDs: was it
->> because I had not uploaded it to Ubuntu key server, and MIT server where I did,
->> is no longer functional / used ?
-> No, the "problem" is that keyservers don't forget. So you need to revoke
-> the UIDs if you really want to get rid of them. It's a feature that you
-> got it back. If I fetch your key after you added the UIDs I want the new
-> UIDs just added to your key. That's what happend for you, too, as there
-> is no way to distinguish between "the fetcher doesn't know the new UIDs
-> yet" and "oopsie, the fetcher thought these UIDs are wrong and deleted
-> them".
-
-Makes total sense.
-
->> Anyhow do the older/deleted UIDs need to be sha-1 fixed  and then re-deleted and
->> --send-key to ubuntu key server?
-> When you re-sign a UID, the old signature doesn't go away, it is just
-> not considered any more as there is a newer one.
-
-Right. So instead of fixing the sha-1 deficiency, I ended up just revoking the
-aforementioned UIDs - at least 2 of them had stale addresses.
+Content-Type: multipart/mixed; boundary="c/sr3RprGizvSwEt"
+Content-Disposition: inline
 
 
->> Or is there a different order of things to do - apologies for these noob questions.
-> No problem. I bet you're not the only one who will have such questions
-> while fixing their keys.
->
-> Also I don't understand all the things about your key yet either.
+--c/sr3RprGizvSwEt
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-:-)
+I now have a kernel.org account and I've added my fustini@kernel.org
+address to my key.
 
-Thx for your patience in explaining this.
+Thanks,
+Drew
 
-Once I have the new UID signed I'll follow up on keys@.
+--c/sr3RprGizvSwEt
+Content-Type: application/pgp-keys
+Content-Disposition: attachment; filename="fustini_korg_email.asc"
 
-Thx,
--Vineet
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+K3GsUMMKEQ==
+=ZYLP
+-----END PGP PUBLIC KEY BLOCK-----
+
+--c/sr3RprGizvSwEt--
