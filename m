@@ -1,155 +1,159 @@
-Received: from mailout2.w1.samsung.com (mailout2.w1.samsung.com [210.118.77.12])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6FC8291C10
-	for <keys@linux.kernel.org>; Tue,  5 Aug 2025 16:42:30 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=210.118.77.12
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EAD255E20
+	for <keys@linux.kernel.org>; Tue,  5 Aug 2025 15:46:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754412153; cv=none; b=acB3CgdhNnTSmCoPnfUnbG3Ra+6136HMYEWizp5bZcYzYRHkhZsVFgFKqwP67XG2lIoE9yjAyEDAOKv1rc1nKSUvX5iifl98F4GxLKKH+O1xQAEKgtnQPmIaDTynrRb8S0o6okQodEcR+N2TCNMZ+iC9cQ4IercX3VYp5p0Q+EM=
+	t=1754408816; cv=none; b=nxtKJp8KIXvLQfc9GgmK619gVNfHpePoclEhSqjnI+W0hkpkSHPlsC+eFSNljUn1ooJMHXTRLQEHn0Xh4ZlYotZLc61a9FSFUs3MmXB1AHJxv5HSB7dF7KdW64ztrk1BBxmaKeshsZcXV3y345HhIpIujtpjdK2kyRhQEhiahLU=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754412153; c=relaxed/simple;
-	bh=uH5yqbXc5u8ENm8RW55S3AfS3La7SOIIdin/uuCrhiU=;
-	h=Date:From:To:CC:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:References; b=PqHIyCe5c3Xh5Dj1SHYxUplhBEzvYXhZCvIV8igMwUeQzA1ZmMAieI0ppg+QCMrbP0ZehGvQpoLANn2dVabfzUusNooig1/d5Qs7ML6gfuuqkOY3Q8cc8/ctK1jxYZEnyuBrH4utAfKabOxdpT3KVhjAYZ89ZBXUkWe7ZtBhn9c=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com; spf=pass smtp.mailfrom=samsung.com; dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b=mcY+yCe/; arc=none smtp.client-ip=210.118.77.12
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=samsung.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=samsung.com
+	s=arc-20240116; t=1754408816; c=relaxed/simple;
+	bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=BCVAqanfxBt4zpfzfXbnIDk6n081eS5XQlqSoBLVlmtaDLaiNdglafd3bvXKOYSjoSYW8wD8fF2NuZwB0y/KMpIPno3AfGpp4tVry/hOq9h7nO/jUt5RSozWyA+VnGrgKNkEXe4qu8kTysUN0Tsk8syfEp5+gKyDyeXKJjQ04Kg=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=kcHCgbPI; arc=none smtp.client-ip=209.85.128.42
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key) header.d=samsung.com header.i=@samsung.com header.b="mcY+yCe/"
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-	by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20250805164228euoutp02f17b5605cc01424691e8a25b540032b2~Y7I3YPhkm1581515815euoutp02I
-	for <keys@linux.kernel.org>; Tue,  5 Aug 2025 16:42:28 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20250805164228euoutp02f17b5605cc01424691e8a25b540032b2~Y7I3YPhkm1581515815euoutp02I
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-	s=mail20170921; t=1754412148;
-	bh=jBrlHT4WwbCDU1PuzMu8Nv/98ev9UCDfL4WUmanBJAY=;
-	h=Date:From:To:CC:Subject:In-Reply-To:References:From;
-	b=mcY+yCe/HCQksOg3+xmqXDyDwqdQLfD5NYwiB0+0hWtVgdDqdaxf2XEpMGAKAWrcn
-	 HKCsptbdTRlVO611y0pQwVZtDglB6mXoY3Y4ggV+U99G5FbIh0DskC/7/jKoG30mxL
-	 R99NHZoC+f8nwAtliAdaADLaB76wITWtg26Ffv+E=
-Received: from eucas1p2.samsung.com (unknown [182.198.248.175]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTP id
-	20250805164228eucas1p2633044303a2ac6911a1724b115f58a0f~Y7I273E-Q2821828218eucas1p25;
-	Tue,  5 Aug 2025 16:42:28 +0000 (GMT)
-Received: from eusmtip1.samsung.com (unknown [203.254.199.221]) by
-	eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-	20250805164227eucas1p29c6d2e7ca60e7bfc4ad8f3ac65d4e777~Y7I2j24fE2823528235eucas1p2i;
-	Tue,  5 Aug 2025 16:42:27 +0000 (GMT)
-Received: from CAMSPWEXC02.scsc.local (unknown [106.1.227.4]) by
-	eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-	20250805164227eusmtip161c754d0d9b23b41a9d9c98cff6ee1a4~Y7I2eacBy2568225682eusmtip1f;
-	Tue,  5 Aug 2025 16:42:27 +0000 (GMT)
-Received: from localhost (106.110.32.107) by CAMSPWEXC02.scsc.local
-	(106.1.227.4) with Microsoft SMTP Server (version=TLS1_2,
-	cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1748.26; Tue, 5 Aug
-	2025 17:42:27 +0100
-Date: Tue, 5 Aug 2025 18:42:25 +0200
-From: Joel Granados <j.granados@samsung.com>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-CC: <keys@linux.kernel.org>, Kieran Bingham <kieranbingham@gmail.com>,
-	"Kieran Bingham" <kieran@bingham.xyz>, Kieran Bingham
-	<kieran@kbingham.co.uk>, "Imre Kaloz" <kaloz@dune.hu>, Imre Kaloz
-	<kaloz@openwrt.org>, Eric Dumazet <edumazet@google.com>, Eric Dumazet
-	<eric.dumazet@gmail.com>, Eric Dumazet <edumazet@kernel.org>, Pravin B
-	Shelar <pshelar@nicira.com>, "Allison Henderson"
-	<allison.henderson@oracle.com>, Joel Granados <joel.granados@kernel.org>,
-	Joel Granados <joel.granados@joelgranados.com>, Harald Hoyer
-	<harald@hoyer.xyz>, Harald Hoyer <harald@harald-hoyer.de>, Harald Hoyer
-	<harald@redhat.com>, Bothersome Borer <bothersome-borer@kernel.org>,
-	Confounding Cockroach <confounding-cockroach@kernel.org>, Frank Rowand
-	<frank.rowand@sony.com>, Frank Rowand <key_111017@frowand.com>, Frank Rowand
-	<frank.rowand@am.sony.com>, Frank Rowand <frowand@gmail.com>, Frank Rowand
-	<frank.rowand@sonymobile.com>, Frank Rowand <frowand.list@gmail.com>, "Frank
- Rowand" <frank@frowand.com>, Jacek Anaszewski <jacek.anaszewski@gmail.com>,
-	Jacek Anaszewski <j.anaszewski@samsung.com>, Aggravating Aphid
-	<aggravating-aphid@kernel.org>
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="kcHCgbPI"
+Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-459e1338565so10415555e9.2
+        for <keys@linux.kernel.org>; Tue, 05 Aug 2025 08:46:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1754408812; x=1755013612; darn=linux.kernel.org;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
+        b=kcHCgbPIPut8gF2kbKNuxCskrceGpfwCSP+cwQZpj9iZSiBQPekDmu79RpWq2gYDCG
+         z3b74rYFLNqOqQCxnsa+a8hFzN8u1SzRgELSmAjDjUZ1cW6s4kSaOJP0+WHn4ZjHUIZt
+         qUk0Dz+fA1JskRO0c723YmVm6bglWmmCQ1gxq05Edft1rfNqyQs6PY5XakLt0yyRuhxj
+         oF96xjKnslTFR6sU6mlDvDFyvO6sAXLiWQ6WkzXc5PsRhwj19QAN6qCw67TXt3DWM3Qm
+         95c3vRW/a6gXplTDy6+ERxRvjWWBMRqrxmBXWnFWtailCifeMu0tXOYmKkOr99rxMi5p
+         A5Vg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20230601; t=1754408812; x=1755013612;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
+        b=QXu+L6MiOK/fX7kLc8ggfNlLmP4GU4uDLhjNDO6NekZ28XA2qvIZbioRv01/33R7cT
+         CUzvMHkzsDfTCbAYXO1mP0NE/pXPe1z1WgHHkx778eH9IeSFOpwn/RR+MYBifmaUM+UV
+         QMmmhaDtxzQ2XO4XHAbDUeG2Wos8KWk7XxfI5YYhpgqbImnbOsJVkH6kprI3x8pxrKzg
+         ACWJr9OOU4YxoVU1OPg0fz4JdSVE8SudzGpAwrxa52VGcchmuVGX7hkUxAyuFSR8sTo7
+         pzqiE0fIPCech9i0fsKo/ZAe0ZZfv3UhuC47TpIEkVaNIwF31VSR1JHH0vH72tk8Fd0j
+         M41A==
+X-Gm-Message-State: AOJu0YwXcTIvBnOJXBAnsNW5XhvgmWa56zjF7gVg5Avv1dW7kR+37kuY
+	8CROxdkLpgveoGBlf1MKaXf7P5TKyhIjpbE488DD53ZRd2mYXuhpTDLy6oiEJYxQ+mc=
+X-Gm-Gg: ASbGncv1ZBYr4nUNczZIWFD7Oy1QP2T8uxDZRCggGqPSN5BIzigLuzPgHHGCAA5XX/a
+	KmhLJTG5c1zk26c7HfD3qKASTH6jdvhZosmuXLnHEOAJLURdZDUZat8b3QZPSCNpZUbDiRsfkGz
+	vwCX50Il3O8IoP7qe9fa7DZfraBt5Dnoep6e0dOpZWZRWALCQi1+fZs5z1VcbeNT55mZaKGfSwk
+	yIc85adeVyksQ+wLepH8FUOYoQ9mFE5lrfuzLH+MLKwr6w1/AdkNoO9Vton+FGMjFPjHTGxQexJ
+	KeVBm1aiXLdRpwBDdx0Tc5hUUrxRsdsMSHBqR3Cl1liaf+MTk6TKTWFISta6bcu0y3BSrHDZVYX
+	gIUMAJVL+8EVanPYSrNlKNvSXDoex8CV6iqTnlWXajnaCkWvCpYNS31hNbAMtlddz
+X-Google-Smtp-Source: AGHT+IG3ljcjrnyFeeTKYrH1X/X0ouRsEUbwZf0BsrskCqfXFCxDxZqVfV+ierVbSY13ZTulSGGPxw==
+X-Received: by 2002:a05:600c:1e8c:b0:456:11cc:360d with SMTP id 5b1f17b1804b1-458b69de114mr110924145e9.9.1754408811479;
+        Tue, 05 Aug 2025 08:46:51 -0700 (PDT)
+Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-459e583f9fcsm8704685e9.4.2025.08.05.08.46.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Aug 2025 08:46:50 -0700 (PDT)
+Date: Tue, 5 Aug 2025 17:46:48 +0200
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: keys@linux.kernel.org, Kieran Bingham <kieranbingham@gmail.com>, 
+	Kieran Bingham <kieran@bingham.xyz>, Imre Kaloz <kaloz@dune.hu>, Imre Kaloz <kaloz@openwrt.org>, 
+	Eric Dumazet <edumazet@google.com>, Eric Dumazet <eric.dumazet@gmail.com>, 
+	Eric Dumazet <edumazet@kernel.org>, Pravin B Shelar <pshelar@nicira.com>, 
+	Allison Henderson <allison.henderson@oracle.com>, Joel Granados <joel.granados@kernel.org>, 
+	Joel Granados <joel.granados@joelgranados.com>, Joel Granados <j.granados@samsung.com>, 
+	Harald Hoyer <harald@hoyer.xyz>, Harald Hoyer <harald@harald-hoyer.de>, 
+	Harald Hoyer <harald@redhat.com>, Bothersome Borer <bothersome-borer@kernel.org>, 
+	Confounding Cockroach <confounding-cockroach@kernel.org>, Frank Rowand <key_111017@frowand.com>, 
+	Frank Rowand <frowand@gmail.com>, Frank Rowand <frank.rowand@sonymobile.com>, 
+	Frank Rowand <frowand.list@gmail.com>, Frank Rowand <frank@frowand.com>, 
+	Jacek Anaszewski <jacek.anaszewski@gmail.com>, Aggravating Aphid <aggravating-aphid@kernel.org>
 Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
-Message-ID: <mx4t2fyuijj2einu4eibez4tjnrxpdo7ofutb7hh7ddmi7636i@gowa3on2bvgd>
+Message-ID: <mvcgtyzwqkjbwk6hwhrj4uggzvvc2hoyb2hlqnmtj54pnwawmk@5f2nlzlnmjbt>
+References: <cover.1754379198.git.u.kleine-koenig@baylibre.com>
+ <20250805-caped-jovial-limpet-ce9baa@lemur>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="iso-8859-1"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="rlc2nnd4l55twdhg"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <cover.1754379198.git.u.kleine-koenig@baylibre.com>
-X-ClientProxiedBy: CAMSPWEXC02.scsc.local (106.1.227.4) To
-	CAMSPWEXC02.scsc.local (106.1.227.4)
-X-CMS-MailID: 20250805164227eucas1p29c6d2e7ca60e7bfc4ad8f3ac65d4e777
-X-Msg-Generator: CA
-X-RootMTR: 20250805075932eucas1p17f15688e91b34f617fef8c2316d92a80
-X-EPHeader: CA
-cpgsPolicy: EUCPGSC10-065,Y
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20250805075932eucas1p17f15688e91b34f617fef8c2316d92a80
-References: <CGME20250805075932eucas1p17f15688e91b34f617fef8c2316d92a80@eucas1p1.samsung.com>
-	<cover.1754379198.git.u.kleine-koenig@baylibre.com>
-
-On Tue, Aug 05, 2025 at 09:59:01AM +0200, Uwe Kleine-König wrote:
-> Hello,
-> 
-> this cleanup series removes 5 keys and one subkey that expired in 2024.
-> Also a key that was revoked in 2020 is dropped.
-> 
-> None of the removed keys is part of trust paths to other keys, so there
-> is no effect on the remaining keys.
-> 
-> I suggest to not apply this series straight away to give the affected
-> owners the chance to extend the expiry date of their keys and replace
-> them accordingly.
-> 
-> A bit orthogonal to this series: It is usually recommended to have an
-> expiry date on PGP keys. Most keys (472 of now 620) don't have an expiry
-> date, I wonder if that would be sensible to require at least for new
-> keys added to the keyring. The upside would be that we don't trust keys
-> that are already long abondoned. E.g. Gentoo requires that for the keys
-> that are relevant for the project[1].
-> 
-> Currently there are 5 more keys contained in the keyring that expired in
-> 2025:
-> 
-> 0AA04DC735ACE2B5.asc
-> 	Bothersome Borer <bothersome-borer@kernel.org>
-> 4C3262CBD285EB87.asc
-> 	Confounding Cockroach <confounding-cockroach@kernel.org>
-> A16F9AB80CB2D395.asc
-> 	Frank Rowand <frank.rowand@sony.com>
-> 	Frank Rowand <key_111017@frowand.com>
-> 	Frank Rowand <frank.rowand@am.sony.com>
-> 	Frank Rowand <frowand@gmail.com>
-> 	Frank Rowand <frank.rowand@sonymobile.com>
-> 	Frank Rowand <frowand.list@gmail.com>
-> 	Frank Rowand <frank@frowand.com>
-> BD6A501CB78B7C26.asc
-> 	Jacek Anaszewski <jacek.anaszewski@gmail.com>
-> 	Jacek Anaszewski <j.anaszewski@samsung.com>
-> E7F85821938ABF6F.asc
-> 	Aggravating Aphid <aggravating-aphid@kernel.org>
-> 
-> These are the only keys left that (obviously) don't have a valid trust
-> path from Linus' key.
-> 
-> Best regards
-> Uwe
-> 
-> [1] https://www.gentoo.org/glep/glep-0063.html
-> 
-> Uwe Kleine-König (7):
->   Remove expired key of Kieran Bingham
->   Remove expired key of Imre Kaloz
->   Remove expired key of Eric Dumazet
->   Remove expired key of Pravin B Shelar
->   Remove expired key of Allison Henderson
->   Remove expired signing subkey of Joel Granados
-Thanks for this. I had update my signing key but forgot to remove the
-expired one. I use my updated Signing key that expires in 2027, so all
-good from my side.
-
-Best
+In-Reply-To: <20250805-caped-jovial-limpet-ce9baa@lemur>
 
 
--- 
+--rlc2nnd4l55twdhg
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
+MIME-Version: 1.0
 
-Joel Granados
+Hello Konstantin,
+
+[dropping a few guys from Cc as their addressed bounced for my first
+mail. Interpret for yourself what that means for the respective keys
+:-)]
+
+On Tue, Aug 05, 2025 at 11:10:13AM -0400, Konstantin Ryabitsev wrote:
+> > A bit orthogonal to this series: It is usually recommended to have an
+> > expiry date on PGP keys. Most keys (472 of now 620) don't have an expiry
+> > date, I wonder if that would be sensible to require at least for new
+> > keys added to the keyring. The upside would be that we don't trust keys
+> > that are already long abondoned. E.g. Gentoo requires that for the keys
+> > that are relevant for the project[1].
+>=20
+> I don't really feel strongly one way or another (clearly, since I don't h=
+ave
+> an expiration date on my own key either :)). From my perspective, the
+> hassle of dealing with expired keys outweighs the security benefits this
+> feature offers.
+
+I feel the urge to advertise the advantages of an expiry date on your
+key. Yes there is a down-side, i.e. you have to regularly extend the
+validity. However that is one command to update and then sending the key
+to a keyserver and the projects you care about (another command for each
+of them), once every two years or so.
+
+However having an expiry date is beneficial for both sides, the owner of
+the key and the persons/projects using the public part. The most obvious
+advantage is that the expiry date serves as auto-revoke if you should
+happen to lose the private parts of your key material. Further it
+ensures that others using your public key have a relatively recent
+version of your key, which is relevant e.g. when you added or revoked a
+UID or subkey.
+
+The relevant part for the kernel project is: If someone stops to
+contribute for some reason (shift of interest, new employer or even
+death), there is a mechanism to notice that. This allows to close the
+account and so reduce attack surface.
+
+For reference also see how TLS certificates are handled today. Pick any
+relevant CA and ask them to sign your certificate that doesn't have an
+expiry date. Be prepared to be laughed at. The reason for them to go for
+shorter expiration times is quite similar to the above.
+
+Best regards
+Uwe
+
+--rlc2nnd4l55twdhg
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmiSJ2UACgkQj4D7WH0S
+/k7ZKwgAgd2dW2rJBYOWXBGiEvtSJxBCd9cFL2Vl2gHNm1rM0+brnzCUoVmSajU3
+Xb2e8YZLKzdatZa8G6Kv+ibI/GDAQJJfqjAf0jLFOwls+lsUH2ns2VVh2qcmqz9Z
+Ay8o/jHoeBB5o9VDtJqgJA+kcrFqhxo4kmWfpv/iGr/kD59lh0V9VEqYwqC/q0UO
+GRbvKXZezq4US56Al4TJFdYLqs0CaoeNumotas4Ht++fe5eozRQKfWYqVrZJ/usd
+R4PeCAqoWa3BW2XeAS4ggpFI0sdZsbMlRhXGtDBywF/l0w7pV40GNKhLK+E5A8BH
+Cp54k17cL7tMEfeHULgmitPj8xFQMw==
+=2axV
+-----END PGP SIGNATURE-----
+
+--rlc2nnd4l55twdhg--
