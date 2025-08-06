@@ -1,80 +1,84 @@
-Received: from mail-wm1-f42.google.com (mail-wm1-f42.google.com [209.85.128.42])
+Received: from mail-wm1-f53.google.com (mail-wm1-f53.google.com [209.85.128.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9EAD255E20
-	for <keys@linux.kernel.org>; Tue,  5 Aug 2025 15:46:53 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.42
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DB11143756
+	for <keys@linux.kernel.org>; Wed,  6 Aug 2025 10:16:08 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.53
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754408816; cv=none; b=nxtKJp8KIXvLQfc9GgmK619gVNfHpePoclEhSqjnI+W0hkpkSHPlsC+eFSNljUn1ooJMHXTRLQEHn0Xh4ZlYotZLc61a9FSFUs3MmXB1AHJxv5HSB7dF7KdW64ztrk1BBxmaKeshsZcXV3y345HhIpIujtpjdK2kyRhQEhiahLU=
+	t=1754475371; cv=none; b=ZuPEyGPpQoHzp6y/jp8+mUSp5lZq4G7H5rQ+bdbJzpSzmwfU0BvClh/Bz0EcxiNL2scteMjPxblJenQHz+kKkxP/LQ01gFmPdQtaH9HNYyFU6h01edEoWQgyEK1Mie34Hi7AqpynB30jWvSW3h32vjhNEVi+cUcF6mi5ez856Xc=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754408816; c=relaxed/simple;
-	bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
+	s=arc-20240116; t=1754475371; c=relaxed/simple;
+	bh=h82uZwepef3tXJZLbt80qpk1AJGlq/MKFiNulKEypJc=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=BCVAqanfxBt4zpfzfXbnIDk6n081eS5XQlqSoBLVlmtaDLaiNdglafd3bvXKOYSjoSYW8wD8fF2NuZwB0y/KMpIPno3AfGpp4tVry/hOq9h7nO/jUt5RSozWyA+VnGrgKNkEXe4qu8kTysUN0Tsk8syfEp5+gKyDyeXKJjQ04Kg=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=kcHCgbPI; arc=none smtp.client-ip=209.85.128.42
+	 Content-Type:Content-Disposition:In-Reply-To; b=UAl6iI3kJMBn8ovEVtQlstRmGehTC2tSxjJFQrB0z80+Ui5P72ywI51Oql5RTQlxisobNH6rbvyHOf5g5VwLXrMVvzzPcVnO1yBayKq43xaHPzfqSNf1p176woJSY2eCvY1N6oTpfnrq4K5suI+EKMH4cx4nXs88idkRhcEXurI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=owQU60xP; arc=none smtp.client-ip=209.85.128.53
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="kcHCgbPI"
-Received: by mail-wm1-f42.google.com with SMTP id 5b1f17b1804b1-459e1338565so10415555e9.2
-        for <keys@linux.kernel.org>; Tue, 05 Aug 2025 08:46:53 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="owQU60xP"
+Received: by mail-wm1-f53.google.com with SMTP id 5b1f17b1804b1-459d40d16bdso22903415e9.0
+        for <keys@linux.kernel.org>; Wed, 06 Aug 2025 03:16:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1754408812; x=1755013612; darn=linux.kernel.org;
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1754475366; x=1755080166; darn=linux.kernel.org;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
-        b=kcHCgbPIPut8gF2kbKNuxCskrceGpfwCSP+cwQZpj9iZSiBQPekDmu79RpWq2gYDCG
-         z3b74rYFLNqOqQCxnsa+a8hFzN8u1SzRgELSmAjDjUZ1cW6s4kSaOJP0+WHn4ZjHUIZt
-         qUk0Dz+fA1JskRO0c723YmVm6bglWmmCQ1gxq05Edft1rfNqyQs6PY5XakLt0yyRuhxj
-         oF96xjKnslTFR6sU6mlDvDFyvO6sAXLiWQ6WkzXc5PsRhwj19QAN6qCw67TXt3DWM3Qm
-         95c3vRW/a6gXplTDy6+ERxRvjWWBMRqrxmBXWnFWtailCifeMu0tXOYmKkOr99rxMi5p
-         A5Vg==
+        bh=h82uZwepef3tXJZLbt80qpk1AJGlq/MKFiNulKEypJc=;
+        b=owQU60xPYZuWCCdNcPNHmPvMECCIPCxpaddjjUPGAoKep5INFzoIYanqR1tgZXiX0m
+         UqTVpsEk1WDfEz1eEsvpLCYApaMIJYW/0GWhx3JwpmFwVjYvOxqaENGE7xhxdnQ59G+g
+         NxKLv0PmoRhahWXCP7+Dqj5OOoHtFLOW6ujOAHZjNTaLVvHDyvGzrjTS+aIZk9IZ+aEm
+         rFkWRgdq00bFhZISDxJgB0olPY2z9QbbnpE6HmRnN+zAaWvjhv0h5jX4x02dvswdDO3G
+         o3ZkWkTUx54cdaAOXSqBpjd41hFiiOt32469st4XNgyBAh4hdas2ViO08L2HgI7gttY5
+         IIUA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754408812; x=1755013612;
+        d=1e100.net; s=20230601; t=1754475366; x=1755080166;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=wEhQUR1NWHCBKVOvIHgONQZR3jfqUhfvEmTR9ArwVcU=;
-        b=QXu+L6MiOK/fX7kLc8ggfNlLmP4GU4uDLhjNDO6NekZ28XA2qvIZbioRv01/33R7cT
-         CUzvMHkzsDfTCbAYXO1mP0NE/pXPe1z1WgHHkx778eH9IeSFOpwn/RR+MYBifmaUM+UV
-         QMmmhaDtxzQ2XO4XHAbDUeG2Wos8KWk7XxfI5YYhpgqbImnbOsJVkH6kprI3x8pxrKzg
-         ACWJr9OOU4YxoVU1OPg0fz4JdSVE8SudzGpAwrxa52VGcchmuVGX7hkUxAyuFSR8sTo7
-         pzqiE0fIPCech9i0fsKo/ZAe0ZZfv3UhuC47TpIEkVaNIwF31VSR1JHH0vH72tk8Fd0j
-         M41A==
-X-Gm-Message-State: AOJu0YwXcTIvBnOJXBAnsNW5XhvgmWa56zjF7gVg5Avv1dW7kR+37kuY
-	8CROxdkLpgveoGBlf1MKaXf7P5TKyhIjpbE488DD53ZRd2mYXuhpTDLy6oiEJYxQ+mc=
-X-Gm-Gg: ASbGncv1ZBYr4nUNczZIWFD7Oy1QP2T8uxDZRCggGqPSN5BIzigLuzPgHHGCAA5XX/a
-	KmhLJTG5c1zk26c7HfD3qKASTH6jdvhZosmuXLnHEOAJLURdZDUZat8b3QZPSCNpZUbDiRsfkGz
-	vwCX50Il3O8IoP7qe9fa7DZfraBt5Dnoep6e0dOpZWZRWALCQi1+fZs5z1VcbeNT55mZaKGfSwk
-	yIc85adeVyksQ+wLepH8FUOYoQ9mFE5lrfuzLH+MLKwr6w1/AdkNoO9Vton+FGMjFPjHTGxQexJ
-	KeVBm1aiXLdRpwBDdx0Tc5hUUrxRsdsMSHBqR3Cl1liaf+MTk6TKTWFISta6bcu0y3BSrHDZVYX
-	gIUMAJVL+8EVanPYSrNlKNvSXDoex8CV6iqTnlWXajnaCkWvCpYNS31hNbAMtlddz
-X-Google-Smtp-Source: AGHT+IG3ljcjrnyFeeTKYrH1X/X0ouRsEUbwZf0BsrskCqfXFCxDxZqVfV+ierVbSY13ZTulSGGPxw==
-X-Received: by 2002:a05:600c:1e8c:b0:456:11cc:360d with SMTP id 5b1f17b1804b1-458b69de114mr110924145e9.9.1754408811479;
-        Tue, 05 Aug 2025 08:46:51 -0700 (PDT)
+        bh=h82uZwepef3tXJZLbt80qpk1AJGlq/MKFiNulKEypJc=;
+        b=PXljtjOu0GsTe4Ky6zyhq2Q/p+ToZg47GFJV9RS1+dQQr7+/QOxzcHDKwt16G5L+lu
+         nsBlfjxl3P2qRuzSBX1ndjGeD2PftU3rcnuVBaqWUshMi86V53Y3u2jdNS8nUoM/fDCM
+         OUARUq00/8mZMxLWl1RXud+zeLGYfvyvGW692JJXuvWldcc9L+VtPreD7fAq2mD0nt9c
+         DKxTcGHNpUcS5lU/JYIF2i5iBWDy8M1r08gU83Tn7yx2tS7TC5l6emS9/GvAnlDnAIso
+         yXSWViFqvI+3/6mAyL3YNMgo6c7ZiruuZSY4qNAlAefDeTo+LC7qQNCUeJsooMHu7Nsi
+         RXbQ==
+X-Forwarded-Encrypted: i=1; AJvYcCUxa43F6dHTZYC8X0xVboYgFdQHVXQhugE101ZxCL1VKzR6u+DIBnhASnzTvAqyCAeKgTak@linux.kernel.org
+X-Gm-Message-State: AOJu0YwJ6MWK5t+1kYNQHq9ZuVyerbSPzUQkfdUI034Bjz47FWsYj5H5
+	TWSp7JHB1bpOMNN3WJn9Uz14fodY6FN4B16KZKFDOiPrb3GgPn03UMlnsTEhhX5fBhY=
+X-Gm-Gg: ASbGncu5yyjTjFNSjBBQ0SQCVndERSmXWFubs++PyZI/rd2WSqhzEBRLXaEIH7yfQiA
+	te6xSyjoZg/NBwi9BctK736o8WX5AjBizcN6iZyrtRCP/+Z5iYSeyD1IMBXDCqXzg9VI5NtmRsl
+	J8qP7Z5tDi8Hz7SzAOSaebH5vQVEwBPLOqM/dL9EDkNq4c9tNgDvGqUkZ9RR4AB0oEGuVyJsJzd
+	3eaOor7vZBcWR8mD/iijUFhwpGvgvVNyA7wE3UuPTk4F0i+Hb0U9z3DDP+gO0nmiTuzi8GUoI0y
+	RD4DYh3f4V5M+Oq1uMttZ3Kg8VZgaD04FnlDXX+m1TWedQtIAZs+izgm3Rcc0uxUhlJntKbnwuU
+	MQ/Zn+NZHf3uaU8UtV4QC+xnKsO2xYQRJfH5YpnyimeRvKEAPtPwzAwasVrskuPs8
+X-Google-Smtp-Source: AGHT+IH8H7qQENqqY2diFWqGg00vRxjy2utH+sr0UomCp714ZkKwFhhaJr1TuvWXTL1ohU58oFv8bg==
+X-Received: by 2002:a5d:584b:0:b0:3b7:9bfe:4f6f with SMTP id ffacd0b85a97d-3b8f491ec5bmr1648369f8f.44.1754475366293;
+        Wed, 06 Aug 2025 03:16:06 -0700 (PDT)
 Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-459e583f9fcsm8704685e9.4.2025.08.05.08.46.49
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3b79c3c4d02sm21948821f8f.33.2025.08.06.03.16.05
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 08:46:50 -0700 (PDT)
-Date: Tue, 5 Aug 2025 17:46:48 +0200
+        Wed, 06 Aug 2025 03:16:05 -0700 (PDT)
+Date: Wed, 6 Aug 2025 12:16:04 +0200
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Cc: keys@linux.kernel.org, Kieran Bingham <kieranbingham@gmail.com>, 
-	Kieran Bingham <kieran@bingham.xyz>, Imre Kaloz <kaloz@dune.hu>, Imre Kaloz <kaloz@openwrt.org>, 
-	Eric Dumazet <edumazet@google.com>, Eric Dumazet <eric.dumazet@gmail.com>, 
-	Eric Dumazet <edumazet@kernel.org>, Pravin B Shelar <pshelar@nicira.com>, 
-	Allison Henderson <allison.henderson@oracle.com>, Joel Granados <joel.granados@kernel.org>, 
-	Joel Granados <joel.granados@joelgranados.com>, Joel Granados <j.granados@samsung.com>, 
-	Harald Hoyer <harald@hoyer.xyz>, Harald Hoyer <harald@harald-hoyer.de>, 
-	Harald Hoyer <harald@redhat.com>, Bothersome Borer <bothersome-borer@kernel.org>, 
-	Confounding Cockroach <confounding-cockroach@kernel.org>, Frank Rowand <key_111017@frowand.com>, 
-	Frank Rowand <frowand@gmail.com>, Frank Rowand <frank.rowand@sonymobile.com>, 
-	Frank Rowand <frowand.list@gmail.com>, Frank Rowand <frank@frowand.com>, 
-	Jacek Anaszewski <jacek.anaszewski@gmail.com>, Aggravating Aphid <aggravating-aphid@kernel.org>
+To: Joel Granados <joel.granados@kernel.org>
+Cc: Joel Granados <j.granados@samsung.com>, keys@linux.kernel.org, 
+	Kieran Bingham <kieranbingham@gmail.com>, Kieran Bingham <kieran@bingham.xyz>, Imre Kaloz <kaloz@dune.hu>, 
+	Imre Kaloz <kaloz@openwrt.org>, Eric Dumazet <edumazet@google.com>, 
+	Eric Dumazet <eric.dumazet@gmail.com>, Eric Dumazet <edumazet@kernel.org>, 
+	Pravin B Shelar <pshelar@nicira.com>, Allison Henderson <allison.henderson@oracle.com>, 
+	Joel Granados <joel.granados@joelgranados.com>, Harald Hoyer <harald@hoyer.xyz>, 
+	Harald Hoyer <harald@harald-hoyer.de>, Harald Hoyer <harald@redhat.com>, 
+	Bothersome Borer <bothersome-borer@kernel.org>, Confounding Cockroach <confounding-cockroach@kernel.org>, 
+	Frank Rowand <key_111017@frowand.com>, Frank Rowand <frowand@gmail.com>, 
+	Frank Rowand <frank.rowand@sonymobile.com>, Frank Rowand <frowand.list@gmail.com>, 
+	Frank Rowand <frank@frowand.com>, Jacek Anaszewski <jacek.anaszewski@gmail.com>, 
+	Aggravating Aphid <aggravating-aphid@kernel.org>
 Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
-Message-ID: <mvcgtyzwqkjbwk6hwhrj4uggzvvc2hoyb2hlqnmtj54pnwawmk@5f2nlzlnmjbt>
-References: <cover.1754379198.git.u.kleine-koenig@baylibre.com>
- <20250805-caped-jovial-limpet-ce9baa@lemur>
+Message-ID: <inbgo6pg27fn5r26664ygcs23m5ok34f7aso7gghsgqm7mx327@dmttrpuq2rnn>
+References: <CGME20250805075932eucas1p17f15688e91b34f617fef8c2316d92a80@eucas1p1.samsung.com>
+ <cover.1754379198.git.u.kleine-koenig@baylibre.com>
+ <mx4t2fyuijj2einu4eibez4tjnrxpdo7ofutb7hh7ddmi7636i@gowa3on2bvgd>
+ <hd2ahm4vhilzz3yuus63v3cbpf7zgxrl6uwtarjyjt72yxogt6@h6ytbjcygbev>
+ <t4dynynvvtujdi2jz7jo4cyo4z6z5cxqh5swsdn7lmsa3fyq7n@czej5r32ngrl>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -82,78 +86,75 @@ List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="rlc2nnd4l55twdhg"
+	protocol="application/pgp-signature"; boundary="ts5k4dq35ebja7as"
 Content-Disposition: inline
-In-Reply-To: <20250805-caped-jovial-limpet-ce9baa@lemur>
+In-Reply-To: <t4dynynvvtujdi2jz7jo4cyo4z6z5cxqh5swsdn7lmsa3fyq7n@czej5r32ngrl>
 
 
---rlc2nnd4l55twdhg
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
+--ts5k4dq35ebja7as
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
 MIME-Version: 1.0
 
-Hello Konstantin,
+Hello Joel,
 
-[dropping a few guys from Cc as their addressed bounced for my first
-mail. Interpret for yourself what that means for the respective keys
-:-)]
-
-On Tue, Aug 05, 2025 at 11:10:13AM -0400, Konstantin Ryabitsev wrote:
-> > A bit orthogonal to this series: It is usually recommended to have an
-> > expiry date on PGP keys. Most keys (472 of now 620) don't have an expiry
-> > date, I wonder if that would be sensible to require at least for new
-> > keys added to the keyring. The upside would be that we don't trust keys
-> > that are already long abondoned. E.g. Gentoo requires that for the keys
-> > that are relevant for the project[1].
+On Wed, Aug 06, 2025 at 11:20:34AM +0200, Joel Granados wrote:
+> On Tue, Aug 05, 2025 at 10:57:55PM +0200, Uwe Kleine-K=F6nig wrote:
+> > On Tue, Aug 05, 2025 at 06:42:25PM +0200, Joel Granados wrote:
+> > > Thanks for this. I had update my signing key but forgot to remove the
+> > > expired one. I use my updated Signing key that expires in 2027, so all
+> > > good from my side.
+> >=20
+> > Maybe I state the obvious, but to maybe save you some trouble: You have
+> > to revoke the subkey if you want to get rid of it; not delete it. I
 >=20
-> I don't really feel strongly one way or another (clearly, since I don't h=
-ave
-> an expiration date on my own key either :)). From my perspective, the
-> hassle of dealing with expired keys outweighs the security benefits this
-> feature offers.
+> The change that I was thinking was actually updating my SEA key to just
+> S and pushing it to the pgpkeys repo. So I had no need to revoke that
+> one. Commit "a23ccb8 Update 5895FAAC338C6E77 (Joel Granados)" in [1].
 
-I feel the urge to advertise the advantages of an expiry date on your
-key. Yes there is a down-side, i.e. you have to regularly extend the
-validity. However that is one command to update and then sending the key
-to a keyserver and the projects you care about (another command for each
-of them), once every two years or so.
+You currently have a master key with sign and certify capabilities, an
+subkey each for encrypt, sign and authentication (rsa4096, rsa3072 and
+rsa4096 respectively) and the expired rsa4096 signing subkey.
 
-However having an expiry date is beneficial for both sides, the owner of
-the key and the persons/projects using the public part. The most obvious
-advantage is that the expiry date serves as auto-revoke if you should
-happen to lose the private parts of your key material. Further it
-ensures that others using your public key have a relatively recent
-version of your key, which is relevant e.g. when you added or revoked a
-UID or subkey.
+I don't understand your plans, but you cannot drop the certify
+capability from the master key, and if you want others to notice that
+you don't use a certain subkey any more, you have to revoke that.
 
-The relevant part for the kernel project is: If someone stops to
-contribute for some reason (shift of interest, new employer or even
-death), there is a mechanism to notice that. This allows to close the
-account and so reduce attack surface.
+> The expired one came in on an update from keyserver.ubuntu.com Commit
+> "50066c0 (HEAD) Periodic update from keyserver.ubuntu.com" in [1]. And
+> that one was probably an inadvertent sync from my part since I try not
+> to use the keyservers. I'll be sure to revoke it once I have access to
+> my private key.
+>=20
+> > didn't test, but I guess after the patch the subkey will be added back
+> > on the next keyserver sync. The same would happen to you.
+> I think you are right. But I have a question here. What key server
+> should we use? https://keys.openpgp.org/upload/ (as described in [2]) or
+> should we use keyserver.ubuntu.com?
 
-For reference also see how TLS certificates are handled today. Pick any
-relevant CA and ask them to sign your certificate that doesn't have an
-expiry date. Be prepared to be laughed at. The reason for them to go for
-shorter expiration times is quite similar to the above.
+I'm using these two (keys.openpgp.org via hkps, but that doesn't matter
+much). the openpgp keyserver has the disadvantage (advantage? feature?)
+to not distribute 3rd party signatures unless you do
+https://datatracker.ietf.org/doc/draft-dkg-openpgp-1pa3pc/.
 
 Best regards
 Uwe
 
---rlc2nnd4l55twdhg
+--ts5k4dq35ebja7as
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmiSJ2UACgkQj4D7WH0S
-/k7ZKwgAgd2dW2rJBYOWXBGiEvtSJxBCd9cFL2Vl2gHNm1rM0+brnzCUoVmSajU3
-Xb2e8YZLKzdatZa8G6Kv+ibI/GDAQJJfqjAf0jLFOwls+lsUH2ns2VVh2qcmqz9Z
-Ay8o/jHoeBB5o9VDtJqgJA+kcrFqhxo4kmWfpv/iGr/kD59lh0V9VEqYwqC/q0UO
-GRbvKXZezq4US56Al4TJFdYLqs0CaoeNumotas4Ht++fe5eozRQKfWYqVrZJ/usd
-R4PeCAqoWa3BW2XeAS4ggpFI0sdZsbMlRhXGtDBywF/l0w7pV40GNKhLK+E5A8BH
-Cp54k17cL7tMEfeHULgmitPj8xFQMw==
-=2axV
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmiTK2AACgkQj4D7WH0S
+/k4W0wf+Ia5/UkwvjnJZHDN9zP/3LEZKBA8hN5HCJyOR4uuaCzavvkMMor7IpM0H
+c8TIg5ZjtqHjdcKeVFdWsNY+FbgtKSuUMiH+jYEmCfL/vT2z8WbSZ1yuxpuQibUa
+Fg8yPInG64Jkc6XbfUOetDRWogZhTfBpdLlRRFYdwvafxlosVsqD3E0QzYclFUwL
+JskuHmaI6IeaxjAjM/B9rmBr0g3eLVx7jUtpwX+X1URZDy+BIQnlDvKQESoeQ0xx
+80qhoVqIC3H5CVDv+0O2XmX0bIHJKXwdXx5I3WUI8/kUYYKzEylMsH9/Ukfk7suQ
+ab1Ex8+aUyetoF0VKgPXzimEV1rB7Q==
+=C1hj
 -----END PGP SIGNATURE-----
 
---rlc2nnd4l55twdhg--
+--ts5k4dq35ebja7as--
