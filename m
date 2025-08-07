@@ -1,81 +1,41 @@
-Received: from mail-ed1-f51.google.com (mail-ed1-f51.google.com [209.85.208.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A051A23AE66
-	for <keys@linux.kernel.org>; Tue,  5 Aug 2025 20:57:59 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.208.51
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC72F25B1C5
+	for <keys@linux.kernel.org>; Thu,  7 Aug 2025 14:27:00 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1754427482; cv=none; b=QcX2jDFHzwZberf/yiC1p5sNxwO/DOU1sMhm6I+EpYASGa5VRp5l7BEpLMbyyMQF8Lsj+tuF4RcEIzDJrcEuy+9kP0lchuqRKEUtobm+DZCqvLIFdUdTQb6czc9fSFkrTYDp6mYF829zpH/8UYumaKhMQeeQGMhxD0UswO3uwOI=
+	t=1754576820; cv=none; b=M41nZOC93ig/yLgfWUFsEIpWsi4pXcHYz8ZnPj6PiOj280SSUGUF1D9Hp0Q8b3PongitmzN8ItUrvc4LuoWrak/6+bZVI9QtsMGj2dAZy7b+cJvdGijfU0cNAF7r7ZvSMnWwHLUeD0N8igNnWma8vtKWGHTVdtxdiRcLJerPQmE=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1754427482; c=relaxed/simple;
-	bh=svwTcsBzMze3Rpkk3KgTUamTCpqfmn5DivHFB0TLZPY=;
+	s=arc-20240116; t=1754576820; c=relaxed/simple;
+	bh=OmNVOEYQG5EtLmZVoFyIXDEN3jOu6P3C+mQC2fqcU88=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=PG+ZV4fm1pvuxdrbFx8oRnPKGHaMgibbq6jMMX1ZYtFyx9G+H78qTaJhOCHHteE94z5AXPzSLGRKOi7eDNoqGrisM2eYPXRfd8e7USMVBu8VldHW0YB1gs3xoFzz2ygfR7QrRZoRMafdFtqRE+1ImEtFWlkdnFLPY4EL+uu0JUA=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=xKWbEkCU; arc=none smtp.client-ip=209.85.208.51
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=eYuF+TrB5q4dDRA3A59iQSFgFxFRXHTwh6GJm8K1/9qTWUBlnG4PG1E9l0eI/XfJ8Mu3RNcte6zVPzEq6gTlT8WALJuZwlqqQwWwPGDV39/NMRPryXXhAm8UWXoQZLWN721B/sFihmRA/xxw6ZHMX4USyGocI2G29+cLy2VVV4I=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=SHenEmfK; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="xKWbEkCU"
-Received: by mail-ed1-f51.google.com with SMTP id 4fb4d7f45d1cf-61568fbed16so7588048a12.3
-        for <keys@linux.kernel.org>; Tue, 05 Aug 2025 13:57:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1754427478; x=1755032278; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=UpOwDLam9xRG46yfHKC+3yYyBy+YULV31pjyEzcBg5U=;
-        b=xKWbEkCUq+r2NQ70LiafVSB+7BxJ0e1gW35BXi+BYv6OSprzaC5pEdp8hwzphSX1K3
-         YlAPzTrwvtUJfcW+Vj7hVk4i6cq0UNml8b2E/9XP1lL7JsO6275RgZkVBlFrMly++0VK
-         t/170jRkoAvsSyIOx8IfxJ1a7ifn/5ZzRboAYsYdsGcn8MM8j0rlz60wLU0MTIwkxINg
-         4F2OdxFSWmn0mi34WXqTN2AI39bXZ0aG4PfDQYZq/TyBma4ELB/sF4AFHG8wp0yDf6sF
-         9z6e3vmkqnbd10I6J0/bzpP3NK++2uQDIXgHSXDxgOfTzwy5dUywSvX2E7UTQuwZn+VS
-         QbXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1754427478; x=1755032278;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=UpOwDLam9xRG46yfHKC+3yYyBy+YULV31pjyEzcBg5U=;
-        b=LQmv2BfI9+0bYst3Iv96JgP5s56N5XGj25W1y/agTnskqpvQQtAgQMnrvhMm5DMpv8
-         pWWT8HlsdRT+4e2kbqxc71BEUybNZ4WsMfhgTsqYfyG9onxde5ohfowDwRsiYdtiC//z
-         8M6NPJwhAremye+Mf1YV1YMddDaJA4Ew6fwmD6x8rIV6qROq2XVBx7w1jhQJaDW74FIE
-         b1hksM+mAjYtfZ2LbXXbP28gi9Pzwi6CCOyS+at/exNwRG7kkv1ZX2xdxGBud/q4oFzj
-         QO7oNIqq2shYoo7M0s5nhVOIB7rLJl4soRzTCO4i7zCQk+ze397qQHVDUJYGvsfcQP63
-         hp+w==
-X-Gm-Message-State: AOJu0Yxbt4PJHcNjzqnPsKX4EHXs2I7U17pkR3fGdlinbeV858jwtQXb
-	+ug2x0BPcC8u8+MtJ5FeH1FjYPoulTXrkJAvCMWJpD7r9zZh0LkB+bHBaeLK/pA2pic=
-X-Gm-Gg: ASbGncuRoZTfsLvLYsr1luP6BN/dkJ9c+a8ffodvoRlMNYRjgLsDrz6IuRSmd14ScRd
-	TMFG6McLdrXV50iRFQ3ht/YrOm1NEF3RrkVVfMnUzRlQzwo0Yuj32eJRsKvCjTfAlkB2QIiK3cx
-	i9EkDdT4rsKxpDb3I6LLySfhWkU/ydlOOVqBQmK316Xcx3dfRl7t2XRXTcT15ELWHjhcwybs4XP
-	5Z1tKJZDDe/zWR33HCMDq1HhOmADECQHJMJxffatXu5U1SfRL3UpwwiTC8CJZiqHr0/5ygvl5xp
-	lhm/XpmYXoY+z+CSQQY9JhIIV9SoDKtLWEjK6fnbvlusAuqujJkwzCiH9RHe5CP4twuiH/BiDOj
-	+UnKvHCFLEhk4Ue/gN7tdpkkfhkQ=
-X-Google-Smtp-Source: AGHT+IFZD51rqA0pbetFQ4FNzFvrjEMaon480j2VbAbOju8SM6pKqiU2nw3DPOOfD7d+9XjxGlc0jQ==
-X-Received: by 2002:a17:907:3e9e:b0:af9:14cf:d820 with SMTP id a640c23a62f3a-af9900ebc26mr41588466b.12.1754427477591;
-        Tue, 05 Aug 2025 13:57:57 -0700 (PDT)
-Received: from localhost ([2a02:8071:b783:6940:36f3:9aff:fec2:7e46])
-        by smtp.gmail.com with UTF8SMTPSA id a640c23a62f3a-af928c84154sm876154466b.84.2025.08.05.13.57.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Aug 2025 13:57:56 -0700 (PDT)
-Date: Tue, 5 Aug 2025 22:57:55 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Joel Granados <j.granados@samsung.com>
-Cc: keys@linux.kernel.org, Kieran Bingham <kieranbingham@gmail.com>, 
-	Kieran Bingham <kieran@bingham.xyz>, Imre Kaloz <kaloz@dune.hu>, Imre Kaloz <kaloz@openwrt.org>, 
-	Eric Dumazet <edumazet@google.com>, Eric Dumazet <eric.dumazet@gmail.com>, 
-	Eric Dumazet <edumazet@kernel.org>, Pravin B Shelar <pshelar@nicira.com>, 
-	Allison Henderson <allison.henderson@oracle.com>, Joel Granados <joel.granados@kernel.org>, 
-	Joel Granados <joel.granados@joelgranados.com>, Harald Hoyer <harald@hoyer.xyz>, 
-	Harald Hoyer <harald@harald-hoyer.de>, Harald Hoyer <harald@redhat.com>, 
-	Bothersome Borer <bothersome-borer@kernel.org>, Confounding Cockroach <confounding-cockroach@kernel.org>, 
-	Frank Rowand <key_111017@frowand.com>, Frank Rowand <frowand@gmail.com>, 
-	Frank Rowand <frank.rowand@sonymobile.com>, Frank Rowand <frowand.list@gmail.com>, 
-	Frank Rowand <frank@frowand.com>, Jacek Anaszewski <jacek.anaszewski@gmail.com>, 
-	Aggravating Aphid <aggravating-aphid@kernel.org>
-Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
-Message-ID: <hd2ahm4vhilzz3yuus63v3cbpf7zgxrl6uwtarjyjt72yxogt6@h6ytbjcygbev>
-References: <CGME20250805075932eucas1p17f15688e91b34f617fef8c2316d92a80@eucas1p1.samsung.com>
- <cover.1754379198.git.u.kleine-koenig@baylibre.com>
- <mx4t2fyuijj2einu4eibez4tjnrxpdo7ofutb7hh7ddmi7636i@gowa3on2bvgd>
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="SHenEmfK"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F28DCC4CEEB;
+	Thu,  7 Aug 2025 14:26:59 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1754576820;
+	bh=OmNVOEYQG5EtLmZVoFyIXDEN3jOu6P3C+mQC2fqcU88=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=SHenEmfKxNP5a+03YuerAVRze7uPJ2AYP/wfFqPjJImjphB/To4eujygAxAD3vQst
+	 TL0OLsWxh0FKCrHya6DF+Hh0DDMcZZkEpi/Pmksqv6xF76EdxTwgh875Zkuc1gXmBJ
+	 sRB2MLSm81sKxpR44mcLpwqITjhMxwHV9R89p2NxsmfW362BdvgUTChpJRhGJwyeT5
+	 NJsqLUWd2xxvONkM5FU1eO8RHSQSEfZwKALDO03UDGt2s6pbfpQ6r4K8ZEWJ5NHoNV
+	 Gwq2K9fsRcG6m1iKK6bpcOrSQDG7o8CmYT+yA7tv6/VRFUMlGx3MAzxSQDXs0pyqF2
+	 ewfIXYfmczt4Q==
+Date: Thu, 7 Aug 2025 16:26:54 +0200
+From: Joel Granados <joel.granados@kernel.org>
+To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Cc: keys@linux.kernel.org, Joel Granados <joel.granados@joelgranados.com>, 
+	Joel Granados <j.granados@samsung.com>
+Subject: Re: [PATCH 6/7] Remove expired signing subkey of Joel Granados
+Message-ID: <kn2hscakoyj6nl4yxn2i7wnjol37jt3zdedqzwbvv4hhezxhzc@4w25xf4pkpkx>
+References: <cover.1754379198.git.u.kleine-koenig@baylibre.com>
+ <95d951d396bf2034e4d090f82f22b0b15b73d8dc.1754379198.git.u.kleine-koenig@baylibre.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -83,49 +43,80 @@ List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="gz2szxffd27aajny"
+	protocol="application/pgp-signature"; boundary="mn2s52tv6hgppxcl"
 Content-Disposition: inline
-In-Reply-To: <mx4t2fyuijj2einu4eibez4tjnrxpdo7ofutb7hh7ddmi7636i@gowa3on2bvgd>
+In-Reply-To: <95d951d396bf2034e4d090f82f22b0b15b73d8dc.1754379198.git.u.kleine-koenig@baylibre.com>
 
 
---gz2szxffd27aajny
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
+--mn2s52tv6hgppxcl
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: [PATCH 0/7] Remove expired keys, 2024 edition
-MIME-Version: 1.0
 
-Hello Joel,
-
-On Tue, Aug 05, 2025 at 06:42:25PM +0200, Joel Granados wrote:
-> On Tue, Aug 05, 2025 at 09:59:01AM +0200, Uwe Kleine-K=F6nig wrote:
-> >   Remove expired signing subkey of Joel Granados
+On Tue, Aug 05, 2025 at 09:59:07AM +0200, Uwe Kleine-K=F6nig wrote:
+> The subkey expired in November 2024.
+> ---
+>  keys/5895FAAC338C6E77.asc | 40 ++-------------------------------------
+>  1 file changed, 2 insertions(+), 38 deletions(-)
 >=20
-> Thanks for this. I had update my signing key but forgot to remove the
-> expired one. I use my updated Signing key that expires in 2027, so all
-> good from my side.
+> diff --git a/keys/5895FAAC338C6E77.asc b/keys/5895FAAC338C6E77.asc
+> index 9a228cca2ccd..b435101ed14f 100644
+> --- a/keys/5895FAAC338C6E77.asc
+> +++ b/keys/5895FAAC338C6E77.asc
+> @@ -10,8 +10,6 @@ sub   rsa3072 2020-10-29 [S] [expires: 2027-03-22]
+>        AE47095725E63125CECB2790BA97CD52B796414F
+>  sub   rsa4096 2020-11-06 [A] [expires: 2027-03-22]
+>        0E81B177263D4031E4744DA662B669D05E153901
+> -sub   rsa4096 2020-11-06 [S] [expires: 2024-11-05]
+> -      5738F39D590536BFC54CD0F8CF756396B98DDF71
+This is now revoked on the ubuntu keyserver. I think that everything
+will be everything will be update on the next update from
+keyserver.ubuntu.com
 
-Maybe I state the obvious, but to maybe save you some trouble: You have
-to revoke the subkey if you want to get rid of it; not delete it. I
-didn't test, but I guess after the patch the subkey will be added back
-on the next keyserver sync. The same would happen to you.
+@konstantine: Get back to me if you need me to push changes to the
+pgpkeys repo.
 
-Best regards
-Uwe
+Best
 
---gz2szxffd27aajny
+> =20
+>  -----BEGIN PGP PUBLIC KEY BLOCK-----
+> =20
+> @@ -214,40 +212,6 @@ l3zluXfCDM7lHyQXJ2ujBv4YiucmLmrTmkXStXVPCvQ8lMmdUOwz=
+se6V+7aUfu4i
+>  qSUfD7tZdDWcf7q+vWaNKQIyr1tu3me6W9URm4ZI06FzTjM7xpkJQ7S3Rn/WOMT1
+>  Un/GpCl7zUPGSob4BLjWXnQ5Ue/qoui95yKpocuufnkshAt5+M+c6NE3K9QYocc9
+=2E..
+> -4kvwC/yGVwknn3yTQp9whof25KVlUiHhSPIHHl2WiIzJ0NYJHlFc+BjXOXQBfbdc
+> -Nq9SSh7UpNLEKNqNwt9XdxuY0mKB+5TvUCQnoq/sl7p4/fY8F0we3Hw2e1+8Oxvf
+> -DtDBeHl2aZ4q8DD712KHnYbi8jYRUl+NdGKOQOy0JnQU1r4TzNBrVA+w
+> -=3DII1B
+> +Wagr24U=3D
+> +=3D+x9p
+>  -----END PGP PUBLIC KEY BLOCK-----
+> --=20
+> 2.50.1
+>=20
+
+--=20
+
+Joel Granados
+
+--mn2s52tv6hgppxcl
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmiScFAACgkQj4D7WH0S
-/k5W4wf+PGLV2XQScob0ND7Xo+d/swBpOaV3iwm9S6n/QKdh7lN5guCbFCXhijrB
-+zInEEaj+2jkE/kA8UswWiEJsvUId8FLPy8Oq92u5UZ5saNuFI56EYIEdy3hf2f7
-wrScKgZzMczIC5OLuULhgqQL1ugVMgbW4TP78ETVXxDL+JDdGimZ/lmss/oLbcm9
-Cf5ZogvBBece523s0VzW601pziasGDH0GIx3jC0M3E8XIEhY5WLKqmJ/iC0SrPLf
-C48IoQtp2TQXJacXHPb+IxlNdXY30qsLnu1eNCh8JWk8qkv/22JbPC56HR83214g
-rQGYNL21iJNpzKT5TYcMgvQ8EKzTRw==
-=Sjif
+iQGzBAABCgAdFiEErkcJVyXmMSXOyyeQupfNUreWQU8FAmiUt6YACgkQupfNUreW
+QU9zLQv/aRJ2+AbgL4WSfuBAXAXRJhjU5i7CKmICMwNd4a0AAlKxIRWnyv0+j13W
+5u5UnqaBRh1MJ+KzcUL2Ohp/0MJKo1Rb/G+pCMlpXAX8JpK6t/hIUL/HM5+wIpiT
+Gf29+eHvyOncGbfpPejClGXAPbbGBGqGo+oerlFuPJydF1iWGUglYynkgwOYQzAb
+SEAajqNakNfExjwQNg6UGmK12DwE7rMBlqu8E9zXymT/PtShNJhaCgwEN98B5Wp+
+JTPkxTV6wz/IE5vpsIimyI76d7Je3wUH0WgchCiYXJoZcyI5Jya13UhN2vbENvnm
+wMAd2mp3sOR9em0R16uShMe6wLy4Ca/hOieQOkL+BrwKcEoDYnIzD1tWVbONwVno
+cO+SIVPjRIRduk4HLkAocUjfG+THX+Z3tkDOhGQ2QXZYHXuZrxMecg3IBub44p03
+c4UIgfMTNCTmzMvUclwqL6WM+IH47G7UTsliSTFE/Y0/tZbMKPnGhrNtYiVEDyLZ
+cLzGhJsl
+=LVcl
 -----END PGP SIGNATURE-----
 
---gz2szxffd27aajny--
+--mn2s52tv6hgppxcl--
