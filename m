@@ -1,138 +1,121 @@
-Received: from mail-wm1-f50.google.com (mail-wm1-f50.google.com [209.85.128.50])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mta1.formilux.org (mta1.formilux.org [51.159.59.229])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93F3255F31
-	for <keys@linux.kernel.org>; Tue,  9 Sep 2025 08:55:00 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.50
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B3D306D3E
+	for <keys@linux.kernel.org>; Wed, 10 Sep 2025 06:46:37 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=51.159.59.229
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1757408104; cv=none; b=GIbpN6j+tLb6Fkxx7Lb5PUHnIA3b+AzgeBlD2MtPmRQuEv3Llxwkgj/LKIy3+/ocs1hdZRdnBWw6On4+/GtUpAGAq43ErEZ1JyIev+UHN9ZGymdFfrX4ejKrcObDsSX2lLdlKuwMQUuAjqWQsFGP1nPbkTYexcHRkUMLZ8j5NJA=
+	t=1757486801; cv=none; b=kWyuPcUnKWMOxZ0YIaifAwAMwTYQy8qxkSGnQz0kMxfsZ8rr3N3xP8Po/aW7fkzPw3LFaqh+cYydBEUZ3JjgSpz2PjjSTrJOvnZHzU4Hp1athx9u42U+v/G7VNJpc0b4QbtdDWqsHkIts7thYNSU9jotDOU8iPz07wTvhQDsBFY=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1757408104; c=relaxed/simple;
-	bh=ifEzxQBihFvSEZtk6kIimqT5BcTkzeIXlyRsneq8DCA=;
+	s=arc-20240116; t=1757486801; c=relaxed/simple;
+	bh=bFtk55uGsNT/PMjKTSrDtLoPJM86gmKyYJM/8ymXCpw=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=RxIpwWI6j1/231iqT65EL9wBV6uWaz0BLGhonCeS5UBTbiJ/lgiRLufQqKziznhH3ZV6+sTzpHP7wXLpCjrlc59H297QhrBIrIBR+duyI6Cld4ue0uBVtLz0fU0YSEOQkylkdXTrDczKJBDLJhbYOcUe31XRGUemdNBXtObqN9Q=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=r2nBo05G; arc=none smtp.client-ip=209.85.128.50
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	 Content-Type:Content-Disposition:In-Reply-To; b=B2/NWTq0Cc7gX9ieFJkQL4Raq2CZ3Ji4EKKziQ8ITg0m/UFKCoj65jJwvfPWg7Lh7tVmEPazT54RJS8Ew624se4JgBE85zid4iaRzr3SGQW//7cGmpNrgMvXT8ttOGxuROhKF3TL8SsXNG0UOhovxiUh1lcd0IFwBdyJQFrzS5o=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=1wt.eu; spf=pass smtp.mailfrom=1wt.eu; dkim=pass (1024-bit key) header.d=1wt.eu header.i=@1wt.eu header.b=ngtxOHIS; arc=none smtp.client-ip=51.159.59.229
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=1wt.eu
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=1wt.eu
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="r2nBo05G"
-Received: by mail-wm1-f50.google.com with SMTP id 5b1f17b1804b1-45de2b517a3so20873645e9.3
-        for <keys@linux.kernel.org>; Tue, 09 Sep 2025 01:55:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1757408099; x=1758012899; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=ZiX+5hEDBmtRl/9W+lSIv3Jjz939th2pFtEym7mjlTc=;
-        b=r2nBo05GELcyPmw2YCUK/wSHShTWCsx9ypKjMMXSs8fVlhH9IBwuHta62Dex8hUFEP
-         YqZFr3k4uOck4TvUU4V89b86GrlVK0Sh0/KCF+OzfTzO3rqbg4QwnNtaWZvR5cepvZ7u
-         HVIsrOxygnx/9AFrlzdBTtGpwAaYZ0hughaCKaA9DVt+vbr2TVybvVBUOmmvPZ+hXKf3
-         /RtJeK0yOMob33HClPjJHcIevx7zv8x/HdY+TwS7brBM7abdAIkjitZUhc7fJT4lgOhh
-         konu0eSY3PY7rLb/KDiXRe9QQ08QayvUSCfKMEy54sUh2vUv3OBqdcbtvi5TWhnE5lbv
-         u/8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1757408099; x=1758012899;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=ZiX+5hEDBmtRl/9W+lSIv3Jjz939th2pFtEym7mjlTc=;
-        b=OCqWBSZYUXbZUXQOenZzN3Dir4LK2EbcxQufwZm1V8C7TiDKmE6bOQIJFydpPV4iRE
-         RoDM8Ra/iRBEBOeStMiOiNd1B250DvCxiNuuxaahPi9Acewy/8dt8n5WZ43aGWfIf9pj
-         lqbcx3a9Njh1vzTwwYfTX8THKs7Lr+j0F7bj3DZWG6w3cEy8qxHdxHB0rE1LueuCRsF5
-         hplTWeNCMC2gJIHVNYycF4oh/VqHU4IS/AkmRxNxr+Z0rk4hXzjIU7yPBhYLH1fYk+d1
-         SoJaPkw/Az1WUlD/yPN29YEtqTh15Pa7QAMLSlcrO+dRkIhuxMBd1cGaCGj3x5IdRQWy
-         Cssg==
-X-Gm-Message-State: AOJu0YxamlOe7M4lgVukSe/8kD4+S36T0Gb7zjIHTySL7dqI7uMUDQOE
-	Ibnntwvqbukw70In/eylUQzVyL9u4SMwOXBRsldFLeyy4nDMSuVK1p7l9Hs2L0QZ9axKr1H1pqO
-	c4u9G
-X-Gm-Gg: ASbGncsSo8ft+KdIAI/LY0Bxq+5W9quxlL4Mb7yDCrnOjvjBNVFJqQ8e56FuS3kmHBF
-	bFGBYJFtEHPvRyj7wbjmpacJ7VRY+CQQ/5VMOV26UbvQwwoUmPqMQJLHYQkYrfs8LoKWWyS9xKF
-	noY5xvDKvdT4wmzSKqnX/KsHVRCXqU41KaOktE3Q8j8m1F/K7QACIZgrZbU2K80NzGCmMmCptzP
-	P0kVaoow4heBPAkJDCWBnxz1BHITQVwE5z982Q3LqwEYCbt002NnYzvH0isswv6W73Hw21yVSI1
-	w+8Eccj8zKt9TJ2IZ7SGh/pvul7dm0Ebtb8HDgPKye3KHV//Wb7C0oSMe7nKrEM3dhQLgGEGB5M
-	R6ZdCzpPThyBzJBfXiHZ1Pt7L4lYKVTUK0DEP2lJiCxj5Y53BJHf21W4XUUVb6lWO
-X-Google-Smtp-Source: AGHT+IFXQkIAR4BJQbGzmKAqwag6j5ugjHWQZ/1rqftFNI0DCH5agC1A5ZtvAziZfDrtGWo5m1s6qg==
-X-Received: by 2002:a05:600c:1f11:b0:45d:db2a:ce4a with SMTP id 5b1f17b1804b1-45de07ee7b3mr92672845e9.9.1757408099212;
-        Tue, 09 Sep 2025 01:54:59 -0700 (PDT)
-Received: from localhost (p200300f65f06ab0400000000000001b9.dip0.t-ipconnect.de. [2003:f6:5f06:ab04::1b9])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-3e7521ca22esm1853378f8f.18.2025.09.09.01.54.58
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 09 Sep 2025 01:54:58 -0700 (PDT)
-Date: Tue, 9 Sep 2025 10:54:57 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Paul Walmsley <paul@pwsan.com>
+	dkim=pass (1024-bit key) header.d=1wt.eu header.i=@1wt.eu header.b="ngtxOHIS"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=1wt.eu; s=mail;
+	t=1757486459; bh=bFtk55uGsNT/PMjKTSrDtLoPJM86gmKyYJM/8ymXCpw=;
+	h=From:Message-ID:From;
+	b=ngtxOHISq+nbk5IGGkLwizElRMLwMGRz5Krtgrm+MptWmzy8RLT6mV7kCnZAdEvTe
+	 JBt+8qX1VlwTEAnBujLyS9NsIOK0tDmbnJfFxat0zh7t+aM1kUmXGcHiHAHBLGnl/n
+	 1v8C/lPu1oNBZkskdEAg73Pa3GGdQc7FuzC3r2C4=
+Received: from 1wt.eu (ded1.1wt.eu [163.172.96.212])
+	by mta1.formilux.org (Postfix) with ESMTP id 20172C0699;
+	Wed, 10 Sep 2025 08:40:59 +0200 (CEST)
+Received: (from willy@localhost)
+	by pcw.home.local (8.15.2/8.15.2/Submit) id 58A6ewZO030481;
+	Wed, 10 Sep 2025 08:40:58 +0200
+Date: Wed, 10 Sep 2025 08:40:58 +0200
+From: Willy Tarreau <w@1wt.eu>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
 Cc: keys@linux.kernel.org
-Subject: Re: Updated key for myself with new E-mail address added
-Message-ID: <nnun7eitfarfpqsnt3gmhizmcyfcwtm52kkqtdn77ndziue3gi@b4sslvefo62e>
-References: <04195f9b-dae2-eac8-d109-196fa5cfe872@pwsan.com>
+Subject: Re: SHA1 bindings in your PGP key 4E386D9C9C61702F
+Message-ID: <20250910064058.GB30457@1wt.eu>
+References: <isa35mrnkbzbirunf55qmy2bmxj4jfbcado5o4xi655oa6tawa@azwkdgaggj2g>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="7lq3gldqslylbgfh"
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <04195f9b-dae2-eac8-d109-196fa5cfe872@pwsan.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <isa35mrnkbzbirunf55qmy2bmxj4jfbcado5o4xi655oa6tawa@azwkdgaggj2g>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 
+Hello Uwe!
 
---7lq3gldqslylbgfh
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: Updated key for myself with new E-mail address added
-MIME-Version: 1.0
+On Tue, Sep 09, 2025 at 12:03:20PM +0200, Uwe Kleine-König wrote:
+> Hello Willy,
+> 
+> recently your PGP key 4E386D9C9C61702F was updated in the kernel PGP
+> keyring after you expanded its validity
+> (https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/commit/?id=e8a3192d295094087e09f623595c8309b2eac915). 
+> 
+> Taking this as a hint that you still care about the key:
+> 
+> This key suffers from SHA-1 bindings which are not considered on par with
+> typical security recommendations today:
+> 
+> 	$ sq cert lint < keys/4E386D9C9C61702F.asc
+> 	Certificate 4E386D9C9C61702F is not valid under the standard policy: No binding signature at time 2025-09-09T09:45:16Z
+> 	Certificate 4E386D9C9C61702F contains a User ID (Willy Tarreau <w@1wt.eu>) protected by SHA-1
+> 	Certificate 4E386D9C9C61702F, key 014180C7E8419672 uses a SHA-1-protected binding signature.
+> 	Examined 1 certificate.
+> 	  0 certificates are invalid and were not linted. (GOOD)
+> 	  1 certificate was linted.
+> 	  1 of the 1 certificates (100%) has at least one issue. (BAD)
+> 	0 of the linted certificates were revoked.
+> 	  0 of the 0 certificates has revocation certificates that are weaker than the certificate and should be recreated. (GOOD)
+> 	0 of the linted certificates were expired.
+> 	1 of the non-revoked linted certificate has at least one non-revoked User ID:
+> 	  1 has at least one User ID protected by SHA-1. (BAD)
+> 	  1 has all User IDs protected by SHA-1. (BAD)
+> 	1 of the non-revoked linted certificates has at least one non-revoked, live subkey:
+> 	  1 has at least one non-revoked, live subkey with a binding signature that uses SHA-1. (BAD)
+> 	0 of the non-revoked linted certificates have at least one non-revoked, live, signing-capable subkey:
+> 	  0 certificates have at least one non-revoked, live, signing-capable subkey with a strong binding signature, but a backsig that uses SHA-1. (GOOD)
+> 
+> 	  Error: 1 certificate have at least one issue
+> 
+> The issue is that the proofs about your UID and your subkey
+> 014180C7E8419672 belonging to your main key 4E386D9C9C61702F rely on
+> SHA-1 hashes which is considered weak since at least 2005[1]. Practical
+> breakage is not known yet, but still I recommend to update your key to a
+> safer hash algorithm to reduce attacking surface.
 
-Hello Paul,
+Hmmm unless I'm missing something, these serve to sign tags designating
+a commit that itself relies on SHA-1, no ? So in this case if we don't
+trust the keys anymore because we consider them weak, we shouldn't trust
+the tags nor the commits either ?
 
-On Thu, Sep 04, 2025 at 01:51:10PM -0600, Paul Walmsley wrote:
-> I'm switching over to my pjw@kernel.org E-mail for kernel work, and have=
-=20
-> updated my PGP key accordingly.  Please find it attached (per the=20
-> instructions at https://korg.docs.kernel.org/pgpkeys.html )
+> GnuPG doesn't create such bindings by default any more, but it also
+> doesn't fix these when opportunities arise (e.g. when expanding key
+> validity). Other implementations (e.g. Sequoia PGP) don't even accept
+> these keys any more (while GnuPG continues to be happy about them).
 
-Your key fails the sq linter check:
+OK that might be a good reason (even if some tools tend to deprecate
+certain well-known and well working solutions sometimes for non-technical
+reasons, I'm not judging if that's the case here or not).
 
-	Certificate C78FB10D0BBD2A4B contains a User ID (Paul Walmsley <paul@pwsan=
-=2Ecom>) protected by SHA-1
-	Certificate C78FB10D0BBD2A4B, key 7C50FF6DD228D259 uses a SHA-1-protected =
-binding signature.
-	Examined 1 certificate.
-	...
-	  1 of the 1 certificates (100%) has at least one issue. (BAD)
-	...
-	  1 has at least one User ID protected by SHA-1. (BAD)
-	1 of the non-revoked linted certificates has at least one non-revoked, live
-	subkey:
-	  1 has at least one non-revoked, live subkey with a binding signature tha=
-t uses SHA-1. (BAD)
-	...
-	  Error: 1 certificate have at least one issue
+> Find more details at
+> https://lore.kernel.org/keys/fxotnlhsyl2frp54xtguy7ryrucuwselanazixeax3motyyoo3@7vf7ip6gxyvx/T/#u
+> which also describes a procedure to (hopefully) fix your key.
 
-It would be great if you could fix those.
+Thank you. I must admit I'm a bit lost by the complexity of these
+operations, especially since I don't understand their impact. Does
+this mean that my key that was previously signed will change if I
+do that, and that as such it will have to be signed again ? What
+should I backup before entering these operations in case things go
+wrong or if I simply do a mistake ? I never understand even the
+questions in GPG, so I tend to randomly respond until it works.
 
-See
-https://lore.kernel.org/keys/fxotnlhsyl2frp54xtguy7ryrucuwselanazixeax3moty=
-yoo3@7vf7ip6gxyvx/T/#u
-for some background and a manual to fix these issues. Don't hesitate to
-ask if questions arise.
+I must admit that I'm not exactly GPG's best friend and it turns the
+favor back to me, so the least I touch it the better I feel.
 
-Best regards
-Uwe
-
---7lq3gldqslylbgfh
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmi/614ACgkQj4D7WH0S
-/k6SYwf/VMrZMykupWE41YZcUIUUqPJh5gEj0uwVlk2neX4xsS5WMxlDUCdZsS1O
-WA9e0x3kIerEOZkAkDCbIgWZUpUI+JEgchOgAhJlC+gnCkGxFxcGJ9Z8HBGXe+fE
-ZV8zuK9B9ZINgrrR2zev/0TJ7C4hSuckOD7l62PMSdnrPhBj/pCAC+2aPEqkdJtr
-sm2vwUhQkNDcgmuIFMF0Q2gTTiP6cy09bcmP1acsCxnOSNRZb1fJFC6Z407F5Cs9
-3b9ufQmBBfGd6XXfYrWnTX/SGmrvB7lAojbAEaC6KA+5dUBg6B2pmazFLrT4GT9e
-Xs+HUQEhMuY91r9o6nhtEfGdi+re0A==
-=kWuc
------END PGP SIGNATURE-----
-
---7lq3gldqslylbgfh--
+Thanks,
+Willy
