@@ -1,118 +1,114 @@
-Received: from mail-wr1-f43.google.com (mail-wr1-f43.google.com [209.85.221.43])
+Received: from mail-wm1-f44.google.com (mail-wm1-f44.google.com [209.85.128.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8163937AA9A
-	for <keys@linux.kernel.org>; Thu, 29 Jan 2026 09:20:04 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D15237998A
+	for <keys@linux.kernel.org>; Thu, 29 Jan 2026 09:28:46 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.44
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769678407; cv=none; b=iNH46icDTQY0BTwjhaqlJ+MAQCqjamcsv73hiEG7/Lf1Qp4dSTfOlWE+MNkxzlnKvWm0ncmQYokL4ncuupXPa+k40QJXjwcjJjZk8kkZDy1uHpS4O9SoFws0WTVHNzx+v/1qeI/6tezhONR77eCnOKygVjhDTtx4Z1pbneSR8co=
+	t=1769678929; cv=none; b=j2ZEKy5y7iih/SBF7+jDml819ZfgaSAMzAo1pFQP+PrNJLdE5OQ48Oug4Kl4jqDLiqoIod1zNIkM+Rq7Hn3Lk1SblJ3TJov3urcsH8zUfUX1rqZjffyvQxBoEBUsrzEOdYlv8kyR4mry6tQAb5y/vqO7L3++4Mb6tphb6lttw6g=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769678407; c=relaxed/simple;
-	bh=Nt9UYDX91xpK6ueSiFYzy1iVFn6VOWfsNWnEDlGaJSE=;
-	h=Date:From:To:Cc:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=drB546F8YCnNdt1hGmiK0nOPqTFZlDJs/xlHeyRLSOGMVnbvfLgJy4oNBBtf7lk9BLs3iuE7wSpjwDDBZtM8bZGirI3m18/+nWP04d5bWI6ICzWJKJQmRiHmKymphPP0UFSNxdODIMQrnf09PN5v1f1wNhANaLGHsHMti0mpguI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=OH9Zx9BQ; arc=none smtp.client-ip=209.85.221.43
+	s=arc-20240116; t=1769678929; c=relaxed/simple;
+	bh=X+gu219e3SgpfcIl4m38HZ3r2On5h+VLh0MKXKTSS0o=;
+	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version; b=uFhW89eSOjDFHZY6a0EQ4GD2d68BOMBRqdnShgKNM/q3qlHeBeZbuk04YRd9EdiSK2hwdtO6YIaEpWMvi0HWRKQiTuPjGaC0+4wAsMtrWfrduy9A9yhJ0EZKeNVDlMCLgLtlV9sq+01j5bpRnYOkRmJVK/jPj1y4Sq2V7+PWawc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=DQnvnr+9; arc=none smtp.client-ip=209.85.128.44
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="OH9Zx9BQ"
-Received: by mail-wr1-f43.google.com with SMTP id ffacd0b85a97d-43590777e22so444952f8f.3
-        for <keys@linux.kernel.org>; Thu, 29 Jan 2026 01:20:04 -0800 (PST)
+	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="DQnvnr+9"
+Received: by mail-wm1-f44.google.com with SMTP id 5b1f17b1804b1-4801c2fae63so5381995e9.2
+        for <keys@linux.kernel.org>; Thu, 29 Jan 2026 01:28:46 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1769678403; x=1770283203; darn=linux.kernel.org;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4F+v9HThnxdc5EmjoM0f9gDCYFQlB+uelY3uLhNnod8=;
-        b=OH9Zx9BQfH/PGmSORO2UdfKKck+2m1u2FOGL/pqtnq2l9jXMqwVY8qiomjbBsFKX8w
-         bMUIhVK9k5O2vE5PbJCotJo8ReXT+3ZO0SmoEVjipkithYs+EOgWJx4g5W3mMQYzXaVG
-         JbLSdfPeb8I7Enp11/v3hyvD2XsSfs54FANkQgipae0Q3Tl81iwkdE61v2F9Wmdlm0wF
-         aj4jxRshcnRD6R3VW27MSgd8FKcXwNfWd17r4sarbECl6/X3UyMYL7PNfHsda3NM+pU9
-         rTkZloIRiPLFEsYfAl9wQ4d2dhC7UNlOQHDQ/6lqkpAyyD9sq/syLEZ/5vW276ah5n3w
-         Ux7Q==
+        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1769678925; x=1770283725; darn=linux.kernel.org;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=3zXuzCAUVqXjY0LdBcwLsWP25Of6cpDZwnsjdT5PG4M=;
+        b=DQnvnr+95MiyIoAbixEaqUns+XZ5TyvgfAX68Y2Dl/APsH5vokzT/FZ4qZ5ID14dvw
+         3LpLBclJErJhV62M5QIF0IH3pDxWnHotKipzjmcWa9l+qRCzaA2kgcszxqRlNhBaezD/
+         vHWZKxJeIfww2ccsQCsYTz2A8O2IbOEuaCMw043cef6AJmPceJiL5pzH4dR2iv7W0skX
+         mhNGR5VPCO5rdB3Daa8Z8UB3L7pWN46MBQWma66qvNSpGHYYqLCRdOwMbKT3+czrWgc3
+         hbAJZuxZxgLsX3D6WMAVv8wje0f+G8ZLRBtup3BFfIzUYk6A5VPCbISFxRqtkhcnczf0
+         N0Xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769678403; x=1770283203;
-        h=content-disposition:mime-version:message-id:subject:cc:to:from:date
-         :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4F+v9HThnxdc5EmjoM0f9gDCYFQlB+uelY3uLhNnod8=;
-        b=RTAwkwybM5DiuPr93sHj+1m8bh8ImICDtTJNEvjxLRIDi59iQ8ht5sTyU4yp7roDTh
-         yqJAOaEu+s5zZwqfKDc4NCcJMbiFs07JAyIsX3+KAAWaA7tsKlSdd9B8J3nC6QZeUdYw
-         QLO6tJwcxIEufwoFZybBlN6MIRWEuWvO51qwPCqWv/IAhOyJZ//Rd6dq5HanWFf2631n
-         /T2F21n2o5SWxEVjdjyPQvQF46kHB6lLZRaNPHOAU/TZkXYsjDZgwaHmyzqbfDoYOTAB
-         0FAQwOok9EzR2IX5e8I+HjfReAykyPnlBKI9g54ok+5I95nI0hX7vFo6lgPeZZiH+x/u
-         Jipg==
-X-Gm-Message-State: AOJu0YypEX2x1fAqwAaqViZKBm7+sbNyKKUEe3tyqTZYyNxTGxSlt0SK
-	7Lb1kKh4vyclo1gtog2e3oWoQyNWiPwggBktBPP7JjSddA76EZmapBrfgZrMWuzWkwU=
-X-Gm-Gg: AZuq6aLa/WuGgwvsxqg4dwWFdPQIQCpZtAOqeKX0ryL8erWLGTwYLiU30ESBqVzsaX1
-	85AP2Hq14Do3Y7cm6Vcrcwp8C6zRtcon+zTG1yomJkqLmVKyoHmNXxpw9W8XlqUCdn8vusieKnd
-	ky6KN8c30e5NUuSAePduIbMFhxD39U7EHrRRPbip41TM+sANPRKjgN1ONZyRE6VG1U+DfWRNQKC
-	mJOoMg0jGdgAY6P48jMmFqjpDlBICK4Py9D0rBaQ90OW3X5gZMD3od+2ACBy5grr/Us2/9o8oBd
-	b1GSz5vwqi6cgyQbb44HclPSRUum7qDBwcwZMeqqNkVAGK1PsUVilEy3xRRfmQgcutk5b4K1fxQ
-	2Bifb2uZRsm17O4iZeNqnh7Ket5stFn/SI5xtUHX1fTvSS5bOCIxb8T9+8AjELkbQrPHuBKe6WZ
-	aJCNJTd6+ZST77o3C6WGCdCJUxpjuQXX8rD5n52h6i+iq7Uy5aI1g0XRwtQXKhW31hfy/P5J8RZ
-	hbg6/LyIIuYxQ==
-X-Received: by 2002:a05:6000:2c01:b0:430:f58d:40da with SMTP id ffacd0b85a97d-435dd051623mr11466478f8f.10.1769678402418;
-        Thu, 29 Jan 2026 01:20:02 -0800 (PST)
+        d=1e100.net; s=20230601; t=1769678925; x=1770283725;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=3zXuzCAUVqXjY0LdBcwLsWP25Of6cpDZwnsjdT5PG4M=;
+        b=A2lrltrjWrDWESR8dgwzCZP/bjw/giM7km+8yEb1ER2/uyNFBR9Eq7Ag2aguqJEn91
+         a7MPmVllh4goYxILAZKlz/SQBMPByoowieM5rffj3RnpzNWWobZ5cKHiAUmd5S2IpXn9
+         B0NdfYALOdrvEv9a44+68Q8v9CYpQTIXau07AaJ3NH6jqSmlFdN1ADmbn3fFM+S0pv8s
+         zElKB3z9HxFEETRMNaSPhq87LGazcuchzMVKF/J0VF122k8FZNRI06XeHHploFXJNNyW
+         eiSoAa6rcIoY61YABhkSXuh8KOXKb3iOhxN6qDuKZmvtKOk7LP1jgafmbaZbHdw8FJgy
+         FOCA==
+X-Gm-Message-State: AOJu0YzS7obu913QoP2MEjobiuOvGAAkDgBaeQxha9RU8mKLA44SggJw
+	pcEgQdJVAJPnEj00Tys2Ae/KUTmwUIxfrb3dF8icfooP5icFkbgVqgoAQMuNC76IHU4=
+X-Gm-Gg: AZuq6aIOfIgvynD4MikXx/ZJqsD3A2M4lq/94hkEHVjJIyzvUfACO+PqhdZkBY3rDZP
+	S+y1yi7rJhGXXcozZideVsNgxbUDEy2J2GCkMdEFIyW8bV4cnlCA4kd8tZcIObxWSQtwv/OZqyj
+	A1Yhjom0nocP/i0528R9yz19OCIBb15S0g9ks/iRGpUt2Vi0xSpEaC1QFdGS0nMfVCD+D1WnxVA
+	OE28VuYfp2Lq9teo3Gmar2NHKMIjjzp7NcapFn7TixqeSvVCnfLcCFtnyrtRHUVRcQRi6MGUjt2
+	YJOLX8uJQeh8ccTRBc6KzAh6kXIhUnXQjWvP3ReoWvRU8ZBaRNTf/ebsapRHCyIY5eThU7niw1/
+	xUtC6HXHddnTp0FAdc3F+lvJZr9WAKCSJDkDzvp7NjFYGDd2vgmqHBiS9mY13rr64TM/9YJ0nti
+	2uY2kk2vWoAdJgb2lD2R6/URCvtKVVhBSkB/KQ9T2kOkzDg8AYtLCbaR2ItT+2crlajc6yPNBy+
+	Dc=
+X-Received: by 2002:a05:600c:8b30:b0:480:1e8f:d15f with SMTP id 5b1f17b1804b1-48069bfaa0bmr103646145e9.2.1769678925481;
+        Thu, 29 Jan 2026 01:28:45 -0800 (PST)
 Received: from localhost (p200300f65f20eb04703f3ea9880728e0.dip0.t-ipconnect.de. [2003:f6:5f20:eb04:703f:3ea9:8807:28e0])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-435e135422csm13458380f8f.40.2026.01.29.01.20.01
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-435e10e476dsm13356626f8f.4.2026.01.29.01.28.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 01:20:01 -0800 (PST)
-Date: Thu, 29 Jan 2026 10:20:00 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Seth Forshee <seth.forshee@canonical.com>, 
-	Seth Forshee <seth@forshee.me>, Seth Forshee <seth.forshee@gmail.com>, 
-	Seth Forshee <sforshee@kernel.org>
+        Thu, 29 Jan 2026 01:28:45 -0800 (PST)
+From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Sakari Ailus <sakari.ailus@iki.fi>
 Cc: keys@linux.kernel.org
-Subject: key AB4800A62DB9F73A (Seth Forshee) expired
-Message-ID: <6vz6qlpdzoueoigolgs2x6i6mpg6wpa3hos34feiu6n4bnvc5d@syix5qqdbmn6>
+Subject: [PATCH] Drop expired subkey from description of BF53AD52308AD4EC (Sakari Ailus)
+Date: Thu, 29 Jan 2026 10:28:37 +0100
+Message-ID: <20260129092838.941498-2-u.kleine-koenig@baylibre.com>
+X-Mailer: git-send-email 2.47.3
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="mvweoabr6b742z3h"
-Content-Disposition: inline
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1315; i=u.kleine-koenig@baylibre.com; h=from:subject; bh=X+gu219e3SgpfcIl4m38HZ3r2On5h+VLh0MKXKTSS0o=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpeyhGjj4Go3N8PfuLp12KeEQHEP28P7d6Iw6Yu GkxN7bzfZyJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaXsoRgAKCRCPgPtYfRL+ TrEtB/43cGTGMsv1ehyCfr3UQNIHJGYF0DgcvJGikqxZCV399Pw4T32bBdQbUqXpb1C+SvqI6Cn borZCy4lDmf0JZo4BcnSrt2HJXebmZz8x03lL8uWNBV87ahrNaICiJvDft4pTyUY+iOEkh/N3mL fJlZ2sDnE6KUU7FMZ2qP7CQa7h3TGWuay6C7fgqLcd50IkVtb6QuIGzvZZU/r70AbPIcGI0niH/ wLzHnCpcS7zG35geC1JTsaMyzU1O2slx9i1i9SM5qtRjeZFqD4cJB/7I7kghKouv+3+VQwFY4k2 X3cjcI6SnLqwVstDjNtgvEcP3w/EQUrMpJ8bT2a8ZCrTski4
+X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Transfer-Encoding: 8bit
 
-
---mvweoabr6b742z3h
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Subject: key AB4800A62DB9F73A (Seth Forshee) expired
-MIME-Version: 1.0
-
+Sakari's signing subkey expired in October last year. Drop it from the
+descriptive header in the key file.
+---
 Hello,
 
-this is a quick FYI that your PGP certificate AB4800A62DB9F73A in the
-version that is tracked in
-https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/tree/keys/AB4800A62DB9F73A.asc
-expired earlier this month.
+this change is not very important to be applied to the pgpkeys repo, but
+serves mainly as notification to Sakari.
 
-If you don't use this key for kernel work any more, please let us know.
-Otherwise I suggest to expand the key's expiry date by doing e.g.:
+@Sakari: If you don't need your certificate in the kernel pgpkeys repo any
+more, please tell us. Otherwise you might want to extend the validity of
+your subkey or create a new one.
 
-	gpg --quick-set-expire 2ABCA7498D83E1D32D51D3B5AB4800A62DB9F73A 2y
-	gpg --keyserver hkps://keys.openpgp.org/ --send-key 2ABCA7498D83E1D32D51D3B5AB4800A62DB9F73A
-
-to extend the expiry by 2 years.
+There are a few valid signatures done by the key BF53AD52308AD4EC in the
+keyring, but none of them is essential for the WoT of other certificates
+in the repo. There is currently one active path for Mika Westerberg, but
+it can be replaced by another one of the same length.
 
 Best regards
 Uwe
 
---mvweoabr6b742z3h
-Content-Type: application/pgp-signature; name="signature.asc"
+ keys/BF53AD52308AD4EC.asc | 2 --
+ 1 file changed, 2 deletions(-)
 
------BEGIN PGP SIGNATURE-----
+diff --git a/keys/BF53AD52308AD4EC.asc b/keys/BF53AD52308AD4EC.asc
+index fd2f2c79aa44..c28f9e39b43f 100644
+--- a/keys/BF53AD52308AD4EC.asc
++++ b/keys/BF53AD52308AD4EC.asc
+@@ -1,8 +1,6 @@
+ pub   dsa3072 2011-10-18 [SC] [expires: 2030-08-22]
+       270CDCD35B9D7E26C2D72097BF53AD52308AD4EC
+ uid                      Sakari Ailus <sakari.ailus@iki.fi>
+-sub   dsa3072 2017-11-01 [S] [expires: 2025-10-30]
+-      C4E18128781ECBCFBCEC07AA7C0476FFD34F87C5
+ 
+ -----BEGIN PGP PUBLIC KEY BLOCK-----
+ 
+-- 
+2.47.3
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAml7Jj4ACgkQj4D7WH0S
-/k6kJQf+JYg2GH1Tq5mAKIuj/MrGhHzXWkYDboLQRKHRP9I3Mo/EfEBnn1ZuRuEe
-r4O0IXqRULmtm5Bq2IuNMvKnjoiKOfigvkpw0RYuJr3szaThec4hLOuHipV4bRdF
-QnCyfzedrtDZCiYkKg4fQcHRQPC0LfHwsuDiGG9vpnInZCYsINnUDxfc7V/YZ9m3
-c+HAWxnYqk61ONTTarEOenFwbv18hq8b8fB7LWYJaZLcdFbJ/OO2NMNvKUjtsaXs
-kGe2JlL8QQcYck1wW0LNenyMQMqBykWb5qfiBstdIeRN0v9MIg7EKIEFqVQvzaTK
-b69Kig4iSei0usBOAtUhpXoHrFAEuQ==
-=Tycy
------END PGP SIGNATURE-----
-
---mvweoabr6b742z3h--
