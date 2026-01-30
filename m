@@ -1,124 +1,192 @@
-Received: from mail-wr1-f52.google.com (mail-wr1-f52.google.com [209.85.221.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-out3.simply.com (smtp-out3.simply.com [94.231.106.210])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C75EEAE7
-	for <keys@linux.kernel.org>; Thu, 29 Jan 2026 09:48:07 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.221.52
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1915C23BCF7
+	for <keys@linux.kernel.org>; Fri, 30 Jan 2026 09:06:53 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.231.106.210
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1769680090; cv=none; b=LnKsNPiHNyftpwltAFa2caqrtycPZhjixLf85gCuSy/ZHqYwsDj2KhIpzhsjmiEtGOP/tHm2wFxSfxPAKHJEsEO7Vs8ijhUupQmHAe0wCHP1Dr+GhVVesoVYInOBzlPDOcdpd629fQ6YlvKAUcf8M46Uk0gZJLvq+HYgWGSztkw=
+	t=1769764017; cv=none; b=MQlVtPs+VUZfr7eiv7LlpTP0nEjRQDSyHvhIBOW07tn1rCzgUPqWutULEuNuaedlg3Rs3vQGiKiziRZUjtze70m3/4Kx9BaY5X0ODnU4OABzfCJN666v856JNibKfgEiLA/6v/f1J8TL4kHN4V/RbiM6vTOcY5Ao/1gWT3WLg/k=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1769680090; c=relaxed/simple;
-	bh=qq9or99pJIEwAm8moQ174Lk44KZCGFyw+fl6hgIO32w=;
-	h=From:To:Cc:Subject:Date:Message-ID:MIME-Version:Content-Type; b=OnLKoJ6ENfFcBiqe3uXPki8ftdif0DYkDRcDsig/4qSAMYaaGpHzNhevc118/tEJk0lqcYdfqWyHk7VHXwWHxaMjNKRXYi1vizPiIJO6c0H+Sdg1/sEXvs+4ga9Dv28A45aToKlTk5xoFOy34Gm/r4EooiVTwx0SWzpgHR6PdU0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=XpHpcJQV; arc=none smtp.client-ip=209.85.221.52
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1769764017; c=relaxed/simple;
+	bh=XXJLESt1exvwjS+Ep57zO4cPuyxlqmyQzAWgtBHGx+8=;
+	h=Content-Type:Message-ID:Date:MIME-Version:From:Subject:To; b=KzLDmj/TnKRtJHkYBYNliZBkJq7Wknrd8V/m+D+dEPip8I3dOkcTrZz5koJgp+2oc2KtfTjFPeIKTAirNhcUKp4GI9ykktNnpAJ8Gem4GmKUneBlO1G7P3YlQ5MB4Oe8vX9ywyMhKPAoyAAEnbyh6AO8LTDyvAYGnehiPoP91o4=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com; spf=pass smtp.mailfrom=gaisler.com; dkim=fail (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b=hrcnCDY/ reason="key not found in DNS"; arc=none smtp.client-ip=94.231.106.210
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gaisler.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="XpHpcJQV"
-Received: by mail-wr1-f52.google.com with SMTP id ffacd0b85a97d-4359249bbacso1226776f8f.0
-        for <keys@linux.kernel.org>; Thu, 29 Jan 2026 01:48:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1769680086; x=1770284886; darn=linux.kernel.org;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=jjh8j2zhJA7ZId155p5IpGMzvY3NpugrVoCdbCQjAxY=;
-        b=XpHpcJQVfzyfC+DM9u7OMTPAOrNs/EaeNn8Fd+KYl0o5Ibved3GcVRLeI6pU5CcoBd
-         7yN5MJT1fpd/EGtLffWQ2X5eJIrx8gvvgummwNvWH8u+RVVBBfPqolEProSmbLmqpt2o
-         oWKUAgseCU63ulOptb0/+v0A+6NLsVoBR7HSe7pm+sBByE7HTNJL8gyeVVxg8G62l/eT
-         N0TsURqzbo3sWVmrGPDy43bDWbCKEzbAIIdxFVr64/ovnP2niKCSNh0I+b2ub64ie42k
-         NUGHy1XWPibLEaYEvZOxfooAoHKpSvnfHjdvpEFRnrihgZqaJvWIL88oIq/rzkjB9yUv
-         wdng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1769680086; x=1770284886;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=jjh8j2zhJA7ZId155p5IpGMzvY3NpugrVoCdbCQjAxY=;
-        b=JMgGKcA542b1ZCLsTqtrENPo/fW2bmcnQjG54bzv33g1j0Xx1Tg1LhJZ6oItgoYK66
-         PdnzDlmeGjmGO+522QEXNID80QMlglgznAviO884GDQ3ancmFqLepw3E2inDDjsIuQxz
-         MhipHymTCWzSR8tKFkYGjiJSSvEKkYsY4JtaM5re5fr3m5fuX+7kHp5e3JtrvIzk80xq
-         Vd6OEQhxHBPkZ4dbikTThApb4NGhJg6z1qUXw6xLNV7nMKrymJfJjE10pIl7CCiGM76I
-         Xzdsz1vkjCpHKUrzQDPw/VDLJzPRFnBnMSz1uORx8LYyNZg50QgwIFHSif7XM0SugZ7N
-         umGQ==
-X-Gm-Message-State: AOJu0Yw5AdbC1dwaHoTKtwtpkGRKZHw1bD5dCJOBlFiOjBKRkUywgBEq
-	x1k+zgrI2QQiIvLn6qc14vkdAKha2Un8f7tKHWB9HGSfKWE7xc1sKxYikCYwYtgGW24=
-X-Gm-Gg: AZuq6aICMhk+xUP6z8dyuqZ9LUttmucfyhSf5jq/EXgiMWqYqWkX7L6kKgg/r+9AE5A
-	nj5tIt1H0Jr8CnTttKn/u/3TxD8pBj+z5nZjTWnGDIias467d8RXCbgRjXOSfa12bJk463rOdMT
-	2dwQLkqvoW32KCUt+FCBtPjRDPFtzcfxFin2jnRt2lUUT4eQ7b/S4II+BDVM9vlHv2Fgz1u80s7
-	w8PWRs4wQ9qyB0LGDuw3TluZ1sF5i1kXR85xoDI+aOv33Mg/Bs9wcqb/kbPK8r9sdSRapY7zYNT
-	SuBfG2oueKNFeKuVuocUMsPKWKlt0RW48vQaGkRNHwVpCS4lLdjBmMNUQ7TyDiT4F/6YsMTECpg
-	QQaL/3zIqygp1a5fWtYPpSPNRXRgWfezvvraa0yI+cYVT1fBmlQuMssaMtqQHtuEH1Nv3p6HIjQ
-	6Xhvp/NcqKvFMzTI+q2+vEDQ988Y5j4uJoMQrjnnwsmb2wd3CQ2ToNX52P5xD2Zq4Bny6jtyBbz
-	xg=
-X-Received: by 2002:a5d:5d86:0:b0:432:c03e:a78e with SMTP id ffacd0b85a97d-435ea220d54mr3309586f8f.27.1769680085988;
-        Thu, 29 Jan 2026 01:48:05 -0800 (PST)
-Received: from localhost (p200300f65f20eb04703f3ea9880728e0.dip0.t-ipconnect.de. [2003:f6:5f20:eb04:703f:3ea9:8807:28e0])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-435e1322eefsm13347313f8f.30.2026.01.29.01.48.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jan 2026 01:48:05 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: =?UTF-8?q?Michal=20Koutn=C3=BD?= <mkoutny@suse.com>
-Cc: keys@linux.kernel.org
-Subject: [PATCH] =?UTF-8?q?Drop=20expired=20subkey=20from=20description=20?= =?UTF-8?q?of=20CFDED9A2FD1314F0=20(Michal=20Koutn=C3=BD)?=
-Date: Thu, 29 Jan 2026 10:48:02 +0100
-Message-ID: <20260129094802.947558-2-u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.3
+	dkim=fail reason="key not found in DNS" (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b="hrcnCDY/"
+Received: from localhost (localhost [127.0.0.1])
+	by smtp.simply.com (Simply.com) with ESMTP id 4f2VWB2cznz1DPkR;
+	Fri, 30 Jan 2026 10:06:46 +0100 (CET)
+Received: from [10.10.15.30] (h-98-128-223-123.NA.cust.bahnhof.se [98.128.223.123])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+	(Client did not present a certificate)
+	by smtp.simply.com (Simply.com) with ESMTPSA id 4f2VWB1Nxwz1DPkN;
+	Fri, 30 Jan 2026 10:06:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaisler.com;
+	s=simplycom2; t=1769764006;
+	bh=XXJLESt1exvwjS+Ep57zO4cPuyxlqmyQzAWgtBHGx+8=;
+	h=Date:From:Subject:To;
+	b=hrcnCDY/Sn0t0rT2xngb5ExX5cC75pB3q2wbsE5/Tcd2YMPsXbiCu7gW+UT1y/8J6
+	 jjIXSIjJnG8/AsbRvHEUT7jr9zhb+jGxPw7q1VTQdxotQxvWT6POmNwkB8oNnHSreW
+	 EsTzTgO5l97rtS12XexZvtVC7HErtA1IQrIh37jWlNijiNPPenv7Lq2RDgsWctHStt
+	 LmPk9fy22MJ/h1i/uYgNu4SSLUzWuI43lE1izw4L1V3m+6pVPdp8kJK4+NBPAkKiyi
+	 w0cfia3xb397yCRGR9+f6CJ0Wr9foNtcYIYkshlakRV0mO5aQqwj3b3MGOImM1S6eC
+	 Xa7GPz0G4prVQ==
+Content-Type: multipart/mixed; boundary="------------nR1RkK45JFtk5MuAzObLU7Qu"
+Message-ID: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
+Date: Fri, 30 Jan 2026 10:06:45 +0100
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US
+From: Andreas Larsson <andreas@gaisler.com>
+Subject: Key update for Andreas Larsson
+To: keys@linux.kernel.org
+
+This is a multi-part message in MIME format.
+--------------nR1RkK45JFtk5MuAzObLU7Qu
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 
-Michal's signing subkey expired in June last year. Drop it from the
-descriptive header in the key file.
----
-Hello,
+Hi,
 
-this change is not very important to be applied to the pgpkeys repo, but
-serves mainly as notification to Michal.
+Could you please update my soon to expire key in the kernel keyring.
 
-@Michal: If you don't need your certificate in the kernel pgpkeys repo
-any more, please tell us. Otherwise you might want to extend the
-validity of your subkey or create a new one.
+Thanks,
+Andreas
 
-Extending the validity can be done using:
+--------------nR1RkK45JFtk5MuAzObLU7Qu
+Content-Type: text/plain; charset=UTF-8; name="export.asc"
+Content-Disposition: attachment; filename="export.asc"
+Content-Transfer-Encoding: base64
 
-	gpg --quick-set-expire 47DE106A4B860621B0D6E63DD8CF730A95E2521C 2y DDEA67C5D8F6C4667A5DA0092DDD69DECBBEC149
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptUUlOQkdXN1Vva0JFQUM3
+OHNjZzU1a28xVUZkemtwWGtRcnpPTDZuRnBoR09pdlcyUzFFNE5WbE8vd1VVVkNEClVDWHVk
+eTZLMU5PMTVLWS9nWjVNOFhsancvS0FpeUUxaTRUclI3WGJheHdMWGpzSEp2ZDhLR0xzcWRM
+WVpRZUgKTFU5QlhYM1NxQ0lIQjg5c29DSThPNUQ1TmJiOGp4MFFqTUp4SUREQzh0R1draWdO
+dnBQN3M3b0dNZUgrbWRLLwpXdFdTYzlpR2V5RWgrcUJqcUx2TUg2S2hGOGNjSVh6T1g5OUVM
+bVFJS3pTTTMzSlNybnU1cWY4ZWdvV2VZbHlVCmpIRUxLbnYzZS9PSE93SzVOakpGWm1CRDMx
+cG1oSE9Ma0FwUWRHRklVb214eEhPM2VHSXFoR0FETXJZbVBoUWMKV3ZFSytSd0hheWJ3S0pv
+ZWZ2ajRZZlZTZk40blVHVHNrVDVFNTN0OUxRV3pHOHZBaVVIQllyUlBsbFo1UnRHeQpyTWQv
+RTFkZEVsSlhSM1QrNlZzVmN0ZlgrN0ZNSzBkZlRBUVg4YjJWb1p4dHFxSmI3RjV1dTh3VS9L
+VEJ2dDRECkFiSWlVbWpjWlNRWVBuMEp0UjJxQlNqT0UzSTRhWC9SckJQdHA5R1gxOWp0YXpE
+MGtZVVdXa3hSYnhheEtjZ3YKcUc3TnV5VHZLNUJYckdpTmt2Sk40c0c3ZTQxY0hkd0tvMzFq
+WU15SWZpWHFhYURkMUFzRzZXZ1MwdHZRTGRnUwpacmFpTnI2T1BwOUVmaGd4YUZsQ1o4SzBp
+VU1Hb0tlTDA1U2NPSUF4cUUxeFJOcFdjVTByZit0eWt5TEo1SHAvCm9ObVlseCtNUSswNDAw
+dk5Kc0VlV3pZTmZLNGhtbzR3RzZzblp1YlhqRjJUdEJoWXpNTWVLWklNN3dBUkFRQUIKdENW
+QmJtUnlaV0Z6SUV4aGNuTnpiMjRnUEdGdVpISmxZWE5BWjJGcGMyeGxjaTVqYjIwK2lRSlVC
+Qk1CQ2dBKwpBaHNCQlFzSkNBY0NCaFVLQ1FnTEFnUVdBZ01CQWg0QkFoZUFGaUVFUUxOOUJT
+QllFYmpEZlp2ZUJmNVFQa2ZkCjNsY0ZBbWw4WW04RkNRZUdScWNBQ2drUUJmNVFQa2ZkM2xk
+akRBLy9RbzUzUVBXcjM1eE1lKzdwMGh6QU5aeEUKeDdXdVp2WVBPSURFZ2RoSUNWOUZMbHN3
+cHFCem96Ny92djcxSUlVLzd1REkreWkya3lvdXlVSEZKMGpFdnpacwo1Nkt5dE9acWpybkIz
+SUhpdkN5akNBNlRQNTJRRDVWR3dSK0ZHV1FhajlNZkROalNEZkdpeWZWK1ZSUmVXSlFiCkdO
+emxEcVoxcC9FcU9UajdsTGNubGZOMEdUaVJJTU0yU2sraHIwL0ZxSGtXZElQZGsrMThFZDdr
+VWlEMkNjd1EKbUZRRHdKZUhDbFdZbUNVd1Q0bUpZbmdueGdqZlZEUXVuSjhtSEk1dkFIdU1G
+dWpJU0xxdmpqYnNWdVEyRlI2OApORXlZdWJOOGRxdUdZbXhHV25rWjZ6OGN3ajJ2emtxamts
+Nnpha2NWU1NQL1dlVmNHSm93b1Z4ZDNMcHRoR2NFCitvMzFnVWNkN1RJV3RkdGtSbEtZVzhG
+MmJlOGpLMkxsWHh3ZDluWFNTNDhJVVVuUTFRVjlpOVp4N0NOZWljMy8Kb0RMVDZPYXhYcGVS
+UmpTM21mVldPU01TbEVLZ3VhRlA0ODNEQTNncWNmREJldzJzc09TQXBXMFE3aUt5Q2p6VwpI
+L2dGTFEyY0I2dy9rOWJ6QUVtdFVYZGlJNkM0OVEzNHZoM2R1YTlyS3BRK2RhTWVDOVhZWSto
+QlBacnpjRUQyCjZhYSs4eDgzZ1JRL0RKSGtFcU1FdU10ZWJYeWdlUGJTTmkwRGNIZStyc0tI
+K1dEUTJjQUMwaVhvK0ozRkthTWkKeHU3SEtxK2d4Y3liblYyc0lIQzF0NmZpcnJleVpvUGhs
+NFN4dGZQcWxsaUJGTzUyOEYvOHFscmlQa1oxb3FGOAprMENiSHBZeWQvM2JDbEJDNEltSkFq
+TUVFQUVJQUIwV0lRUmkvNHAxaE9BcFZwVkdBQVowSmpzMzliWDVFd1VDClpiNEl4Z0FLQ1JC
+MEpqczM5Ylg1RXdOdkQvOVBRbHR4ZkcyeTRFaVMwandSWDJWVWJZemdrRkZwMm5RdUlPeTEK
+WEFrZEh1aVU3aUVLeTlsRlNycTkyZWRGeEg4ZkFhdFk5aE9yb3BQK2NLUk9lYWxNd24yQllq
+eWYwMnpZNENRYQovb1psY05qSUJIVEx6VmEzUmZvM2xyR1FyK1FzRzBsNFZLYjNNUnVsaDJ6
+QjB1TUI1U3RIWmNTVVg2VURJck50CkQzQWVMeGJDR1lFYkk5YnZLNVJoMkpvUGk4RkYyeDdP
+bStNRzBTNy9MQ2VrZHJ4RTdxNkdZQlV3c0JJWEdkSDIKWlYxZzJlR3EzdmNtakZxeFdjM05W
+TlpnZEtvcEtWdyswNE5JSTl5a0pWcUtvdGdpYmhKckgwN29QNWhJN2hKeQpLTUZLcS96akhW
+TEJpZm9Za3kyZlJpMWJlUlMzaWIraE9ZVnhrUFlpMllrSGN4UG9GK2VtZnF4cll2aU40NmZG
+CkJHYW1CUUNVOHp4d0VGa0dBZTNuTzNseGJKMnY5QXoyWk9BT0dpOStFL2w1VVFGR3hlVGZx
+MVRabkQwdUlsNmEKalIyZ1lFaXpYUFgyYkd3dWJhNGV6Ti83SWlKaGJZUGY0N1Y5eXVJTm1J
+cE9qUDBPYzlxdytTYnErMVN4N0laSgpYaS9qazhGVUJIajBVZDk3SFR5WWdHMFgxRmJ6M3hS
+cXBVZ3BBek9TTVgrNmRCUkZhRTlNK09RbTc3Z1VNL0pYCi9IUlBWMndicDFmUTVtcFh3VThk
+UWorR1Y5ZmI4SHlUNzdnTUVnMU12bFNlYktXWUN0R2YvMmJ1UE4wSjdobUgKMDhLbXRpR2li
+d1RJblJLNjg2WnpmZzd3OU9jQWR1QzNGUzdmd0lDQ043dUpFaHFKeUJPY3V1MHFnNkd4WXdN
+Swp3bW9GVElrQ013UVFBUW9BSFJZaEJKVTlSWXJiL1BzNFpmUXMyWXRZZ0src0FoakhCUUps
+d09ES0FBb0pFSXRZCmdLK3NBaGpIZFE4UC8zakZGaStGMEsyemh4TU1UUmYyZVNSRlJ3SVpu
+U3c4U3ZFWXJQNGFJV0dIZWdzY3BlbU4KZ281QXd5cUtlV05PU2pmcHVsSDN6ams0Q0MyMHMx
+MFc0YWFFMElqUGwrNlNmaENUbWdXTVZqTWo4VHZvWWV6Twp5NFNyUmI1ZUxSTHJCRnVIMzc2
+SDdJSjhzeTQ3VTRzSGhlL0pXMHF5NlJ3cktnT3RGN2hxa25WZDFKVGZTRmc0ClZBdld2dUpG
+RmhBSXZlZHIySHg1NWlLK3RkRSsxcWNmZjkxaWNiVENmQU83NGdITEpEWXVBRmtmS2VIS2JO
+RmUKSE5kUCtDTnF2NjFPc1lJNlROdmpkdEpTa25hNHNGNmRXZHhOeEl2TGppN3dQa1F0Rjda
+bWNFNFo1L2pJbFNUYQptMTROcVA3elg1bkNTeVU0QjFiYzN1eEx4NGtlelQ2K3dYSkxtMGxM
+RDlGbzJsZ0ovTnNoR0xYV2xjVHNkOHUwCithNHhpUE54TkdXMmg4L1liK0I1OWdtckdHSmdW
+UUMyZHFHWEIxRFA0VVptcHdCUllyb0ZmU2RlSkVyZUVsalAKRnEzZWxyZmd1TUdqZjdXQmVs
+eGlod3RFekVYamNNamFNdEg4MlJzS0VzSEtFZWxJNXZ6VGdDVmdsQ1JFMGxrUApHbHdSZS9y
+bXAxZWFwZy9td0F6R0gxVjQvaFJ1OXY0aFNDTGd3OGZTTW5DK205OTcyeStlTHhBL25zVm5R
+aU1xClJtNEVYaGMzWUYxU1cwTUZpOTFkN1Nzd1I1eWpVQS9jSFJ3Syt5TzlkaXhkcHdxZXJY
+N2tSMmhEZ09QbkN4U04KVkc1YlNyaEl0QWJRNG4vS290dVhQSE5aNng2MkpFK2ludlRteE5X
+YVpQcTFCSWdUUVpmNFRGeFhpUUl6QkJBQgpDZ0FkRmlFRWRRMkNzS2VCVkRGZUpaSmJTQVMw
+dkQ5Vjd2c0ZBbVhBNGFrQUNna1FTQVMwdkQ5Vjd2dE9qeEFBCm54aDAxVzY5M292bHBNdG9z
+Nk9iVEowaFZNQmRXTkQ2RXRCOEVXdHNIU1k5MCtjR1ozSjRXL0ozV1lEalE0anAKaXBCR0Ez
+SkRLamdKYTRHVDljSkZONVdVd3ZJWUZCR3psd3FWNzB1Nmo5V00rdDUreHhNQlNWc1Y4Yngx
+WFRYMwoxTzhZdmNNMktkbGVZTC9aUEJRUlRFSnozNVVtWTdzditiZGhmL2pxYmJzbXdZK3ZO
+WllGYWVjVlR6L28yK3c1ClRzOFVxdEZFc0NIbWlMdERyRVdFK3ZVUy9MaXdmK1dLQkVwK2hG
+S1RFRkJ4blBFTk4yUFpMUjcvOGt3ZUZFdWcKL3Z2M1N6Smd5OVlXNmRBbWpFR2pHZjJJNmhw
+eHVTWVoxaHZ5TnpaNmRjT2J5MFdhQ3ZIeDEzYnlISnl5Zlh5cAplSGRUaE85U1c3YlBENzhP
+cWQrMlB4Q3N6M29EMlNMTGZ3S0h5WFIyMU45TjVLSDRpTTJXZE4veEZhQjZuT0Y4ClVuOFlJ
+eFVnK0lwOWNyVkhENGFIWG5KKzJzTzVpUHhCdGRIZGhKTU5acFhJNUlVRkFGa3NOdCtKK05B
+ZWJMM1QKSUpaNHgzVWVtZm5zdmYyZjhNWGg4WS9oZ1h2cENXdUtPTFR2SFJOaEJER2lvZUJk
+RTRFZlJqNWc1RjVPaVExagpnV0UrL2lpc2gyNDJNdkpKN0h0VXVaYTJUV0kxL3dSOENselhu
+NjdzQkZtNSt5bFBwcUM3bktzVXNxYzQ2M0dsCm5FVGw2TE82SXpwa3poNFpMSTVjM2NRT0hw
+NDM0TDR3RGV6UGpCZHo2M21vU0pJYUY5aURXM25INmpKWmF1bTcKZEp0UWU1ZUV4cjVvaE5F
+bEM2b1Nndkcxc2JsUzVCUjN4S2RLSG9ydGRZT0pBak1FRUFFS0FCMFdJUVFOSlJIegpJcity
+SEJXQUptdmkzTjJSTW1hYjFnVUNaY0NGbkFBS0NSRGkzTjJSTW1hYjF2c2NFQUNiNSswcEti
+OTNVZmJiCkJDSmZBMUlLVStGa2xKeWVEWlpHU29uZExmY0lxMm4vd0Z0Y3NDWVVRRmVMUHFG
+UEkwdit4SUt3RHg2cXVqM2IKR0M3QUdaUGwzenVLZlFJTVF1dHJ1dVRudTVWOCtUcHFkTjRh
+bmNYcW1hVGdEV0ZjaVlXaWF0VWY0K3lmRk9pRAp0OTBUczdlZ3ljbXI3S3AvL0hZNlFlaE5t
+VS9TeVo5VCtaQmpORmdJOEFCdjdUT1lTdnFGOENmNm5VbXg3dmxBCkVwMW9TNmZNeXhoanVy
+RisweGoveVhZVUxDWnAyNVB6TURzM3pFbVZOWjU0ZiticGJ5ZFg5aG5FREFRUUdPRkEKU2wr
+MlppYWFzd2xyZW9NQ0dmUFphQkNxT0djQzcvcmdSMGY2ZTYwcDhlZ0FDeXdVUGt2SFFFeDg0
+WkFNT3l3RwpMQVkwS1FKVkwzbFczbTlkTjNJTHZEWTdUdHpLZjBmN2swNzhUdk5qa1pDcGxZ
+Uk9qRjZ1ODNVSEFIemNVajRSCm5QU2ZNY2RGbjlCZy9JcFpKT0RZYm9zd2xHTGpVVWI0djB4
+bGxaVWRZUjUxOE0vQjUrRjNGQ1lHUlFwdGFMYmcKWm9hUEdnUEtOaWl6OVpxdzluMTVHdzZM
+eVdVMzV1SDE4OWI2WXY4OUxPdHpOOFpNOUlremk4RENrcVR4cFJwcQo2TFdsRkFuNktkRWVT
+WW5MeDNtcS9nZG94L0toQXpyTmtOUDRPSTNCZGxHc2wyeTk5STZvRGtCTlpYM2ZpWXd4CmpF
+QTdNUmdUOXZMaEMxRHdmd2hWTDBFOTVhUUxvSkI2OG41RWtQbnhYZ3VYbmpnYmlmR0V1OHFU
+RmhEa3htdFQKMXkyaTByaVNIVXhiRjNaWWFaUEw3V2p2dFdpOE9yZzRCR1c3ZnNJU0Npc0dB
+UVFCbDFVQkJRRUJCMENXbUNweQp6dXNQVm9wWGU1S3J6UFRITHJuUnZ0QzN2bWVKOGlYa2ox
+ZGdCQU1CQ0FlSkFqWUVHQUVLQUNBQ0d3d1dJUVJBCnMzMEZJRmdSdU1OOW05NEYvbEErUjkz
+ZVZ3VUNhWHhzTXdBS0NSQUYvbEErUjkzZVYvS0FELzBmandlQTVnMzAKaTNwZlJDZWZ4cy95
+Q0pqSjU4UzUvNFpiMEM1M1NXU2VlMm1yUnVZVk9laXZaYkZ3TDdkb0xKZ3V3QzVaSnA4Kwpt
+NHFVM2pGNnZPSUF0OVdHM3Q5Sm15NjBhQnBDQ0dwb0hnMGpxUXlDOTBhaWp0c1NHVkNmbDFh
+Mnp6MDR2bXZZClY2WkFjRHY5MHFHaEFBVSs1K2w1SlpYejVRSmdiTkFta1I4M1l4Z293bG8z
+QXd0K3VaMXRtRml0a1ljekcwZysKUWRCbC9tRThDNXNvYTc0cmJpZXB4N3Awd0tDRzR6VEc2
+WVRrMGU0cGsyQ0IvaUwxL0hMWVZMNTZMUVhTb3FOawpUNzBFQ21vZFprS2dUakNHWGVBZHR3
+NmRqYkNweWU1RTZXYjU1SXczVmo5YlNLcGJFUGRTMGZjZ2RnWUYyMnk3CmRMbEI0ZEtxYkJE
+Wjh0UnFBMW0yWEhZb2E5b1M2K3Ivbzd2K2F4d3lFVVMvVmFybmsxV2JiVy9oejN0NW5HdTUK
+VHBGeEwxa1doQk9IQlRkak5vekM3UDFhVU9IM1NsUFhEWEhUaWx3c3pYMU5HYk1Kb1NkNXk2
+Y3lWM1g5aDhVSApSUDNiWHgvNzAyeFVkT1IvSGlneW9LQlJiZHUrZHFPL3J3bzM4YzhTb25X
+cXM2bnJGanlkR1ArVklXQkxWWFZkClNqcGpHV1pSMFdXMmVlOWdkdi8xUzR4WXFWMkRRR0dw
+amw0TTVWelFrRzA1cVJTYnZVUzNQTkFZeGpWN0J6anYKZ0s2amZOcSsyUnQvNXVxMjUwQUd2
+QmFrc2d0dnJlMHpSMTJQdkNFSGdiSFhQSHpxY2VMZWFyUUxpZGltZlNLaApaZ1oxL3NCQWlw
+T3o3eWpmdkV6UHBFN2w4Skx1a1FFRURMZ3pCR1c3ZnZvV0NTc0dBUVFCMmtjUEFRRUhRQ1Az
+CmZPWlAxZXJmOWVFTEJCenJvZlNGdGtySkcrWUQ1WGRmK0F2SkNHeXppUUt0QkJnQkNnQWdB
+aHNDRmlFRVFMTjkKQlNCWUViakRmWnZlQmY1UVBrZmQzbGNGQW1sOGJENEFnWFlnQkJrV0NB
+QWRGaUVFSDZuMjRLR3hlUEtDakhxdgpOUU1wS2d5MnNzc0ZBbVc3ZnZvQUNna1FOUU1wS2d5
+MnNzczBtZ0VBd1k4eWVMbytSZHlsVzJJWTBrUmRBalllCldrazQyc0l5MDlQU2hIRlRUWkFB
+L2o5eE53OThuUGo1NFlqZXVUMTBqRDl4UDY5cTBNbU50dURVNlltS2RWMFAKQ1JBRi9sQStS
+OTNlVnorNUQvNHFjTXZHdGFndi9NZU5oenlTUll6eVJDRGM0dDN2MGw0NWR0WU1obVF4TVBM
+MApOdGJ2b3JRdE9pUTA5aXVqWmNuU2hLOTR5Nm91QVJKUXczYmhGTkVKUFhESUw1RU1oSWQ2
+NjNlWGxmZ0lQOStqCmNOaWg5Ty9VaHg3Tys5aGNNZGNOUEFNODcrVXgzS0pEVzNxL1JaalU0
+cldyc3NjR0RMd1FaNFU2bWdOTVQvWlkKNTh4SzBpWmFHMzhYS2J3RTl6M01Wb2UwMzRDZnNP
+bHNoSXZnNmx4UWlHekNtckFXTEJ0b3NTMW5ua1RxZ0NtZQpyZ05wWk9SMzZJUm9XN0pibHkw
+YkJBVWI1N0NjMVFyUFJoOUtVUFhtUVNwajZJUG0wcEsvY3RnZEduNDROVkJECjFpM3o5Witn
+eGdMQ3FjRVIxcGJrejRGZUphTE1QR2d6aTNJSGVXR2ZnRGJJd3A2cHR0NWpvcTRKNlRPZ0pq
+Q3cKdWhvVWpZSGJXV0VkQzRkVm1sVFYydE5iMWZnWVFxRVFaaGcxVFZwYnRoNmdRVE02YzVB
+UlhGTkZtVkJxYjExNApTVlFlY0ZVSTNQWFVrSE9SRnNsSW5tZDh3Uk9xUnZORnhMS2hlVG83
+STFJVWhwR1p0NFF3TU00dHN2Ri8rM0x0CkZ0MVplM1c2SWlLRzUvYzh0V3EwaC96bXZHWHFM
+NjE5VUFGdXRtVEQ3dHl0VjJ5eGFNUUgway9ybE84M2NZcXUKZSt4RzZyMWNnK2V0RXhEWWR2
+U3lGWEMvN1Z3R0RRRGFpc2x1NHh3ekYwVW9wRkVLTkJvRi95NWhnZlN3eHlKWQpsbWhGUU9m
+NEpzZDBxNUord3RVSHl5NFJtTWwwT1o0VFoyRC9vSnRHWUJlVTlPOUozb2MxZ256aEZvQWoz
+dz09Cj1mYWhkCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
 
-(I think). After doing that please upload the key to a keyserver and/or
-send it to the keys@linux.kernel.org list. Don't hesitate to ask if
-something is unclear.
-
-There are no signatures by Michal's key tracked in the pgpkeys repo, so
-if we drop the cert it doesn't affect others's trust paths.
-
-Best regards
-Uwe
-
-PS: Maybe the patch doesn't apply properly because this patch
-description is written in UTF-8, but the file to patch is latin1
-encoded. But maybe this only gives this mail a bad spam score ...
-Also this prevented my to sign this patch, because patatt died on it :-\
-
- keys/CFDED9A2FD1314F0.asc | 2 --
- 1 file changed, 2 deletions(-)
-
-diff --git a/keys/CFDED9A2FD1314F0.asc b/keys/CFDED9A2FD1314F0.asc
-index 1d3fbebb9f59..3c35d423ac10 100644
---- a/keys/CFDED9A2FD1314F0.asc
-+++ b/keys/CFDED9A2FD1314F0.asc
-@@ -3,8 +3,6 @@ pub   rsa4096 2017-08-23 [SC]
- uid                      Michal Koutný <mkoutny@suse.com>
- sub   ed25519 2023-01-13 [A]
-       47DE106A4B860621B0D6E63DD8CF730A95E2521C
--sub   ed25519 2024-06-18 [S] [expires: 2025-06-18]
--      DDEA67C5D8F6C4667A5DA0092DDD69DECBBEC149
- 
- -----BEGIN PGP PUBLIC KEY BLOCK-----
- 
--- 
-2.47.3
-
+--------------nR1RkK45JFtk5MuAzObLU7Qu--
