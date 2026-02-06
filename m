@@ -1,731 +1,201 @@
-Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com [209.85.128.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-190c.mail.infomaniak.ch (smtp-190c.mail.infomaniak.ch [185.125.25.12])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 814D73D525C
-	for <keys@linux.kernel.org>; Tue,  3 Feb 2026 18:19:44 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=209.85.128.43
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD59D40FDB8
+	for <keys@linux.kernel.org>; Fri,  6 Feb 2026 18:38:06 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.125.25.12
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770142787; cv=none; b=J65QV5ArcsxoQZ7yZ1co8Nt/ECjPIASLfY58MfIwgxLpYfgiBBLFr3sd+JkyyCRlq/nNgq+l0OVKUc+ZvksksI+HwSLVmJufLwl+02qFC0ZGCuuvtLR/0VYDPma1tdupEQBShIykXKFv2/3L6nPXjWFQDXwDWMdgGQGDD76eR6Q=
+	t=1770403088; cv=none; b=G7bPs6TduAvJJBu1VVigx4mw3nxXJL0saiDTlFN53EL8C/651KDnv33iwp/iQsAqmcVT5PGf+wZJGrHim7q0fF239V3Ehq7m+pzd9QiqP1gPu+Ke31bWDQ6MNDezcyzB5TUulnhBHFmXm9LlPUwrWpWMcSal/0HLitRZctdIVr8=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770142787; c=relaxed/simple;
-	bh=vN6FE7tjTrCjjzXLeDTC0wRu+zKuoWot/5vCEMOtmVA=;
-	h=From:To:Subject:Date:Message-ID:In-Reply-To:References:
-	 MIME-Version; b=bEhCErq983kVvIGU99rvNUPOyixFyE/PrmgVQlV0KhvUr0Lqm8bdZNCJZnm3Lg38CdBhjHitf/bzDrnJBgR0fmfT1smSIZxzy5qH1r+yc34KbyL4WXG8r951iNCMX+bn7YuXdDE1V0PNbLFiLnDp3cQFh+gPcWmGSZQz0PVlvEM=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b=ER0gV/O+; arc=none smtp.client-ip=209.85.128.43
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	s=arc-20240116; t=1770403088; c=relaxed/simple;
+	bh=4l0HuQYpUBIhj8XptFHV4FEsDJBluVazQTmt/rB1Yd8=;
+	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
+	 Content-Disposition; b=YeppDfnWeTUmi3S0JPSVWT7DSlmjcKamrjB6We8FRerTmaO0gH6Q3VV9XNClX+vCfQtr19u7DHDqLq6mGZhA55+ggglOR7bgn2LJxE/lTIrX9TtmJtexvwZ9Fe9+7JNUiTWTPf42jmHxyzNlTNZ4XP9fJuaWEj3rYKVYFSGS3Yo=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net; spf=pass smtp.mailfrom=digikod.net; dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b=znYnjBEz; arc=none smtp.client-ip=185.125.25.12
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=digikod.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=digikod.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre-com.20230601.gappssmtp.com header.i=@baylibre-com.20230601.gappssmtp.com header.b="ER0gV/O+"
-Received: by mail-wm1-f43.google.com with SMTP id 5b1f17b1804b1-4801c2fae63so45803865e9.2
-        for <keys@linux.kernel.org>; Tue, 03 Feb 2026 10:19:44 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre-com.20230601.gappssmtp.com; s=20230601; t=1770142783; x=1770747583; darn=linux.kernel.org;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Kov0E6h3AHXmQn4aCj3Q5OZzJO92Yk10q+cTqvbmS5o=;
-        b=ER0gV/O+s9CLwpIISWZyLIIaTj+HYImx1eJo5L3D+/niR1wJRP/mZhSMKOVk2eq/kT
-         d+dSESYQkrNu7YZmJgJni8Z3lgeOIP7M91wORIaoWNFgINIjhEF6FWoiG6Ra/CB8Q3/0
-         ZY247v2K84Tryf91IFRbHNJX/SolTWFrph+9uSzybJrcGzneGgz61eNMI8zhlrnYnWiv
-         JkeVVnqKN/FhBVIDCYalnDoIBEEYWBjmyoa78qoFv2qYv3tCvqZ6HoUp+qBtSE69mS7v
-         RV4WoRbLlBA/5ma8YzC9gFIqYx/TfoVm7YxgKQbyKuRt5y+yy22Y8EWgZVO5VafaTzND
-         GCVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20230601; t=1770142783; x=1770747583;
-        h=content-transfer-encoding:mime-version:references:in-reply-to
-         :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=Kov0E6h3AHXmQn4aCj3Q5OZzJO92Yk10q+cTqvbmS5o=;
-        b=rhyRJuzrwHRcJvFhEx2ROOxBRmMYwODmXXwreWREfdFIDMfSzM9ddQQ7XCz0q4WbZZ
-         gBR8jRuZe4TZJlakcDTjznxz1F7r6pPiJbdK2ZZPpGe6un4xRBHts9982ySmvPKIHqAB
-         00VpRlmqDbbVTCahzblwfEZr+2MKp0n/GhXqnczUvM4PZXuO0K+UmJHQKUWaBnW50m0q
-         LYxVQkzu9L0QKMLXmhVxHnd5+fW8J5aOQgXd/2cA6tFJldAX1JWjU3TfBkyg1S49mA7w
-         aea1Wry3ZFcmCXDIa04H9JF3bZtdhcXEBUR4WYRc+RVg8VdPmXov0arLJeiKcIj5Kq3I
-         ZDkg==
-X-Gm-Message-State: AOJu0YzhPK0yqvVksOoB6vVJEqQQl1UH8amiU+lDh7FcMB3xxCUydJdl
-	dtnHEo6ATH6gZyXJcgHDHGnQjazRZhh2JNsTrg+mp5WuFUaxcH5nUIXJH8jpdI4wbyzfKI2wT9V
-	aDfdk
-X-Gm-Gg: AZuq6aLW+mXs+qTZY+TGboF9hviKNwKMF4YqxdF7dhRWdXzfQBdDkRg+lVCwPobyU2I
-	rdiaGFFVDG7EFhirWANw5op24ZtN+sMflXe5CEUYwjhrxGZVaV9qEAbkRUvH3cbDjoC9p6oZokw
-	3HJkIPSOZ0ckkdkVCZ9Mv/BVIypm6n4x/KsHpbfcRSFPFcufRxeVnrOLh+L2T2N8ZJhLyMspiY7
-	PcV+VFoMWdpkpMNnSTGOWTDTTLp/9lJ1NWziEp50GEQl/1q21mq9puoYc2Sf+u/gNl9GkzetxKc
-	Bjjidj3VCCxKpF+u9xXH7R3GR3Kzr25uDz2kfy0WUGStKY7KAQ9ESzI5E8am7RTWlFO2bNiNDAZ
-	UXW5YHSa+3mKZgE/b3Rt8Rku9+y7xBKwLOo4WWgvz/pd8uEMT+hhTdKqcWFiYDKq7jUWjCEV6PS
-	NfZ23xWQZ/fPbPpPnIKQ13vvMT0IJ8TOM2Liq3yUVyLMa8V7W6hefk/5nhq5TclT7PnFG01YvaN
-	n4=
-X-Received: by 2002:a05:600c:548a:b0:479:3a86:dc1f with SMTP id 5b1f17b1804b1-4830e99dda5mr7443055e9.37.1770142782543;
-        Tue, 03 Feb 2026 10:19:42 -0800 (PST)
-Received: from localhost (p200300f65f20eb04d65faeeb2737200f.dip0.t-ipconnect.de. [2003:f6:5f20:eb04:d65f:aeeb:2737:200f])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4830515381esm83309035e9.11.2026.02.03.10.19.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Feb 2026 10:19:42 -0800 (PST)
-From: =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+	dkim=pass (1024-bit key) header.d=digikod.net header.i=@digikod.net header.b="znYnjBEz"
+Received: from smtp-3-0001.mail.infomaniak.ch (smtp-3-0001.mail.infomaniak.ch [10.4.36.108])
+	by smtp-3-3000.mail.infomaniak.ch (Postfix) with ESMTPS id 4f72gZ5Qq0zFnZ;
+	Fri,  6 Feb 2026 19:29:46 +0100 (CET)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=digikod.net;
+	s=20191114; t=1770402586;
+	bh=4l0HuQYpUBIhj8XptFHV4FEsDJBluVazQTmt/rB1Yd8=;
+	h=Date:From:To:Subject:From;
+	b=znYnjBEzeXUgtdCY+IFPqaksd4JBYZMfSMSVnGszT/b8nvNmx4IWid9nborpqfQ19
+	 meQeXVyYeigBinex2roCdnmehEWpRY7Xbyt417Wt2sUQWb/JD41FfhI8NLda8Sna9k
+	 AANG2Qr2p7soyGeY0Q4ZPMwJTCk55YVZOZ/x7TsM=
+Received: from unknown by smtp-3-0001.mail.infomaniak.ch (Postfix) with ESMTPA id 4f72gZ2FHyzfGp;
+	Fri,  6 Feb 2026 19:29:46 +0100 (CET)
+Date: Fri, 6 Feb 2026 19:29:41 +0100
+From: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
 To: keys@linux.kernel.org
-Subject: [PATCH 3/3] Drop revoked UIDs from b4 keyring
-Date: Tue,  3 Feb 2026 19:19:26 +0100
-Message-ID: <b02bd3320259c36f228dd32ed71e1ee9a41881cd.1770141846.git.u.kleine-koenig@baylibre.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <cover.1770141846.git.u.kleine-koenig@baylibre.com>
-References: <cover.1770141846.git.u.kleine-koenig@baylibre.com>
+Subject: Updated key for =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=
+Message-ID: <20260206.waiCh9iex3ai@digikod.net>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=33018; i=u.kleine-koenig@baylibre.com; h=from:subject:message-id; bh=vN6FE7tjTrCjjzXLeDTC0wRu+zKuoWot/5vCEMOtmVA=; b=owEBbQGS/pANAwAKAY+A+1h9Ev5OAcsmYgBpgjwy82QD1riiHO8joK8U5wag9Gn1bC4kn985H grR4GMp8GmJATMEAAEKAB0WIQQ/gaxpOnoeWYmt/tOPgPtYfRL+TgUCaYI8MgAKCRCPgPtYfRL+ TryzCAC3HOtzAvp5zf4E6hd/LglulB6Et/6JLT+DxIzBS70kUA3cwcZkFM/7ZlyY4/1vZUAHuZT Ab5/nbgqLV5zYbZSeTgZKefpxU2bGUQmTEJhwKLHpSe6l2rn+oSV5HnxJ5KuRCAQGGedCKzEamT l6dOVtlv32uBQ+MKxHrFcgvrAk5haSY/aglXRtLFNl4unKeHO/KZsFklKXbiFAlyYWYkwvtId2r fdAitmtMHyCWp2usmAt2MHQ9n660rtnNsIdwQCBpFBTBeNM7hMrvkkHiKl28qRQz46CWP4pvj8i orrcfRVqH3wOhoPQ3ODsPIZ/cFHeYQNq/bAktj/54jJTpXjr
-X-Developer-Key: i=u.kleine-koenig@baylibre.com; a=openpgp; fpr=0D2511F322BFAB1C1580266BE2DCDD9132669BD6
+Content-Type: multipart/mixed; boundary="a2g5hy24utvmyunp"
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+X-Infomaniak-Routing: alpha
+
+
+--a2g5hy24utvmyunp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
 
-The scripting that is used to generate the b4 keyring only adds entries
-but fails to delete them.
+Hi,
 
-This commit handles revoked UIDs and drops the links for the respective
-email addresses:
+Please find attached my updated key with an extended expiration date and
+my mic@kernel.org address.
 
-certificate      | UID address                        | tracked since
------------------+------------------------------------+-----------------------------------------
-0393969D2D760850 | jthumshirn@suse.com                | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-0393969D2D760850 | jthumshirn@suse.de                 | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-04B08C8F1524FAF8 | acourbot@chromium.org              | 6531c9d646aca2a61ac87e27ce4988503bdbe1f8
-04B08C8F1524FAF8 | acourbot@google.com                | 6531c9d646aca2a61ac87e27ce4988503bdbe1f8
-0E5C785C804D82D9 | kishon@ti.com                      | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-0FDD682D974CA72A | msturner@google.com                | 9974d9a372b5c521b2ccd79646b27a6e0d675c7a
-142AECC9A1677277 | mathew.j.martineau@linux.intel.com | 10e718223d7ec420bf164716ec60a603e45275d6
-169AB7B1A4CFF8AE | narmstrong@baylibre.com            | 19a5b27853d31ea5399a411407eade59c0fbfbea
-1B93437D3B41629B | krzysztof.kozlowski@canonical.com  | 8cb563c3639320bc73ebe2365506efa0b37c08c2
-254BCFC56BF6CE8D | maxime@cerno.tech                  | e7d6e3bd725a0c92517e078ada3bc87c9483d85c
-2D192CA624770276 | mario.limonciello@dell.com         | 50066c01520324778a603dec0991ad33408482b1
-39CB544D6527CF60 | nicolas.pitre@linaro.org           | 671a0c921fe0ea3a142371a8e30fdab98fea1dc1
-39CB544D6527CF60 | nico@linaro.org                    | 671a0c921fe0ea3a142371a8e30fdab98fea1dc1
-3A554D033B37BCED | brouer@redhat.com                  | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-3A554D033B37BCED | jbrouer@redhat.com                 | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-3AB05486C7752FE1 | jarkko@parity.io                   | 6353e06c0aace7171f96fc6a9008e3d29dd1bc06
-3AB05486C7752FE1 | jarkko@profian.com                 | ba6d0bd9f37c15f8d072d907f7b8d24b214a3f68
-3AB05486C7752FE1 | jarkko.sakkinen@linux.intel.com    | cc5ab0ae0c8c2833627521776d7a0c44ddce4a65
-3AB05486C7752FE1 | jarkko.sakkinen@tuni.fi            | 7b5ef4045f98031df27e1e2f60855b40ac74a2df
-3D200E9CA6329909 | ard.biesheuvel@arm.com             | 632b48511a41b2a83b01891a0c4ef4cf658aa688
-3D200E9CA6329909 | ard.biesheuvel@linaro.org          | 632b48511a41b2a83b01891a0c4ef4cf658aa688
-478701720E5D7C58 | konrad.dybcio@somainline.org       | 54bd413d1a48f5ca5d8b6eba9aa5e6b135809507
-517667E5996EE6AA | hsiangkao@redhat.com               | cc5ab0ae0c8c2833627521776d7a0c44ddce4a65
-56A0D81F9F782DA9 | ricardo@qtec.com                   | 5ca84ca9930f4b1e6852de40dcbe021ede18df7e
-570338B018144F28 | mkorpershoek@baylibre.com          | 671a0c921fe0ea3a142371a8e30fdab98fea1dc1
-586F64FBA9D92344 | krisman@collabora.com              | 7aae0a8d7b110c4face18e4ed4cf8c4961be8718
-5937189AD3FBC665 | khilman@deeprootsystems.com        | 162ae1a90ff558cb7449fce4331deb91bb96cd92
-651D4DB8AB5AE780 | oded.gabbay@amd.com                | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-670BE78A960A00F2 | Trond.Myklebust@netapp.com         | e7d6e3bd725a0c92517e078ada3bc87c9483d85c
-670BE78A960A00F2 | trond.myklebust@primarydata.com    | e7d6e3bd725a0c92517e078ada3bc87c9483d85c
-69D7F1DDE28AC25E | vgupta@synopsys.com                | 4fb0eaaa916714cec4ac406a9b65ff8fff26059f
-69D7F1DDE28AC25E | vineet.gupta1@synopsys.com         | 4fb0eaaa916714cec4ac406a9b65ff8fff26059f
-6CEF3D27CA5B141E | joseph.salisbury@canonical.com     | 313f9f6cec864861c55371d1562df5389ec2a785
-6CEF3D27CA5B141E | joseph.salisbury@ubuntu.com        | 313f9f6cec864861c55371d1562df5389ec2a785
-6E17245526EB6D9B | kvalo@codeaurora.org               | f29aa22a43e0d851dcacc9eb92b00feb6e8072cd
-7C64768D3DE334E7 | krzysztof.wilczynski@redhat.com    | 5ca84ca9930f4b1e6852de40dcbe021ede18df7e
-7C64768D3DE334E7 | kwilczyn@redhat.com                | 5ca84ca9930f4b1e6852de40dcbe021ede18df7e
-7C64768D3DE334E7 | kwilczynski@redhat.com             | 5ca84ca9930f4b1e6852de40dcbe021ede18df7e
-85F56EA4E9E8138F | dagmcr@gmail.com                   | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-86CC4303D870877E | boqun.feng@linux.vnet.ibm.com      | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-86CC4303D870877E | fixme@archlinuxcn.org              | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-95F6661E7A3CC7FE | nsaenzjulienne@suse.com            | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-95F6661E7A3CC7FE | nsaenzjulienne@suse.de             | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-9BA2A5A630CBEA53 | lucas.demarchi@profusion.mobi      | a0895013bb9282a9d3a43bd50a0fd4781f0a5c53
-A669D0002389BB21 | ido@ugcs.caltech.edu               | ba6d0bd9f37c15f8d072d907f7b8d24b214a3f68
-A6A2316573C0A672 | jesse.brandeburg@intel.com         | e7d6e3bd725a0c92517e078ada3bc87c9483d85c
-A6CC680C0AA77EB8 | dvhart@vmware.com                  | cc5ab0ae0c8c2833627521776d7a0c44ddce4a65
-B54856CABE12232B | wbg@ishicorp.com                   | d52c4dd1c16e6b55019df7660089e48c3ebdcf35
-C532392DE6DA7CE9 | rppt@linux.ibm.com                 | fe952924402665372560b826867234aa1caca139
-E289A1F4351A51B3 | oleksij.rempel@gmx.de-mail.de      | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-E289A1F4351A51B3 | olerem@jabber.de                   | 2cf18b7358a45efdae7201826ad9f0a3cbe90b23
-E2DCDD9132669BD6 | u.kleine-koenig@pengutronix.de     | 162ae1a90ff558cb7449fce4331deb91bb96cd92
-EE7A392FDE96209F | dbk763@alumni.ku.dk                | 7f24495d9430328b4e25bda81e7eece9ea41d411
-EF4CA1502CCBAB41 | palmerdabbelt@google.com           | 51e1f284b1c3de6507dce507105cd03d47ee2f0c
-EF4CA1502CCBAB41 | palmer@rivosinc.com                | a2d4eb1013c922d5ed25544aa3e686d5a5a7276c
-F6503556C11B1CCD | p.yadav@ti.com                     | 10e718223d7ec420bf164716ec60a603e45275d6
-F6B7824F4269A073 | matthieu.baerts@tessares.net       | fc7b9f7403d8f8a8ec82c9163e250880a6de4f1c
-F7BF214136F41FAE | abel.vesa@nxp.com                  | 13287eeb10a05b21e064dbdd8f0bb09b0f709e2b
----
- .keyring/openpgp/alumni.ku.dk/dbk763/default                | 1 -
- .keyring/openpgp/amd.com/oded.gabbay/default                | 1 -
- .keyring/openpgp/archlinuxcn.org/fixme/default              | 1 -
- .keyring/openpgp/arm.com/ard.biesheuvel/default             | 1 -
- .keyring/openpgp/baylibre.com/mkorpershoek/default          | 1 -
- .keyring/openpgp/baylibre.com/narmstrong/default            | 1 -
- .keyring/openpgp/canonical.com/joseph.salisbury/default     | 1 -
- .keyring/openpgp/canonical.com/krzysztof.kozlowski/default  | 1 -
- .keyring/openpgp/cerno.tech/maxime/default                  | 1 -
- .keyring/openpgp/chromium.org/acourbot/default              | 1 -
- .keyring/openpgp/codeaurora.org/kvalo/default               | 1 -
- .keyring/openpgp/collabora.com/krisman/default              | 1 -
- .keyring/openpgp/deeprootsystems.com/khilman/default        | 1 -
- .keyring/openpgp/dell.com/mario.limonciello/default         | 1 -
- .keyring/openpgp/gmail.com/dagmcr/default                   | 1 -
- .keyring/openpgp/gmx.de-mail.de/oleksij.rempel/default      | 1 -
- .keyring/openpgp/google.com/acourbot/default                | 1 -
- .keyring/openpgp/google.com/msturner/default                | 1 -
- .keyring/openpgp/google.com/palmerdabbelt/default           | 1 -
- .keyring/openpgp/intel.com/jesse.brandeburg/default         | 1 -
- .keyring/openpgp/ishicorp.com/wbg/default                   | 1 -
- .keyring/openpgp/jabber.de/olerem/default                   | 1 -
- .keyring/openpgp/linaro.org/ard.biesheuvel/default          | 1 -
- .keyring/openpgp/linaro.org/nico/default                    | 1 -
- .keyring/openpgp/linaro.org/nicolas.pitre/default           | 1 -
- .keyring/openpgp/linux.ibm.com/rppt/default                 | 1 -
- .keyring/openpgp/linux.intel.com/jarkko.sakkinen/default    | 1 -
- .keyring/openpgp/linux.intel.com/mathew.j.martineau/default | 1 -
- .keyring/openpgp/linux.vnet.ibm.com/boqun.feng/default      | 1 -
- .keyring/openpgp/netapp.com/Trond.Myklebust/default         | 1 -
- .keyring/openpgp/nxp.com/abel.vesa/default                  | 1 -
- .keyring/openpgp/parity.io/jarkko/default                   | 1 -
- .keyring/openpgp/pengutronix.de/u.kleine-koenig/default     | 1 -
- .keyring/openpgp/primarydata.com/trond.myklebust/default    | 1 -
- .keyring/openpgp/profian.com/jarkko/default                 | 1 -
- .keyring/openpgp/profusion.mobi/lucas.demarchi/default      | 1 -
- .keyring/openpgp/qtec.com/ricardo/default                   | 1 -
- .keyring/openpgp/redhat.com/brouer/default                  | 1 -
- .keyring/openpgp/redhat.com/hsiangkao/default               | 1 -
- .keyring/openpgp/redhat.com/jbrouer/default                 | 1 -
- .keyring/openpgp/redhat.com/krzysztof.wilczynski/default    | 1 -
- .keyring/openpgp/redhat.com/kwilczyn/default                | 1 -
- .keyring/openpgp/redhat.com/kwilczynski/default             | 1 -
- .keyring/openpgp/rivosinc.com/palmer/default                | 1 -
- .keyring/openpgp/somainline.org/konrad.dybcio/default       | 1 -
- .keyring/openpgp/suse.com/jthumshirn/default                | 1 -
- .keyring/openpgp/suse.com/nsaenzjulienne/default            | 1 -
- .keyring/openpgp/suse.de/jthumshirn/default                 | 1 -
- .keyring/openpgp/suse.de/nsaenzjulienne/default             | 1 -
- .keyring/openpgp/synopsys.com/vgupta/default                | 1 -
- .keyring/openpgp/synopsys.com/vineet.gupta1/default         | 1 -
- .keyring/openpgp/tessares.net/matthieu.baerts/default       | 1 -
- .keyring/openpgp/ti.com/kishon/default                      | 1 -
- .keyring/openpgp/ti.com/p.yadav/default                     | 1 -
- .keyring/openpgp/tuni.fi/jarkko.sakkinen/default            | 1 -
- .keyring/openpgp/ubuntu.com/joseph.salisbury/default        | 1 -
- .keyring/openpgp/ugcs.caltech.edu/ido/default               | 1 -
- .keyring/openpgp/vmware.com/dvhart/default                  | 1 -
- 58 files changed, 58 deletions(-)
- delete mode 120000 .keyring/openpgp/alumni.ku.dk/dbk763/default
- delete mode 120000 .keyring/openpgp/amd.com/oded.gabbay/default
- delete mode 120000 .keyring/openpgp/archlinuxcn.org/fixme/default
- delete mode 120000 .keyring/openpgp/arm.com/ard.biesheuvel/default
- delete mode 120000 .keyring/openpgp/baylibre.com/mkorpershoek/default
- delete mode 120000 .keyring/openpgp/baylibre.com/narmstrong/default
- delete mode 120000 .keyring/openpgp/canonical.com/joseph.salisbury/default
- delete mode 120000 .keyring/openpgp/canonical.com/krzysztof.kozlowski/default
- delete mode 120000 .keyring/openpgp/cerno.tech/maxime/default
- delete mode 120000 .keyring/openpgp/chromium.org/acourbot/default
- delete mode 120000 .keyring/openpgp/codeaurora.org/kvalo/default
- delete mode 120000 .keyring/openpgp/collabora.com/krisman/default
- delete mode 120000 .keyring/openpgp/deeprootsystems.com/khilman/default
- delete mode 120000 .keyring/openpgp/dell.com/mario.limonciello/default
- delete mode 120000 .keyring/openpgp/gmail.com/dagmcr/default
- delete mode 120000 .keyring/openpgp/gmx.de-mail.de/oleksij.rempel/default
- delete mode 120000 .keyring/openpgp/google.com/acourbot/default
- delete mode 120000 .keyring/openpgp/google.com/msturner/default
- delete mode 120000 .keyring/openpgp/google.com/palmerdabbelt/default
- delete mode 120000 .keyring/openpgp/intel.com/jesse.brandeburg/default
- delete mode 120000 .keyring/openpgp/ishicorp.com/wbg/default
- delete mode 120000 .keyring/openpgp/jabber.de/olerem/default
- delete mode 120000 .keyring/openpgp/linaro.org/ard.biesheuvel/default
- delete mode 120000 .keyring/openpgp/linaro.org/nico/default
- delete mode 120000 .keyring/openpgp/linaro.org/nicolas.pitre/default
- delete mode 120000 .keyring/openpgp/linux.ibm.com/rppt/default
- delete mode 120000 .keyring/openpgp/linux.intel.com/jarkko.sakkinen/default
- delete mode 120000 .keyring/openpgp/linux.intel.com/mathew.j.martineau/default
- delete mode 120000 .keyring/openpgp/linux.vnet.ibm.com/boqun.feng/default
- delete mode 120000 .keyring/openpgp/netapp.com/Trond.Myklebust/default
- delete mode 120000 .keyring/openpgp/nxp.com/abel.vesa/default
- delete mode 120000 .keyring/openpgp/parity.io/jarkko/default
- delete mode 120000 .keyring/openpgp/pengutronix.de/u.kleine-koenig/default
- delete mode 120000 .keyring/openpgp/primarydata.com/trond.myklebust/default
- delete mode 120000 .keyring/openpgp/profian.com/jarkko/default
- delete mode 120000 .keyring/openpgp/profusion.mobi/lucas.demarchi/default
- delete mode 120000 .keyring/openpgp/qtec.com/ricardo/default
- delete mode 120000 .keyring/openpgp/redhat.com/brouer/default
- delete mode 120000 .keyring/openpgp/redhat.com/hsiangkao/default
- delete mode 120000 .keyring/openpgp/redhat.com/jbrouer/default
- delete mode 120000 .keyring/openpgp/redhat.com/krzysztof.wilczynski/default
- delete mode 120000 .keyring/openpgp/redhat.com/kwilczyn/default
- delete mode 120000 .keyring/openpgp/redhat.com/kwilczynski/default
- delete mode 120000 .keyring/openpgp/rivosinc.com/palmer/default
- delete mode 120000 .keyring/openpgp/somainline.org/konrad.dybcio/default
- delete mode 120000 .keyring/openpgp/suse.com/jthumshirn/default
- delete mode 120000 .keyring/openpgp/suse.com/nsaenzjulienne/default
- delete mode 120000 .keyring/openpgp/suse.de/jthumshirn/default
- delete mode 120000 .keyring/openpgp/suse.de/nsaenzjulienne/default
- delete mode 120000 .keyring/openpgp/synopsys.com/vgupta/default
- delete mode 120000 .keyring/openpgp/synopsys.com/vineet.gupta1/default
- delete mode 120000 .keyring/openpgp/tessares.net/matthieu.baerts/default
- delete mode 120000 .keyring/openpgp/ti.com/kishon/default
- delete mode 120000 .keyring/openpgp/ti.com/p.yadav/default
- delete mode 120000 .keyring/openpgp/tuni.fi/jarkko.sakkinen/default
- delete mode 120000 .keyring/openpgp/ubuntu.com/joseph.salisbury/default
- delete mode 120000 .keyring/openpgp/ugcs.caltech.edu/ido/default
- delete mode 120000 .keyring/openpgp/vmware.com/dvhart/default
+Regards,
+ Mickaël
 
-diff --git a/.keyring/openpgp/alumni.ku.dk/dbk763/default b/.keyring/openpgp/alumni.ku.dk/dbk763/default
-deleted file mode 120000
-index dfa7d60af52c..000000000000
---- a/.keyring/openpgp/alumni.ku.dk/dbk763/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/EE7A392FDE96209F.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/amd.com/oded.gabbay/default b/.keyring/openpgp/amd.com/oded.gabbay/default
-deleted file mode 120000
-index c1f0b8331873..000000000000
---- a/.keyring/openpgp/amd.com/oded.gabbay/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/651D4DB8AB5AE780.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/archlinuxcn.org/fixme/default b/.keyring/openpgp/archlinuxcn.org/fixme/default
-deleted file mode 120000
-index 1016a0645d13..000000000000
---- a/.keyring/openpgp/archlinuxcn.org/fixme/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/86CC4303D870877E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/arm.com/ard.biesheuvel/default b/.keyring/openpgp/arm.com/ard.biesheuvel/default
-deleted file mode 120000
-index f7212b62014a..000000000000
---- a/.keyring/openpgp/arm.com/ard.biesheuvel/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3D200E9CA6329909.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/baylibre.com/mkorpershoek/default b/.keyring/openpgp/baylibre.com/mkorpershoek/default
-deleted file mode 120000
-index bc676f7f049f..000000000000
---- a/.keyring/openpgp/baylibre.com/mkorpershoek/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/570338B018144F28.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/baylibre.com/narmstrong/default b/.keyring/openpgp/baylibre.com/narmstrong/default
-deleted file mode 120000
-index 78cc3b7e2e0d..000000000000
---- a/.keyring/openpgp/baylibre.com/narmstrong/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/169AB7B1A4CFF8AE.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/canonical.com/joseph.salisbury/default b/.keyring/openpgp/canonical.com/joseph.salisbury/default
-deleted file mode 120000
-index 3f1b3c882adb..000000000000
---- a/.keyring/openpgp/canonical.com/joseph.salisbury/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/6CEF3D27CA5B141E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/canonical.com/krzysztof.kozlowski/default b/.keyring/openpgp/canonical.com/krzysztof.kozlowski/default
-deleted file mode 120000
-index 600b34f25d86..000000000000
---- a/.keyring/openpgp/canonical.com/krzysztof.kozlowski/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/1B93437D3B41629B.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/cerno.tech/maxime/default b/.keyring/openpgp/cerno.tech/maxime/default
-deleted file mode 120000
-index b46466f06ae8..000000000000
---- a/.keyring/openpgp/cerno.tech/maxime/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/254BCFC56BF6CE8D.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/chromium.org/acourbot/default b/.keyring/openpgp/chromium.org/acourbot/default
-deleted file mode 120000
-index 372763eb6398..000000000000
---- a/.keyring/openpgp/chromium.org/acourbot/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/04B08C8F1524FAF8.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/codeaurora.org/kvalo/default b/.keyring/openpgp/codeaurora.org/kvalo/default
-deleted file mode 120000
-index ee6a6dc7c6f0..000000000000
---- a/.keyring/openpgp/codeaurora.org/kvalo/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/6E17245526EB6D9B.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/collabora.com/krisman/default b/.keyring/openpgp/collabora.com/krisman/default
-deleted file mode 120000
-index c962e168b163..000000000000
---- a/.keyring/openpgp/collabora.com/krisman/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/586F64FBA9D92344.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/deeprootsystems.com/khilman/default b/.keyring/openpgp/deeprootsystems.com/khilman/default
-deleted file mode 120000
-index 9d9c9dc375d4..000000000000
---- a/.keyring/openpgp/deeprootsystems.com/khilman/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/5937189AD3FBC665.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/dell.com/mario.limonciello/default b/.keyring/openpgp/dell.com/mario.limonciello/default
-deleted file mode 120000
-index 4bb3819c597e..000000000000
---- a/.keyring/openpgp/dell.com/mario.limonciello/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/2D192CA624770276.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/gmail.com/dagmcr/default b/.keyring/openpgp/gmail.com/dagmcr/default
-deleted file mode 120000
-index f00f10fbefcf..000000000000
---- a/.keyring/openpgp/gmail.com/dagmcr/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/85F56EA4E9E8138F.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/gmx.de-mail.de/oleksij.rempel/default b/.keyring/openpgp/gmx.de-mail.de/oleksij.rempel/default
-deleted file mode 120000
-index 10117115b072..000000000000
---- a/.keyring/openpgp/gmx.de-mail.de/oleksij.rempel/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/E289A1F4351A51B3.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/google.com/acourbot/default b/.keyring/openpgp/google.com/acourbot/default
-deleted file mode 120000
-index 372763eb6398..000000000000
---- a/.keyring/openpgp/google.com/acourbot/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/04B08C8F1524FAF8.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/google.com/msturner/default b/.keyring/openpgp/google.com/msturner/default
-deleted file mode 120000
-index 2013148eac02..000000000000
---- a/.keyring/openpgp/google.com/msturner/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/0FDD682D974CA72A.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/google.com/palmerdabbelt/default b/.keyring/openpgp/google.com/palmerdabbelt/default
-deleted file mode 120000
-index 3f5b6e842ef2..000000000000
---- a/.keyring/openpgp/google.com/palmerdabbelt/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/EF4CA1502CCBAB41.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/intel.com/jesse.brandeburg/default b/.keyring/openpgp/intel.com/jesse.brandeburg/default
-deleted file mode 120000
-index 450c61bab709..000000000000
---- a/.keyring/openpgp/intel.com/jesse.brandeburg/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/A6A2316573C0A672.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/ishicorp.com/wbg/default b/.keyring/openpgp/ishicorp.com/wbg/default
-deleted file mode 120000
-index e6edd5416e70..000000000000
---- a/.keyring/openpgp/ishicorp.com/wbg/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/B54856CABE12232B.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/jabber.de/olerem/default b/.keyring/openpgp/jabber.de/olerem/default
-deleted file mode 120000
-index 10117115b072..000000000000
---- a/.keyring/openpgp/jabber.de/olerem/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/E289A1F4351A51B3.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linaro.org/ard.biesheuvel/default b/.keyring/openpgp/linaro.org/ard.biesheuvel/default
-deleted file mode 120000
-index f7212b62014a..000000000000
---- a/.keyring/openpgp/linaro.org/ard.biesheuvel/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3D200E9CA6329909.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linaro.org/nico/default b/.keyring/openpgp/linaro.org/nico/default
-deleted file mode 120000
-index 541b8f02711b..000000000000
---- a/.keyring/openpgp/linaro.org/nico/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/39CB544D6527CF60.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linaro.org/nicolas.pitre/default b/.keyring/openpgp/linaro.org/nicolas.pitre/default
-deleted file mode 120000
-index 541b8f02711b..000000000000
---- a/.keyring/openpgp/linaro.org/nicolas.pitre/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/39CB544D6527CF60.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linux.ibm.com/rppt/default b/.keyring/openpgp/linux.ibm.com/rppt/default
-deleted file mode 120000
-index 4a8cd5de20e2..000000000000
---- a/.keyring/openpgp/linux.ibm.com/rppt/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/C532392DE6DA7CE9.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linux.intel.com/jarkko.sakkinen/default b/.keyring/openpgp/linux.intel.com/jarkko.sakkinen/default
-deleted file mode 120000
-index bf18228be747..000000000000
---- a/.keyring/openpgp/linux.intel.com/jarkko.sakkinen/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3AB05486C7752FE1.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linux.intel.com/mathew.j.martineau/default b/.keyring/openpgp/linux.intel.com/mathew.j.martineau/default
-deleted file mode 120000
-index 6fde4b7907e8..000000000000
---- a/.keyring/openpgp/linux.intel.com/mathew.j.martineau/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/142AECC9A1677277.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/linux.vnet.ibm.com/boqun.feng/default b/.keyring/openpgp/linux.vnet.ibm.com/boqun.feng/default
-deleted file mode 120000
-index 1016a0645d13..000000000000
---- a/.keyring/openpgp/linux.vnet.ibm.com/boqun.feng/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/86CC4303D870877E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/netapp.com/Trond.Myklebust/default b/.keyring/openpgp/netapp.com/Trond.Myklebust/default
-deleted file mode 120000
-index 4508221305e5..000000000000
---- a/.keyring/openpgp/netapp.com/Trond.Myklebust/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/670BE78A960A00F2.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/nxp.com/abel.vesa/default b/.keyring/openpgp/nxp.com/abel.vesa/default
-deleted file mode 120000
-index 635c8698ba90..000000000000
---- a/.keyring/openpgp/nxp.com/abel.vesa/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/F7BF214136F41FAE.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/parity.io/jarkko/default b/.keyring/openpgp/parity.io/jarkko/default
-deleted file mode 120000
-index bf18228be747..000000000000
---- a/.keyring/openpgp/parity.io/jarkko/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3AB05486C7752FE1.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/pengutronix.de/u.kleine-koenig/default b/.keyring/openpgp/pengutronix.de/u.kleine-koenig/default
-deleted file mode 120000
-index 4742030ac503..000000000000
---- a/.keyring/openpgp/pengutronix.de/u.kleine-koenig/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/E2DCDD9132669BD6.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/primarydata.com/trond.myklebust/default b/.keyring/openpgp/primarydata.com/trond.myklebust/default
-deleted file mode 120000
-index 4508221305e5..000000000000
---- a/.keyring/openpgp/primarydata.com/trond.myklebust/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/670BE78A960A00F2.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/profian.com/jarkko/default b/.keyring/openpgp/profian.com/jarkko/default
-deleted file mode 120000
-index bf18228be747..000000000000
---- a/.keyring/openpgp/profian.com/jarkko/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3AB05486C7752FE1.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/profusion.mobi/lucas.demarchi/default b/.keyring/openpgp/profusion.mobi/lucas.demarchi/default
-deleted file mode 120000
-index 26c11e2b783f..000000000000
---- a/.keyring/openpgp/profusion.mobi/lucas.demarchi/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/9BA2A5A630CBEA53.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/qtec.com/ricardo/default b/.keyring/openpgp/qtec.com/ricardo/default
-deleted file mode 120000
-index 8d6aa8b83605..000000000000
---- a/.keyring/openpgp/qtec.com/ricardo/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/56A0D81F9F782DA9.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/brouer/default b/.keyring/openpgp/redhat.com/brouer/default
-deleted file mode 120000
-index 7b4a340e0372..000000000000
---- a/.keyring/openpgp/redhat.com/brouer/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3A554D033B37BCED.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/hsiangkao/default b/.keyring/openpgp/redhat.com/hsiangkao/default
-deleted file mode 120000
-index 2e703dc0eb89..000000000000
---- a/.keyring/openpgp/redhat.com/hsiangkao/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/517667E5996EE6AA.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/jbrouer/default b/.keyring/openpgp/redhat.com/jbrouer/default
-deleted file mode 120000
-index 7b4a340e0372..000000000000
---- a/.keyring/openpgp/redhat.com/jbrouer/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3A554D033B37BCED.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/krzysztof.wilczynski/default b/.keyring/openpgp/redhat.com/krzysztof.wilczynski/default
-deleted file mode 120000
-index bfeaca3098ab..000000000000
---- a/.keyring/openpgp/redhat.com/krzysztof.wilczynski/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/7C64768D3DE334E7.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/kwilczyn/default b/.keyring/openpgp/redhat.com/kwilczyn/default
-deleted file mode 120000
-index bfeaca3098ab..000000000000
---- a/.keyring/openpgp/redhat.com/kwilczyn/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/7C64768D3DE334E7.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/redhat.com/kwilczynski/default b/.keyring/openpgp/redhat.com/kwilczynski/default
-deleted file mode 120000
-index bfeaca3098ab..000000000000
---- a/.keyring/openpgp/redhat.com/kwilczynski/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/7C64768D3DE334E7.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/rivosinc.com/palmer/default b/.keyring/openpgp/rivosinc.com/palmer/default
-deleted file mode 120000
-index 3f5b6e842ef2..000000000000
---- a/.keyring/openpgp/rivosinc.com/palmer/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/EF4CA1502CCBAB41.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/somainline.org/konrad.dybcio/default b/.keyring/openpgp/somainline.org/konrad.dybcio/default
-deleted file mode 120000
-index 768102d69dd6..000000000000
---- a/.keyring/openpgp/somainline.org/konrad.dybcio/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/478701720E5D7C58.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/suse.com/jthumshirn/default b/.keyring/openpgp/suse.com/jthumshirn/default
-deleted file mode 120000
-index 4f754b3cff0d..000000000000
---- a/.keyring/openpgp/suse.com/jthumshirn/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/0393969D2D760850.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/suse.com/nsaenzjulienne/default b/.keyring/openpgp/suse.com/nsaenzjulienne/default
-deleted file mode 120000
-index 53c5161f92f1..000000000000
---- a/.keyring/openpgp/suse.com/nsaenzjulienne/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/95F6661E7A3CC7FE.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/suse.de/jthumshirn/default b/.keyring/openpgp/suse.de/jthumshirn/default
-deleted file mode 120000
-index 4f754b3cff0d..000000000000
---- a/.keyring/openpgp/suse.de/jthumshirn/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/0393969D2D760850.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/suse.de/nsaenzjulienne/default b/.keyring/openpgp/suse.de/nsaenzjulienne/default
-deleted file mode 120000
-index 53c5161f92f1..000000000000
---- a/.keyring/openpgp/suse.de/nsaenzjulienne/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/95F6661E7A3CC7FE.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/synopsys.com/vgupta/default b/.keyring/openpgp/synopsys.com/vgupta/default
-deleted file mode 120000
-index 598224dd296e..000000000000
---- a/.keyring/openpgp/synopsys.com/vgupta/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/69D7F1DDE28AC25E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/synopsys.com/vineet.gupta1/default b/.keyring/openpgp/synopsys.com/vineet.gupta1/default
-deleted file mode 120000
-index 598224dd296e..000000000000
---- a/.keyring/openpgp/synopsys.com/vineet.gupta1/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/69D7F1DDE28AC25E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/tessares.net/matthieu.baerts/default b/.keyring/openpgp/tessares.net/matthieu.baerts/default
-deleted file mode 120000
-index 30ec5a89ddb7..000000000000
---- a/.keyring/openpgp/tessares.net/matthieu.baerts/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/F6B7824F4269A073.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/ti.com/kishon/default b/.keyring/openpgp/ti.com/kishon/default
-deleted file mode 120000
-index 0915871015c5..000000000000
---- a/.keyring/openpgp/ti.com/kishon/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/0E5C785C804D82D9.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/ti.com/p.yadav/default b/.keyring/openpgp/ti.com/p.yadav/default
-deleted file mode 120000
-index b221e04e61e3..000000000000
---- a/.keyring/openpgp/ti.com/p.yadav/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/F6503556C11B1CCD.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/tuni.fi/jarkko.sakkinen/default b/.keyring/openpgp/tuni.fi/jarkko.sakkinen/default
-deleted file mode 120000
-index bf18228be747..000000000000
---- a/.keyring/openpgp/tuni.fi/jarkko.sakkinen/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/3AB05486C7752FE1.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/ubuntu.com/joseph.salisbury/default b/.keyring/openpgp/ubuntu.com/joseph.salisbury/default
-deleted file mode 120000
-index 3f1b3c882adb..000000000000
---- a/.keyring/openpgp/ubuntu.com/joseph.salisbury/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/6CEF3D27CA5B141E.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/ugcs.caltech.edu/ido/default b/.keyring/openpgp/ugcs.caltech.edu/ido/default
-deleted file mode 120000
-index a66bb977aeed..000000000000
---- a/.keyring/openpgp/ugcs.caltech.edu/ido/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/A669D0002389BB21.asc
-\ No newline at end of file
-diff --git a/.keyring/openpgp/vmware.com/dvhart/default b/.keyring/openpgp/vmware.com/dvhart/default
-deleted file mode 120000
-index cbd2b8648dc4..000000000000
---- a/.keyring/openpgp/vmware.com/dvhart/default
-+++ /dev/null
-@@ -1 +0,0 @@
--../../../../keys/A6CC680C0AA77EB8.asc
-\ No newline at end of file
--- 
-2.47.3
+--a2g5hy24utvmyunp
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: attachment; filename="mic.asc"
 
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+=tx/f
+-----END PGP PUBLIC KEY BLOCK-----
+
+--a2g5hy24utvmyunp--
