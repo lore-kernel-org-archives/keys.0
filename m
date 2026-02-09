@@ -1,70 +1,53 @@
-Received: from smtp-out3.simply.com (smtp-out3.simply.com [94.231.106.210])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A696C371056
-	for <keys@linux.kernel.org>; Mon,  9 Feb 2026 12:39:18 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=94.231.106.210
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1CA23D291
+	for <keys@linux.kernel.org>; Mon,  9 Feb 2026 16:25:05 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770640759; cv=none; b=UgMxcEbnSaJq2vRFa8SChLRxJoqEc11W0DWDnzq32J+jzSiJFx5fG0GJ7SI9kbN+CjX8xvj4EWYJyudIr86O/KyRb5XwaHY840Z9wtnEhmhVDqNy2+9yt8bG0MN/cFOi/gYNdurIIbR5CfggQFxjIWsyOwcKNt/atcr3Uz4NHvI=
+	t=1770654305; cv=none; b=kOMwdPm/yvMV9Xi9lhYUK8TWYIUCJkYIO+cvRZfTHmKbioCG6yW/BbgW9TWcbg3VaZ/sMsu3D/Nc+lU4g3ZFRH/pXRU6vfZfB12USBrY8NfGAgRZOWfcjfw3HJfwpteR3359nBktsnPG2W+7TH/NPnqYSwNeIWbcWy6R+r4dl94=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770640759; c=relaxed/simple;
-	bh=2R57CuPKnnib02uV2GyiRH+FL0tzyGYQY8hJVn1jf8k=;
-	h=Message-ID:Date:MIME-Version:Subject:From:To:References:
-	 In-Reply-To:Content-Type; b=fmNnPvxXlqvJx2Soxwlg940u7NYN+hHub+jWW3vxn4KEMwc3lmQGFtvZeingRDqYzYrbTICJwYO2teu1kw7jnXYXE1cNUJhom+AssulRjh9rrlpZDXhhhQPHC6qqn0IiaplK1wzf+FSTNIpIFegnsodXzHJ+ZCEkLbT37MhxnB4=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com; spf=pass smtp.mailfrom=gaisler.com; dkim=fail (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b=GeWWvZlR reason="key not found in DNS"; arc=none smtp.client-ip=94.231.106.210
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gaisler.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gaisler.com
+	s=arc-20240116; t=1770654305; c=relaxed/simple;
+	bh=qHgH2PMEmT5DTAUQzctuO8o287KaJlJgNjoHBNfdcTs=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=U6WRORY29NFqUls3D9ocswtNqOcXSzqrfzyGTVD0DFd0i0t2a8oCNYoXUG7dzZvnJDkIXPUJG+I63bpsxHCoprAQAYWjqVw8C899PX1XJ7dlNUv4lgfg55LDIG5E+1tCNXSLsh2jg9z05TBnvPWbAhP8XKYIMJaO9TlhLPmtZzk=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUnQEWiw; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=fail reason="key not found in DNS" (0-bit key) header.d=gaisler.com header.i=@gaisler.com header.b="GeWWvZlR"
-Received: from localhost (localhost [127.0.0.1])
-	by smtp.simply.com (Simply.com) with ESMTP id 4f8kln00ckz1DR2Z;
-	Mon,  9 Feb 2026 13:39:17 +0100 (CET)
-Received: from [10.10.15.18] (h-98-128-223-123.NA.cust.bahnhof.se [98.128.223.123])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	by smtp.simply.com (Simply.com) with ESMTPSA id 4f8klm5VKMz1DDh4;
-	Mon,  9 Feb 2026 13:39:16 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gaisler.com;
-	s=simplycom2; t=1770640756;
-	bh=7lBxjgNZBlaDBScsN4OWR6UB5Ufr2uN8/L/SjNXnTi4=;
-	h=Date:Subject:From:To:References:In-Reply-To;
-	b=GeWWvZlRmtxqW/K3fT/8KtF9Bff7p0zq5+BOjFx88J0+Fudu7VacZR18D2m6rQoNw
-	 dH00JtrEsQyCbK+/LxF3VRLFGLdq+JlR7wEsEQ9i1Jwiga0JlmG2wt/E9pEAI6LHo2
-	 19PsjBYAwRY0INGAIai4rwY/vHSr/B1OCzJAH4WsG8V733ZLqjM/Rk+bsHu2E7/4pD
-	 mymEfaP8kMxxaJKdD7QIin+Zr5laDljXn4cv1O4KElwvA3H1xpHh5SnKOT1FxP0GZh
-	 VQ6L2YoUyqbrsJJTXmJqGTbdftRH18IUmtXM8u80sJIoaG4J6PGMAwIRRSrAW7Px+q
-	 joQk6wsApDDIA==
-Message-ID: <26cb3e04-e193-4e1f-bc4f-28d9a2f94671@gaisler.com>
-Date: Mon, 9 Feb 2026 13:39:16 +0100
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUnQEWiw"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9BCC16AAE;
+	Mon,  9 Feb 2026 16:25:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1770654305;
+	bh=qHgH2PMEmT5DTAUQzctuO8o287KaJlJgNjoHBNfdcTs=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=eUnQEWiwbxLSZzlkTKa9Wbjwj1IUHUjBx6k80XyvsSzJFASVkJY889qi9cmnVF/E+
+	 itfVzAU5scdycpbx2QZhC/lxe0PASFoFS7AKBzes/+jEF186nFSpgBCSVT8MPAKjgN
+	 enQIDckmNsTFtBX2FnMXYX5U8k/I576Y7AROJANxHpFtWkTQOIPFe/8ypREGiu2l9P
+	 gB7Ccms1PzYKaOCw1jLMYMPyndmruev6JN3RzVDW0RrvnrliuYwFfxBAdCuyswnMgG
+	 yX3Q3+OUDx7g/ebiGfZ8QUhFJSBriQnW2d2aqoh7ggf+4zSdJRotZP8mR1LhWdjeUy
+	 nGeDCgyKUdZmw==
+Date: Mon, 9 Feb 2026 11:25:03 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Andreas Larsson <andreas@gaisler.com>
+Cc: keys@linux.kernel.org
+Subject: Re: Key update for Andreas Larsson
+Message-ID: <20260209-pastel-meteoric-bear-b243db@lemur>
+References: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: Key update for Andreas Larsson
-From: Andreas Larsson <andreas@gaisler.com>
-To: keys@linux.kernel.org,
- Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-References: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
-Content-Language: en-US
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
 In-Reply-To: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
 
-On 2026-01-30 10:06, Andreas Larsson wrote:
+On Fri, Jan 30, 2026 at 10:06:45AM +0100, Andreas Larsson wrote:
 > Hi,
 > 
 > Could you please update my soon to expire key in the kernel keyring.
 
-Ping. Would appreciate an update. 
+Updated now, thank you for your patience.
 
-Old key has now expired and pull request has been sent before I realized
-that my key update had not been picked up. Update now also available
-through keys.openpgp.org.
-
-Cheers,
-Andreas
-
+-K
