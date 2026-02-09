@@ -1,38 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F1CA23D291
-	for <keys@linux.kernel.org>; Mon,  9 Feb 2026 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D191E3BB44
+	for <keys@linux.kernel.org>; Mon,  9 Feb 2026 18:31:07 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770654305; cv=none; b=kOMwdPm/yvMV9Xi9lhYUK8TWYIUCJkYIO+cvRZfTHmKbioCG6yW/BbgW9TWcbg3VaZ/sMsu3D/Nc+lU4g3ZFRH/pXRU6vfZfB12USBrY8NfGAgRZOWfcjfw3HJfwpteR3359nBktsnPG2W+7TH/NPnqYSwNeIWbcWy6R+r4dl94=
+	t=1770661867; cv=none; b=JgU72ognf4Fl2pdWsjGVls7Fid9gMB6aAdfCjNOnERGvRwsW+wHaZ28zVrHgncykq7TXDH+gqJ6rabLMDiGiqCUpiHfKzFstDwx/HXoqV07IVr2rcvoyVuFzwv/wpfite19oSCVHcWEPHpyHi1eQgu0M3ErzH47qHLwaAMGPt/4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770654305; c=relaxed/simple;
-	bh=qHgH2PMEmT5DTAUQzctuO8o287KaJlJgNjoHBNfdcTs=;
+	s=arc-20240116; t=1770661867; c=relaxed/simple;
+	bh=r3QSJVpU90IH/rWtXG4XCIw5M7BVV+kQqwBgF9fMIzI=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=U6WRORY29NFqUls3D9ocswtNqOcXSzqrfzyGTVD0DFd0i0t2a8oCNYoXUG7dzZvnJDkIXPUJG+I63bpsxHCoprAQAYWjqVw8C899PX1XJ7dlNUv4lgfg55LDIG5E+1tCNXSLsh2jg9z05TBnvPWbAhP8XKYIMJaO9TlhLPmtZzk=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=eUnQEWiw; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=ntExPk1AT0x5ONobhCT0bGESIMKn28GgApP05fJzOnc/3GfUDuKb7cJs6VR/MI1Cr8O2Dt1oIlVCDOkp8edqx4QAEG7+eVpnEAsdGQIP56UXmkTGmuMc+ewM2W/6opFbrhWux2ryeKE8jeE0XFUXQBFA/ct7cWwIl8a8I/gmDq0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDk1W7MO; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="eUnQEWiw"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB9BCC16AAE;
-	Mon,  9 Feb 2026 16:25:04 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDk1W7MO"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7454BC116C6;
+	Mon,  9 Feb 2026 18:31:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770654305;
-	bh=qHgH2PMEmT5DTAUQzctuO8o287KaJlJgNjoHBNfdcTs=;
+	s=k20201202; t=1770661867;
+	bh=r3QSJVpU90IH/rWtXG4XCIw5M7BVV+kQqwBgF9fMIzI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=eUnQEWiwbxLSZzlkTKa9Wbjwj1IUHUjBx6k80XyvsSzJFASVkJY889qi9cmnVF/E+
-	 itfVzAU5scdycpbx2QZhC/lxe0PASFoFS7AKBzes/+jEF186nFSpgBCSVT8MPAKjgN
-	 enQIDckmNsTFtBX2FnMXYX5U8k/I576Y7AROJANxHpFtWkTQOIPFe/8ypREGiu2l9P
-	 gB7Ccms1PzYKaOCw1jLMYMPyndmruev6JN3RzVDW0RrvnrliuYwFfxBAdCuyswnMgG
-	 yX3Q3+OUDx7g/ebiGfZ8QUhFJSBriQnW2d2aqoh7ggf+4zSdJRotZP8mR1LhWdjeUy
-	 nGeDCgyKUdZmw==
-Date: Mon, 9 Feb 2026 11:25:03 -0500
+	b=YDk1W7MO+4KZftaArMCq3cJXtJEBYtFjO81BqiVJITq9z2Rf1Rcu6hCsGzDGLDCN7
+	 gRg4Q5LjQOEmVarm2kqsbJZUkBWD7bs2vY4l9qWQcJx/pgn3rGo/pWNKcuLImkmx+r
+	 16ZWLhXPCvNkpgXMQjJMmu/zEiPUQveQa41+yRvYCLW0MPnwgdPjKTuaD8tHPeCDuj
+	 I7WSbtadFQsy+60YiRYQVcP/pkYawOHA4amT2dna7pRAr8ph2hWvBIvpb5b4gREnnY
+	 SwTZOKO+aA/oncmQwRqW1LN7Li0Xi6CEuGfC9+67gRVgCPglpXG/5XTSVaMwJCs95H
+	 1sFQJZ4pwoY8g==
+Date: Mon, 9 Feb 2026 13:31:06 -0500
 From: Konstantin Ryabitsev <mricon@kernel.org>
-To: Andreas Larsson <andreas@gaisler.com>
+To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
 Cc: keys@linux.kernel.org
-Subject: Re: Key update for Andreas Larsson
-Message-ID: <20260209-pastel-meteoric-bear-b243db@lemur>
-References: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
+Subject: Re: Updated key for =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=
+Message-ID: <20260209-expert-swan-of-protection-7a458f@lemur>
+References: <20260206.waiCh9iex3ai@digikod.net>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -41,13 +41,16 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <43f04d5b-7a14-429d-9c78-f4e7d702c6dc@gaisler.com>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260206.waiCh9iex3ai@digikod.net>
 
-On Fri, Jan 30, 2026 at 10:06:45AM +0100, Andreas Larsson wrote:
+On Fri, Feb 06, 2026 at 07:29:41PM +0100, Mickaël Salaün wrote:
 > Hi,
 > 
-> Could you please update my soon to expire key in the kernel keyring.
+> Please find attached my updated key with an extended expiration date and
+> my mic@kernel.org address.
 
-Updated now, thank you for your patience.
+Looks like this was pulled in with the latest round of keyserver syncs.
 
+Best regards,
 -K
