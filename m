@@ -1,38 +1,40 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D191E3BB44
-	for <keys@linux.kernel.org>; Mon,  9 Feb 2026 18:31:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A872D0C98
+	for <keys@linux.kernel.org>; Fri, 13 Feb 2026 21:38:10 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=10.30.226.201
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1770661867; cv=none; b=JgU72ognf4Fl2pdWsjGVls7Fid9gMB6aAdfCjNOnERGvRwsW+wHaZ28zVrHgncykq7TXDH+gqJ6rabLMDiGiqCUpiHfKzFstDwx/HXoqV07IVr2rcvoyVuFzwv/wpfite19oSCVHcWEPHpyHi1eQgu0M3ErzH47qHLwaAMGPt/4=
+	t=1771018691; cv=none; b=NwFOQu8F7YQTVryHxqFJV1Em/u6gOqmDNlc4eT6kRkTPvDuld4pNdhQFLLxTvz9RRBQ5nLfc27/Hi5HIkDokOZ0Nz/VOVFPMK1vKTRQq+SnxxTe1+WlghA4aJ24MN0OsKN0l+6FKtlKIECpIe2PL4QwNCWgQh3+OvuzBoATrPJM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1770661867; c=relaxed/simple;
-	bh=r3QSJVpU90IH/rWtXG4XCIw5M7BVV+kQqwBgF9fMIzI=;
+	s=arc-20240116; t=1771018691; c=relaxed/simple;
+	bh=Wj8e9h+MycH+pkn0hfdkBJAa4OBLT8aPU0Jv5z30KzM=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=ntExPk1AT0x5ONobhCT0bGESIMKn28GgApP05fJzOnc/3GfUDuKb7cJs6VR/MI1Cr8O2Dt1oIlVCDOkp8edqx4QAEG7+eVpnEAsdGQIP56UXmkTGmuMc+ewM2W/6opFbrhWux2ryeKE8jeE0XFUXQBFA/ct7cWwIl8a8I/gmDq0=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=YDk1W7MO; arc=none smtp.client-ip=10.30.226.201
+	 Content-Type:Content-Disposition:In-Reply-To; b=aCXL3x+z8QjcK7BD3vucWy5SItXvqfT9np1R/6KTocX0KLk6QcCaNOANMYtGfPK3yArumk6WGyWtnyyvrFa5CxhY1kbTYGa+4yuoNpXzWj8NAA7iC1s+n4DviaArN7bUHNaspHiPLXNmthxuqJ+oxSai5CDMgfObOW1CFBpvv9M=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=TTVPFJXA; arc=none smtp.client-ip=10.30.226.201
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="YDk1W7MO"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7454BC116C6;
-	Mon,  9 Feb 2026 18:31:07 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="TTVPFJXA"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0ED8CC116C6;
+	Fri, 13 Feb 2026 21:38:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1770661867;
-	bh=r3QSJVpU90IH/rWtXG4XCIw5M7BVV+kQqwBgF9fMIzI=;
+	s=k20201202; t=1771018690;
+	bh=Wj8e9h+MycH+pkn0hfdkBJAa4OBLT8aPU0Jv5z30KzM=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YDk1W7MO+4KZftaArMCq3cJXtJEBYtFjO81BqiVJITq9z2Rf1Rcu6hCsGzDGLDCN7
-	 gRg4Q5LjQOEmVarm2kqsbJZUkBWD7bs2vY4l9qWQcJx/pgn3rGo/pWNKcuLImkmx+r
-	 16ZWLhXPCvNkpgXMQjJMmu/zEiPUQveQa41+yRvYCLW0MPnwgdPjKTuaD8tHPeCDuj
-	 I7WSbtadFQsy+60YiRYQVcP/pkYawOHA4amT2dna7pRAr8ph2hWvBIvpb5b4gREnnY
-	 SwTZOKO+aA/oncmQwRqW1LN7Li0Xi6CEuGfC9+67gRVgCPglpXG/5XTSVaMwJCs95H
-	 1sFQJZ4pwoY8g==
-Date: Mon, 9 Feb 2026 13:31:06 -0500
+	b=TTVPFJXAGuFChmVC8e4/12IlGhgz/t7nhQbQ82PZXG/Dj7Fr2unFQmoBLm/wqAONT
+	 VTQQvmYPojCnuodPNITBkm4HNqLKrWn4ZZ/QXticJtXSGmXMUZpb0MmybTg0Vc+uOv
+	 NcTRTV4/GGl4+SewyuArn39RcR6OqgO90OU1brelcZ9JbosZL/v/9jKVffE4DnYxuN
+	 m79pIymhqW7aOfO8AZMEqEXoSBL7GS8AO6gmafNCdzko77fmMA6VdGAS3tmMdeUV4s
+	 +04aIU1UNRqVLjUiH62LKlKvD6c+ZeludE7JqujICfENjbRohRfwK2I+cV14HtIPbw
+	 lFIcMkbHizEnA==
+Date: Fri, 13 Feb 2026 16:38:06 -0500
 From: Konstantin Ryabitsev <mricon@kernel.org>
-To: =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?= <mic@digikod.net>
-Cc: keys@linux.kernel.org
-Subject: Re: Updated key for =?utf-8?Q?Micka=C3=ABl_Sala=C3=BCn?=
-Message-ID: <20260209-expert-swan-of-protection-7a458f@lemur>
-References: <20260206.waiCh9iex3ai@digikod.net>
+To: Seth Forshee <sforshee@kernel.org>
+Cc: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>, 
+	keys@linux.kernel.org
+Subject: Re: key AB4800A62DB9F73A (Seth Forshee) expired
+Message-ID: <20260213-magic-rare-termite-bb1cb4@lemur>
+References: <6vz6qlpdzoueoigolgs2x6i6mpg6wpa3hos34feiu6n4bnvc5d@syix5qqdbmn6>
+ <aYIQdlikYqHwps3I@do-x1carbon>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -41,16 +43,29 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260206.waiCh9iex3ai@digikod.net>
+In-Reply-To: <aYIQdlikYqHwps3I@do-x1carbon>
 
-On Fri, Feb 06, 2026 at 07:29:41PM +0100, Mickaël Salaün wrote:
-> Hi,
+On Tue, Feb 03, 2026 at 09:12:54AM -0600, Seth Forshee wrote:
+> > this is a quick FYI that your PGP certificate AB4800A62DB9F73A in the
+> > version that is tracked in
+> > https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/tree/keys/AB4800A62DB9F73A.asc
+> > expired earlier this month.
+> > 
+> > If you don't use this key for kernel work any more, please let us know.
+> > Otherwise I suggest to expand the key's expiry date by doing e.g.:
+> > 
+> > 	gpg --quick-set-expire 2ABCA7498D83E1D32D51D3B5AB4800A62DB9F73A 2y
+> > 	gpg --keyserver hkps://keys.openpgp.org/ --send-key 2ABCA7498D83E1D32D51D3B5AB4800A62DB9F73A
+> > 
+> > to extend the expiry by 2 years.
 > 
-> Please find attached my updated key with an extended expiration date and
-> my mic@kernel.org address.
+> Ah, I guess I forgot to put a reminder on my calendar. I'll get it
+> updated. Thanks for the heads up!
 
-Looks like this was pulled in with the latest round of keyserver syncs.
+Hello!
+
+Note that it's still expired. 
 
 Best regards,
--K
+-- 
+KR
