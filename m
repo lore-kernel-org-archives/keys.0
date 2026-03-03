@@ -1,110 +1,93 @@
-Received: from metis.whiteo.stw.pengutronix.de (metis.whiteo.stw.pengutronix.de [185.203.201.7])
+Received: from out-177.mta1.migadu.com (out-177.mta1.migadu.com [95.215.58.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21CF419D8A8
-	for <keys@linux.kernel.org>; Wed, 18 Feb 2026 15:37:31 +0000 (UTC)
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=185.203.201.7
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D07D301460
+	for <keys@linux.kernel.org>; Tue,  3 Mar 2026 09:42:11 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=95.215.58.177
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1771429053; cv=none; b=hySFXPYt5HN1eCkj1oJoAc5tpRoSlgVSYVi7FO6Q+EJ6Cz38VAhlqZAPm10os3V/ARd067tPDW4uk6Jn+XQEFCc0iFgtB5PAA1a3otqndbGX5SNk6Fi6QP8Iq8hp+lgCM5YM7WZzth57rzDt+Mp9ky1Kv4MEn4AHCP7BZXrzCiE=
+	t=1772530933; cv=none; b=iiO4/RtYfCYssWLJrRICVKXXJUqN7CKqEmOw2AD5adjtAF6kwfIr7AumF+Y5oyge7FA3rTA8YzAG+dvH7Q1S8OFdWyjnyzBuII9iJ+0WxwKV4Mto6q5FXfosJ56d12rnnfWtAKPGFuQzb7e4kUsFwsfuPK84hRntIARbAyzw85A=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1771429053; c=relaxed/simple;
-	bh=czTvS5ZzW+HSBpUUXgafPo3zMhvlzWG6mnxN3AHHgn8=;
-	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=AukzPGK/DjrFElHdUl5SW6ejeOjClwempnQ3HhN/71ck5CEYVFOq+BoFRkdS33cKcRImrvEgmekPcQ3M7uLkfZ5P+RD8WS6kKPqzr9RryD6nC9kls806wPr1Q0LndpEbdC1tP8DTVbZ3bF8w0VfPu468CJ8XrNpuPlPYV87IJ1I=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de; spf=pass smtp.mailfrom=pengutronix.de; arc=none smtp.client-ip=185.203.201.7
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=pengutronix.de
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=pengutronix.de
-Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
-	by metis.whiteo.stw.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
-	(Exim 4.92)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1vsjcG-0004pl-Gs; Wed, 18 Feb 2026 16:37:28 +0100
-Received: from moin.white.stw.pengutronix.de ([2a0a:edc0:0:b01:1d::7b] helo=bjornoya.blackshift.org)
-	by drehscheibe.grey.stw.pengutronix.de with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.96)
-	(envelope-from <mkl@pengutronix.de>)
-	id 1vsjcE-001Qsg-2T;
-	Wed, 18 Feb 2026 16:37:28 +0100
-Received: from pengutronix.de (p54b15bf8.dip0.t-ipconnect.de [84.177.91.248])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(Client did not present a certificate)
-	(Authenticated sender: mkl-all@blackshift.org)
-	by smtp.blackshift.org (Postfix) with ESMTPSA id CB4C34EBC16;
-	Wed, 18 Feb 2026 15:37:27 +0000 (UTC)
-Date: Wed, 18 Feb 2026 16:37:27 +0100
-From: Marc Kleine-Budde <mkl@pengutronix.de>
-To: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Marc Kleine-Budde <mkl@pengutronix.de>, keys@linux.kernel.org
-Subject: Re: Updated key for Marc Kleine-Budde
-Message-ID: <20260218-chirpy-hot-impala-73cf08-mkl@pengutronix.de>
-X-AI: stop_reason: "refusal"
-References: <20260218-smoky-spoonbill-of-sympathy-360c05-mkl@pengutronix.de>
- <aZXTh_HVEkLBM-L3@monoceros>
+	s=arc-20240116; t=1772530933; c=relaxed/simple;
+	bh=poD544lP1DP9HicgjboPSxtiN2x2bllEJfKLD06qilA=;
+	h=Content-Type:Message-ID:Date:MIME-Version:To:Cc:From:Subject; b=gtj8g72pUYH7Gz32F/QapRNHalU2HoxY1CaXWlFRL3+BfhQBIYDah5FhzGw7y/+RnkXEjuFSk/p4KvJ1otS7aMqN06jEpJS51v/adSY747RFXmkHiU3RCAb0hAJgP0BGn29yHmudUJbCFklypPnFp9SFYR0n3OHrxacbminqBsc=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev; spf=pass smtp.mailfrom=linux.dev; dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b=mFaqeCHy; arc=none smtp.client-ip=95.215.58.177
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key) header.d=linux.dev header.i=@linux.dev header.b="mFaqeCHy"
+Content-Type: multipart/mixed; boundary="------------MUcGukItx8FVk0Q11om6A8H0"
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+	t=1772530929;
+	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+	 to:to:cc:cc:mime-version:mime-version:content-type:content-type;
+	bh=poD544lP1DP9HicgjboPSxtiN2x2bllEJfKLD06qilA=;
+	b=mFaqeCHyFmwWBaBwb4zDjljE7xgyjlgR4uQbsxqEIqZdG71aHLhFvYUmSW/eilv93P8+sX
+	b37uyzpcKJmRSyh/Jxg+4HF4vuD6+QzRgJ99N8IjfJXB1NjDfw8VxhxF2qRSSxUDG7abBp
+	88zwCpezPqwj63CJuIg9YY43S/Fel40=
+Message-ID: <c08e120f-d3e2-4ea7-aef1-6ac0f71349f6@linux.dev>
+Date: Tue, 3 Mar 2026 17:41:57 +0800
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="almnmszbuvqt2edf"
-Content-Disposition: inline
-In-Reply-To: <aZXTh_HVEkLBM-L3@monoceros>
-X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
-X-SA-Exim-Mail-From: mkl@pengutronix.de
-X-SA-Exim-Scanned: No (on metis.whiteo.stw.pengutronix.de); SAEximRunCond expanded to false
-X-PTX-Original-Recipient: keys@linux.kernel.org
+To: keys@linux.kernel.org
+Cc: unicorn_wang@outlook.com
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and include these headers.
+From: Chen Wang <chen.wang@linux.dev>
+Subject: Key for Chen Wang
+X-Migadu-Flow: FLOW_OUT
 
+This is a multi-part message in MIME format.
+--------------MUcGukItx8FVk0Q11om6A8H0
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
---almnmszbuvqt2edf
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Subject: Re: Updated key for Marc Kleine-Budde
-MIME-Version: 1.0
+Hello,
 
-On 18.02.2026 16:12:29, Uwe Kleine-K=C3=B6nig wrote:
-> Hello Marc,
->
-> On Wed, Feb 18, 2026 at 02:25:58PM +0100, Marc Kleine-Budde wrote:
-> > Please find attached my updated key with a new signing subkey and an
-> > extended expiration date.
->
-> Your attachment contains two certificates?! I guess having included
-> 9D2055D575B17DD1CF423BF08D3005AB545A5C73 was a mistake?
+I'm sending my PGP key for Linux dev/PR work. Please see attachment.
 
-ACK, sorry.
+Thanks
 
-> The other certificate (C1400BA0B3989E6FBC7D5B5C2B5EE211C58AEA54) looks
-> fine.
->
-> When importing it, a few SHA-1 signatures are dropped (by
-> 6BBF9F19873B518D Luis de Bethencourt, 06CA9F5D1DCF2659 Marcel Holtmann
-> and 140DE4CC14A029B6 Wolfram Sang), which drops the shortest trust paths
-> for Marc and thus there is some further impact on the trust paths of
-> Philipp Zabel and me, but nobody falls out of the web of trust.
+Chen
 
-So we have to poke some people at the next conferences :)
+--------------MUcGukItx8FVk0Q11om6A8H0
+Content-Type: text/plain; charset=UTF-8; name="export.asc"
+Content-Disposition: attachment; filename="export.asc"
+Content-Transfer-Encoding: base64
 
-regards,
-Marc
+LS0tLS1CRUdJTiBQR1AgUFVCTElDIEtFWSBCTE9DSy0tLS0tCgptRE1FYVIxZXNCWUpLd1lC
+QkFIYVJ3OEJBUWRBaDhXS29OWkJFK0lMZnZ6OUdCeWFRd0xRV20rM1NIOWRoaWNRClFneGZN
+ZnUwTDBOb1pXNGdWMkZ1WnlBb1RHbHVkWGdnVUZJcElEeDFibWxqYjNKdVgzZGhibWRBYjNW
+MGJHOXYKYXk1amIyMCtpSk1FRXhZS0FEc1dJUVRZUGNXSjZCeTNhRnU4SXVLSEc5NVF1Yzk3
+ZGdVQ2FSMWVzQUliQXdVTApDUWdIQWdJaUFnWVZDZ2tJQ3dJRUZnSURBUUllQndJWGdBQUtD
+UkNIRzk1UXVjOTdkak40QVA5MEx4VDFPR084Cm9tdjFHK2NBdkxHQnJtRWR2TC9UQjFlNmIw
+TlUvYm9RT0FFQXZXVlNYa2RBQ05NN3R3TjVDTHRONGE4U0NpelkKS1BvMmp2R0VDNis2UVE2
+SkFqTUVFQUVJQUIwV0lRUkY5WTVReWtxZGE3WGJxcnQrZjVIZ01qeHByd1VDYVl0YwpZZ0FL
+Q1JCK2Y1SGdNanhwcjlJMEQvOXFjKzh2eTVpRlZSWHgycXFITjcyVFA4VGpZU3RZK1F3azBC
+cjUvcHkwCkN6aTM1cGl1WE9Xb0NOckxiRWZCanliTGZscFVJczFtbS8zT3N2T3VPYWN4T0J3
+eHdrSDBsK0Q0ZG54QVVpSEgKakN6ektaM1NUVGpHYWdnVm91L0o4Z3lJc0IyKzRmaHpLZHpJ
+TlVFeWhoZ21PamVPZmRNc3VHaHQ0eks2Z001YQp2QVdndEVRSTZIRHFRcWNuejJacHlPQUwx
+QWVOUjdCVUM4VUVmZVhVb3Nud0ZMUE5HTWVwSWR5RjNWNlJ2czBKCnlNaUNxTUJsd2kzUmNv
+aFE4clE3ZXRXRk9VTUJBdmw3bkRqcWhyQWVEV2ZqbEhJY1kzVTBQR1pNZC9FR0FnT3UKSlFw
+SmVsSW1hZWhIMUlNam5JdjdTY3l6dVlRcElwMEFOUUJLWGYyTElFSHFWWmRNcnZTS3JPN3RT
+ODQyL0Y3dgpRZXJFemJzQTh0QlorU1VBZXBWTm5vcTZCWC8yT2RGTEFjV05DUHBta1h0WWdu
+eVY5WEhXSjdld0FvZ0ptb0pUClVIR2VXNGcxbTdBbGZsWDEzZitEcjVKTCt3TER4Q0lHL2xS
+WFlXWFB3ekpwRDAzOWduRXJNa3NzS1hIWS9LL2UKSFJKb1diODVsUFVRanlzT3ZZcHh5OTg5
+cUJ1ZXRqeTFKNlp5WVVpQ2tKa0I2TmJvVmg4enFNMGRHRlZSVTdrdQoxSlRaYUMxdVpScHky
+cE1xZ21DZE5nd2xuTUVSekRSY0xEeEpWYmZLcjZYNDVJK1R5ZTBGWWFWV3JSbDJYOTVLCm92
+WU0rSEw2cHVXSG5ueU0ycmNraXNKVDR5aWs1YkFnZU5DemRFOFJtYk9lUlBPYnJOcHJ2aFE1
+a0M4NGhIK1EKc2JRNlEyaGxiaUJYWVc1bklDaE1hVzUxZUNCRVpYWmxiRzl3YldWdWRDQmhi
+bVFnVUZJcElEeGphR1Z1TG5kaApibWRBYkdsdWRYZ3VaR1YyUG9pVEJCTVdDZ0E3RmlFRTJE
+M0ZpZWdjdDJoYnZDTGloeHZlVUxuUGUzWUZBbW1tCm81a0NHd01GQ3drSUJ3SUNJZ0lHRlFv
+SkNBc0NCQllDQXdFQ0hnY0NGNEFBQ2drUWh4dmVVTG5QZTNic0R3RC8KVEZnMklOaFBHQXlE
+SVF6SXl0eFNBK21kdHIxUXlpQXRlL3hLeGdGbnJJWUJBS29oM0dOVU93bzhDVjBacVhSVgph
+MGFEMDVramJCOEpLdkY4N000V1ZBNEV1RGdFYVIxZXNCSUtLd1lCQkFHWFZRRUZBUUVIUUlu
+NnlwbW5jQzRxCmJSYlJqRHpBM2U2ZVBqTUwwUEVoTjZFWC8xZ2luRVlMQXdFSUI0aDRCQmdX
+Q2dBZ0ZpRUUyRDNGaWVnY3QyaGIKdkNMaWh4dmVVTG5QZTNZRkFta2RYckFDR3d3QUNna1Fo
+eHZlVUxuUGUzYWZtZ0VBMTJIS0Z2M0tlT21oMmE3SApJOGFWMXBoWnVwbGZQeHpwSkR5WW1M
+QXUrcWtBLzNUZEozZjRBekZDcnEwWjR6Y1RSd3NNSWpPYyt0Y3RjTXhLCjJiMXNJY2tCCj13
+TVZZCi0tLS0tRU5EIFBHUCBQVUJMSUMgS0VZIEJMT0NLLS0tLS0K
 
---=20
-Pengutronix e.K.                 | Marc Kleine-Budde          |
-Embedded Linux                   | https://www.pengutronix.de |
-Vertretung N=C3=BCrnberg              | Phone: +49-5121-206917-129 |
-Amtsgericht Hildesheim, HRA 2686 | Fax:   +49-5121-206917-9   |
-
---almnmszbuvqt2edf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSl+MghEFFAdY3pYJLMOmT6rpmt0gUCaZXcsgAKCRDMOmT6rpmt
-0hoHAP0Tp6vttEe8nphJn/nKfhZV3om578Zbwt5p0R50BLgt6gEAyq7pSUNKOdqF
-YdXOEHZ+5TUxVCBe/5LU/UeQ/NrzTAw=
-=pJe7
------END PGP SIGNATURE-----
-
---almnmszbuvqt2edf--
+--------------MUcGukItx8FVk0Q11om6A8H0--
