@@ -1,120 +1,75 @@
 Received: from mx0b-0031df01.pphosted.com (mx0b-0031df01.pphosted.com [205.220.180.131])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81683B6C0A
-	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:33:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF07B2765FF
+	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:27:44 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=205.220.180.131
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1779978825; cv=none; b=Q2yOUJIxpfDc+dLGfpZ51Dd3t68CG+xFLuKkdDlIe1rjefDm+wOoxVfdR9eJwawCiJidQ++KxiIAGn1Vu8+nMJ0hZ4axFJtj8AF63RlY2PYt/V8wGOYVFIca/BoI1BO0TWmPJGqFoFy7BuM0St19sziwXV/SFNA9wpRAkXa1b7w=
+	t=1779978466; cv=none; b=bzLRJnxsumtJfndE/+mCoupLbKJ2SSUCH0tEt9mQxasu6HpTtP+cvUaIlKOaogEbGiWVlw0zzKzdIx7RANfba5k/BB0C7DUViHtHBtwuhXM9nSD/fqq+/a3ArmYJY6eyVwxjidaIcC76o7R0SNXUpxnhfnT7cBxSwdWXcX4firM=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1779978825; c=relaxed/simple;
+	s=arc-20240116; t=1779978466; c=relaxed/simple;
 	bh=Kte7/hGy/5Ky2c55PHfAi9UioRj5wQko3SYxVeCBAeE=;
-	h=Message-ID:Date:MIME-Version:From:To:Subject:Content-Type; b=bTMn45yACKDvBv7coK90TzGuDS3F4d9iBJqM/Bkgwh2j36X0zj/ZIhEBz6ovCW/n1NGkZg+iy2kfuRPyrI0+Zr1JjeeAiKFESHVtcI1I/O1yQk4vCEniDHvtdBbkwJ8nSwAYxrpaBUsownlFAxXOSpF5Kaztc5YyyVpxFy64Awo=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com; spf=pass smtp.mailfrom=oss.qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=Wc9TTY5u; dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b=kSzVCP2s; arc=none smtp.client-ip=205.220.180.131
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=oss.qualcomm.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=oss.qualcomm.com
+	h=Subject:To:Date:Message-Id:From; b=txAI26koe/bNykCdZzSYHoMK/IklPFIw7cB90KrmtDdJz780hs6mYrTRXYWtKFifSonCVf6bki7mNkv4kZEdBvFvmw+DUSSTHJMI6eI0IsaGea0JeXr3KoOFAuDc8XfGxnct7Kt7jXVAkKYVRfhi8FyJ+/JpxA0UF/medST/ZvI=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualcomm.com; spf=pass smtp.mailfrom=qualcomm.com; dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b=GldcDtqY; arc=none smtp.client-ip=205.220.180.131
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=reject dis=none) header.from=qualcomm.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=qualcomm.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="Wc9TTY5u";
-	dkim=pass (2048-bit key) header.d=oss.qualcomm.com header.i=@oss.qualcomm.com header.b="kSzVCP2s"
-Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
-	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64S8vRN12793722
-	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:33:42 GMT
+	dkim=pass (2048-bit key) header.d=qualcomm.com header.i=@qualcomm.com header.b="GldcDtqY"
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+	by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id 64S8vrSH124511
+	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:27:44 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
-	content-transfer-encoding:content-type:date:from:message-id
-	:mime-version:subject:to; s=qcppdkim1; bh=Kte7/hGy/5Ky2c55PHfAi9
-	UioRj5wQko3SYxVeCBAeE=; b=Wc9TTY5uUoNU9dtITSvPkR2ff3X7WW38J8bbiz
-	yNFUIcRI5WVoYbMsCxcnOWH1gMtFmiEWcMSaZhEIavywW0wiVjpA6MSZTyMECd1y
-	SDGSqjJVXm9+iaPEAHDN7rR+BYHgaz5lAR7MCtU3thRfdDQAkCjmKNFEyoejLnb5
-	BWuSVVRhGROEBYbjaZH4es3s4SF7uK4xaFL3F9xN+3xJVW7WIgfApBG5G5WpwabT
-	HBpN8ZNbmxi0EBbal4kPyYZ9Tr6TYMj13aewwhKHDSkJtQZaUnXIVlO9J13i9nSC
-	Q9sRtIsjN1gfV9lUvGMCAi0ektmIga0DEtVDYTAwAKy6/w0g==
-Received: from mail-dy1-f200.google.com (mail-dy1-f200.google.com [74.125.82.200])
-	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7y1u4xq-1
-	(version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
-	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:33:42 +0000 (GMT)
-Received: by mail-dy1-f200.google.com with SMTP id 5a478bee46e88-304dd917645so381102eec.1
-        for <keys@linux.kernel.org>; Thu, 28 May 2026 07:33:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=oss.qualcomm.com; s=google; t=1779978821; x=1780583621; darn=linux.kernel.org;
-        h=content-transfer-encoding:subject:to:from:content-language
-         :user-agent:mime-version:date:message-id:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=Kte7/hGy/5Ky2c55PHfAi9UioRj5wQko3SYxVeCBAeE=;
-        b=kSzVCP2sCPdSruMJZ4dHhRxcw9GoFLsD26map26NlavuDanPq/kng7nxgsYH9EUktr
-         7EugiMF0XSv3O2E0M2CKA/7r/M9+AOZKp8WtHBZA0Y5mkcoAOHDtTSPkWXw+7v+6UKXT
-         2LQ5DiKSgF459u1GSQLxdtluctPyaoy+oKjwy7mrnaAk3SXhWfQ3Z3mw+OCtOPrj7Sbp
-         2xpi0GelCEv07FnuaQDFHZdfWtOCGMm3b7ZOnAM9uv/FrG1Erdo8fckzxfQbePmVyLQm
-         cBpYU1TMEmBg8HfONEzeH2XNriCaCSxdW3ALDwlcPIzS2L63LrwRiV3Jqi5SKv2cGGmj
-         Bdng==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20251104; t=1779978821; x=1780583621;
-        h=content-transfer-encoding:subject:to:from:content-language
-         :user-agent:mime-version:date:message-id:x-gm-gg:x-gm-message-state
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Kte7/hGy/5Ky2c55PHfAi9UioRj5wQko3SYxVeCBAeE=;
-        b=J/IFUayJ9VpDv4PTQegqvpolfAA0qXjugCF9BA3AXfu9znHGJqxQ+jfTGtdWvS/1Yr
-         keg7MMwwUA9RwJwuAzJGyCRc4xwSDuqh1Usnq6oBzoIZ6G8sGSRnvftC4ihfWu7ptE0C
-         +D1WLQs+Xp6aRtUxlCFpIcYCCNpdfG396xwJ2E56ncE9d89f6gJZMVEVTGksyE0PY4x5
-         B8YeW25yhxOJUJkUybNYVeUu4qpmxJO8da9UF1yTaXLq9ZyiWhtRsPcZOJ4ecnl9ciGZ
-         xHLGmCjW4vD/Q+PbnGh8V8dM3u2Fepn/RSZF2qYphlrPUSpd/bl4vK+0pM9h9UQOD7NN
-         Efxw==
-X-Gm-Message-State: AOJu0YzN9vaAgz+6IF3mrbwO69IkLjJmNfmtqZuBu3YVE5zwRx8fVOMn
-	qnQVoHwF94cl6Hp4VfusVpO1DkIGpynIk7OImbLgiAiyDFLt9RUvLbLQR3NCWHszJx39CXjhsGV
-	Vs37zluvUZOdD6uF3dsvLF6LogYhrhXl3TE/HgLC1L4O7hpNGrCfd1mK7Z7vD6UrdOQ==
-X-Gm-Gg: Acq92OE/xFQF2Yh6JObEXVak0BBj6BNHHBRBLxulitbGwHLdy3wT2QCv7lpHOp4YRkY
-	2O8xo68eGXZdv8NvUc88f+J8nxoPzmjbXoA+kdZhwnu01Gj6x/xv03T4B+kNpl4QvZJMQJlKIP1
-	rXhlcKLhXhWfPKEbvwlxnfCHVDK6dmwGL4OxZf0qcDYA41VWtJ49f1cjOggMFVLrKTlZ0jp/cyC
-	oIW6ec2TdDtZFdCCbsDuo40PF80U9E4OjGVMU09utwfnBjyHMwsc9YZZLI5sqAVFn7Tm0pOiIQb
-	uYYFhTuBgn8agwT84RCtgrmPlhiZBGKYEAGdIhD5kSzjh+UMp9c1YYlfQ4bRtQz0XJfl1MsyXXe
-	rZaLc3K8H2Bz/I/dy53367yCE1G58uU8d5ffztyMxTB0V4JhrNjesQNQjDasWyE59r1Lv
-X-Received: by 2002:a05:7022:20f:b0:137:546:9e9d with SMTP id a92af1059eb24-1370546a30dmr5620028c88.23.1779978821327;
-        Thu, 28 May 2026 07:33:41 -0700 (PDT)
-X-Received: by 2002:a05:7022:20f:b0:137:546:9e9d with SMTP id a92af1059eb24-1370546a30dmr5619975c88.23.1779978820336;
-        Thu, 28 May 2026 07:33:40 -0700 (PDT)
-Received: from [10.81.91.45] (Global_NAT1.qualcomm.com. [129.46.96.20])
-        by smtp.gmail.com with ESMTPSA id a92af1059eb24-1366a4011d9sm12998407c88.6.2026.05.28.07.33.39
-        for <keys@linux.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 28 May 2026 07:33:39 -0700 (PDT)
-Message-ID: <c8cb99ef-3960-4b15-8011-8d9fba456fa0@oss.qualcomm.com>
-Date: Thu, 28 May 2026 07:33:39 -0700
+	date:from:message-id:subject:to; s=qcppdkim1; bh=Kte7/hGy/5Ky2c5
+	5PHfAi9UioRj5wQko3SYxVeCBAeE=; b=GldcDtqYNqnIXUOCr1Bkmh92rJ21WSM
+	U2FSFsUz3RLh/bQ4y6soZgbpcOVV/acNIpywdIfj/kcOllkpgA2x1hybTxC62R3K
+	JQa1yeaqyWSsOLAC87JTOPSvacg2IOX9RP8oLJR82YEd2VBV0Q6cNRfWNZVj2yYV
+	A1rrZWIlEJYgKJ1ANTNDCzQGHZ3Acfd9948914re9p/MhKlMtOELTN3Eqi5XozoL
+	MuiqU2Db0yhjQR9bMduQY7PXoWo701xeoJNt5n7Q7tkydEqExCZ4ZUXqXJev8cda
+	rRpFQgnZbFVrop+mdE/uG3o7gz6WhJPLRx71NRReRD2QjI4RmTLrEjw==
+Received: from nalasppmta01.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
+	by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4ee7ycb32t-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:27:43 +0000 (GMT)
+Received: from hu-devc-lv-u24-a.qualcomm.com (hu-jjohnson-lv.qualcomm.com [10.81.91.45])
+	by NALASPPMTA01.qualcomm.com (8.18.1.7/8.18.1.7) with ESMTPS id 64SERg5f001188
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+	for <keys@linux.kernel.org>; Thu, 28 May 2026 14:27:42 GMT
+Received: by hu-devc-lv-u24-a.qualcomm.com (Postfix, from userid 61434)
+	id 8D9CF24EDD; Thu, 28 May 2026 07:27:42 -0700 (PDT)
+Subject: resigned keys from 655B01CA6BF18A6B
+To: <keys@linux.kernel.org>
+User-Agent: mail (GNU Mailutils 3.17)
+Date: Thu, 28 May 2026 07:27:42 -0700
+Message-Id: <20260528142742.8D9CF24EDD@hu-devc-lv-u24-a.qualcomm.com>
+From: Jeff Johnson <jjohnson@qualcomm.com>
+X-QCInternal: smtphost
+X-Authority-Analysis: v=2.4 cv=VOntWdPX c=1 sm=1 tr=0 ts=6a1850df cx=c_pps
+ a=ouPCqIW2jiPt+lZRy3xVPw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=NGcC8JguVDcA:10 a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22
+ a=ZpdpYltYx_vBUK5n70dp:22 a=mzCPqyzg-AE1wucDhR8A:9
+X-Proofpoint-GUID: p8byptHkr2z3M5lBOIzJBzWMVUqHAW0Z
+X-Proofpoint-ORIG-GUID: p8byptHkr2z3M5lBOIzJBzWMVUqHAW0Z
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE0NiBTYWx0ZWRfXxWDgeWspwNhL
+ 27+rKdk3RRAfYl++9VpFtgVQAxbzboq7N61RmkXmtNsH6onkTAn9cxhHDzdb4fJjk81A1ujwrcl
+ pQloOMvCj1aHJr+lTBjPn5PA4HG15zG60xZMGMU3mGGqb6zKATI+Vg4QJfFAM1jA72rgK1gICKv
+ 6vW6XZzMWm+q47xMIHiv6KPoMd9UGqZWZuVuLeWqpwD4i+jl68r0e4FF242/pc6ZaA/5odM4Sl9
+ g7uKvXJqdZzoPXCeZOk0uo/+cKVsjY1577ZIO13MKvesF/eI3YInl/B3lgVmn1UzC1+MYMT7Wvn
+ CgTP9E+ucZXaQO2LsYpSK8EOt+gX/Rj8z/gAzwVJCHkHdU+WZuD/A3mC4M0VyGpthSSi+qFVSGH
+ RiGatlgi/VoF47uTCEsyqMaRDJ9fqcl9+FL78Wi/zAURFKFowdrm09u+hLqU0Qip+rcMS2NWyxK
+ mJ5DoqTxMC3wBkv4H+Q==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
+ definitions=2026-05-28_04,2026-05-28_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ priorityscore=1501 phishscore=0 adultscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 bulkscore=0 clxscore=1011 malwarescore=0 spamscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2605210000 definitions=main-2605280146
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US
-From: Jeff Johnson <jeff.johnson@oss.qualcomm.com>
-To: keys@linux.kernel.org
-Subject: resigned keys from 655B01CA6BF18A6B
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-X-Authority-Analysis: v=2.4 cv=DsNmPm/+ c=1 sm=1 tr=0 ts=6a185246 cx=c_pps
- a=PfFC4Oe2JQzmKTvty2cRDw==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
- a=IkcTkHD0fZMA:10 a=NGcC8JguVDcA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
- a=mzCPqyzg-AE1wucDhR8A:9 a=QEXdDO2ut3YA:10 a=6Ab_bkdmUrQuMsNx7PHu:22
-X-Proofpoint-ORIG-GUID: evamWpAlT794c0jG4pzKHzCxGhbDacyq
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwNTI4MDE0NyBTYWx0ZWRfX4ckQQnG/eHsN
- lhqCXKJHWtJouGDNdNv2BAm7r+mdSRS5MOF/I0gz1BM+r+BxJugrI+qw1s0EGWhuX1Py+CtTP+F
- lRhYtdJk+XET/1N9tczsBQPvwoZ3Oshxp+TXIRcMaHvqXQXfc1CRT7wJapFlTGnoJ+vHLkDQa32
- Mib9oT5zko0Hm0iRhDsmwrEq/tFpQwjJuzbCl2l8lypwmvvrNse+kzZmvAEbwILb2LohiFqp1iY
- qcjJ42CJucZgvrXQQLd7eqLuMxnMLkqEPo+qSvUKVXq8WczDml1VVSQuqb2kyN2/nrF8VpP1vkT
- T4LZF5JRhiZ2b8E+qGryJD8E5dhq+3/UH0U4Gi21lJgBmy1GtmjTLTlxuCnEL9+HAK826hCUBD4
- zohlUp7wd9sg8TWsykPZ0tPreuG/YloCIX/ZtvO9ILoQsg74gGJdVHSgNIUoDusLnxnKDJ+zV1J
- g6i2qOO4jsIsH2rKYcw==
-X-Proofpoint-GUID: evamWpAlT794c0jG4pzKHzCxGhbDacyq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.125,FMLib:17.12.100.49
- definitions=2026-05-28_04,2026-05-28_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 suspectscore=0 adultscore=0 clxscore=1011
- priorityscore=1501 malwarescore=0 impostorscore=0 bulkscore=0
- lowpriorityscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2605210000
- definitions=main-2605280147
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
