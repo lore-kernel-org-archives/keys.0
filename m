@@ -1,44 +1,84 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-alma10-1.taild15c8.ts.net [100.103.45.18])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF50E3D8122
-	for <keys@linux.kernel.org>; Fri, 24 Jul 2026 13:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D30AB33B6F1
+	for <keys@linux.kernel.org>; Sun, 26 Jul 2026 11:31:13 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=100.103.45.18
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1784900911; cv=none; b=L8N6WUD75Qu5UbVk24O6HAG0Rae+zYUO/wCb7EA+TG7yQMgt7/GyGcYVpiWpEcIN6bQmu5fHrf7UWtf9leZoD4hSzDunxT+A6fwu9dpJbVXs8cT2UdO8usfOXYIBxGwv17UP7nhmAqN33fnZjhOQ2miLgKn189YDLfz46RjAKb4=
+	t=1785065476; cv=none; b=CO67fnPaS8Xs+FuPR/6jncek2arEfuuYyB9ZGjlMu9XN5j6BCfn7zxn+BGYctAOSUax1ZDW3qtco58qHXSuFXlAqi861v0gJmJlTLOXNj77QBreuOaVMSZrCfoaSzzx7MH1Qv89FCGo2wOWZaVHKepevM2wb8Rn6oz3iERI9Iw4=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1784900911; c=relaxed/simple;
-	bh=wrtXB1lvARPC41TnzAZuHbUByzsx+pddgMflSaY9F7E=;
-	h=Date:From:To:Subject:Message-ID:MIME-Version:Content-Type:
-	 Content-Disposition; b=afvGEdMXwZqUQj5sfuDB0OWf4fuRRIEZXDtcURr7LLOo6fcIgafvTuaaxQDhSux0qAyaFqMYtWGY2lp4LY+GGhUebieUO66FeEPpZpu2TEzJUCadg4Vb1RLS4e9RlnEanKNV2HaDFZFEnFWzeDQwGBplSFmOBLKKb7tgUO1KZlY=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=hwLF7pST; arc=none smtp.client-ip=100.103.45.18
+	s=arc-20240116; t=1785065476; c=relaxed/simple;
+	bh=2GjqFN+VnRFMYTkNjIOIfawv4DADwEPfLY+y/6WjAC0=;
+	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
+	 Content-Type:Content-Disposition:In-Reply-To; b=DXdBPVmoskF8xaBN+Z4RU4Od7gnF1iXAb6b3eZquY2KKRtr94/9twBrqtbDC4h/31l78cUafzOwN973Z1pbecAkxQ6OuHNhWE+ZMrmTFlrXHVfSAjcflP9J8bvYztP47oCjDA58WoUUS/LZkROOb6CL8zGI97u97eDEAyrZpOX0=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b=FPmrWIf9; arc=none smtp.client-ip=100.103.45.18
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="hwLF7pST"
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 916571F000E9
-	for <keys@linux.kernel.org>; Fri, 24 Jul 2026 13:48:28 +0000 (UTC)
+	dkim=pass (2048-bit key) header.d=kernel.org header.i=@kernel.org header.b="FPmrWIf9"
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B3D21F000E9;
+	Sun, 26 Jul 2026 11:31:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1784900909;
-	bh=wrtXB1lvARPC41TnzAZuHbUByzsx+pddgMflSaY9F7E=;
-	h=Date:From:To:Subject;
-	b=hwLF7pSTSw4fEZ0TuCQFy0uCOBj+jOERvkKwgI9sxe+5uE+Xl2x55ZMQD4NOMwIZZ
-	 l1cZagHUCHj9kprUYaPZuZe/+fy4/4asqYi3lEKDpBi6ADWMBekR4Kmnh0KrAiYJYO
-	 z0wyfgfTGxvw3W9Y1eoQRDslOaii1s6jBDZ7Q677ixnrLlR6geCBM0cEmMzd7FDHgd
-	 TTOn9PRoI7w312M0yU86IVwZbGQE/MyVyJ1lC9/yhhPP5p5XQF1+bgXJqhXEf66jyj
-	 UhP6gFHNhB6cRYrOIQp1zM/GfciBPDkb7knZX1pXbUVwO+fPGi9AKw+8+4DCd0MSJp
-	 8Ibu4GIbF9FEg==
-Date: Fri, 24 Jul 2026 14:48:25 +0100
+	s=k20260515; t=1785065473;
+	bh=vlWygt2dqZSgeP6V9II2AgZhH1WlCnJbQOT87v8KfOg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=FPmrWIf9YToVAUpb/AI48XgssWw9ZPX3GHy4So+uvMI1gjGIZXfPc4pzFREk8TMpR
+	 UE9YmaLS69/abd+P0hAtT9ZsCpwLm+giVkFtwe089AXnyL45v6G2neBJWgcV8jJntV
+	 a6vIxKugcA6xBIR8xOHBqTKTrZ8nGZCcvuQdKniBY3K45XuhIpbj828y6lv1YOEsW4
+	 twF/l3WXXJumUOnzika6RgKkQZuCeDBMdutNfcE8qKZSp8rirftNzZS2/YLswcB6hO
+	 wiuY4zlJxL4e4GS6t/Gqlwh1VHyweTwyxYVuIeBVKCEreJF9UFZYFKxiYpR3i4DgW/
+	 AE4xfwqGejD6A==
+Date: Sun, 26 Jul 2026 12:31:09 +0100
 From: Will Deacon <will@kernel.org>
-To: keys@linux.kernel.org
-Subject: will@kernel.org
-Message-ID: <amNtKaEO-HMnhrYE@willie-the-truck>
+To: Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= <u.kleine-koenig@baylibre.com>
+Cc: keys@linux.kernel.org
+Subject: Re: will@kernel.org
+Message-ID: <amXv_ez4FAu6jmXc@willie-the-truck>
+References: <amNtKaEO-HMnhrYE@willie-the-truck>
+ <amOm00f_J8bZFw_f@monoceros>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <amOm00f_J8bZFw_f@monoceros>
+
+Hi, Uwe,
+
+On Fri, Jul 24, 2026 at 07:59:29PM +0200, Uwe Kleine-König wrote:
+> On Fri, Jul 24, 2026 at 02:48:25PM +0100, Will Deacon wrote:
+> > -----BEGIN PGP PUBLIC KEY BLOCK-----
+> > 
+> > mQINBE6G5s0BEADDGfOcthrGJKfkcrFBdCyduDIsx7Ca02KKtvuNsBrpj5mDGSlf
+> > [...]
+> > LFYBaYx/l+Gxzd10OVv2br/umTyBkQB59JlclrCcW7RYl5jbBO0P+PKfTVWV
+> > =FO5n
+> > -----END PGP PUBLIC KEY BLOCK-----
+> 
+> `sq cert lint` reports:
+> 
+> 	Certificate 2DFBF4523E542FD9, key 4687FCE0E1EAD0C4 uses a SHA-1-protected binding signature.
+> 
+> I think the script by Konstantin (used to redo all the old signatures
+> also suffering from using SHA1). If not, `sq cert lint --fix` is the
+> easiest way to fix that.
+
+I'm just trying to update the upcoming expiry date for the subkeys that
+I've already uploaded, but I've had a crack at fixing this and attached
+the new key below.
+
+> Also one of your identities uses a UID comment. See
+> https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-harmful.html
+> for learning why this is bad.
+
+I'm not sure what I can do about that, but at least this appears to fall
+into the "unnecessary" case from that link. I could revoke the UID (I no
+longer have access to my @arm.com address), but I vaguely remember that
+was also not a good idea?
+
+Will
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -612,6 +652,20 @@ KRrPG3iksOf6iNn0aoLHu676NszhMoLv8iZ5s89GPaMcUXlm/UqrA8CUSILERAa7
 cz1Ieb6Rg+GkM9u+BCnCcI9ZI0gtHFNW+Qis3Fjbx0q2b1Ii1Z0XIGnx9pfAPi8f
 L0mAHbFaNkkTL1fEvfe0gQeYS5ICXXzT/T97A9HK8TyaAKv0x0nwIqUy4oVlnom4
 bfWRl42paggWoLAgLCjYuk8eeB90bNDr6/rcFBLdPhr7rOolPqYQ1nxdsdR/OykS
-LFYBaYx/l+Gxzd10OVv2br/umTyBkQB59JlclrCcW7RYl5jbBO0P+PKfTVWV
-=FO5n
+LFYBaYx/l+Gxzd10OVv2br/umTyBkQB59JlclrCcW7RYl5jbBO0P+PKfTVWViQJ+
+BBgBCAByBYJqZe60CRAt+/RSPlQv2UcUAAAAAAAeACBzYWx0QG5vdGF0aW9ucy5z
+ZXF1b2lhLXBncC5vcmcJHpDVllaYtE4WY2+ScmjsS0C2f6PcXTzmxKJ091imbgIb
+DBYhBLPPnBUzvnUpnLAdNi379FI+VC/ZAADHJA/+KKzqX9nTYCf3e0PyowRaVvV9
+moPwOKGB6nN6yUJVDaQvjQ3BxLGKXaXSwMkL8VREKJfgtttmmuyySK+LfG38+HVL
+Y0Z4O6htRoWgfD0dduPDtIuPFyKf0Bn7f0z1Mf1wd/ZeVBCoOQK7be8a0iMaltJX
+aX2iANQZhT2Dqc+mYeFMLWN429TX3s/m4K38sGuaqosvcVWdHZ67U/Xxon64pNsc
+aXczVwpitIFegJJifYJPVlOFKOaltnND+BVakHMikWWrJWngIq02PcTqepNtYRF2
+KjglAINIG/xsZtCvOC0so0Hn4hYlvAO1vSrnu8s0XuLxoY7Qh2yjD8lvIo5ZL5h4
+akv/ResxdYIVAW6pqG0WWlgEfJDwge+gPnhd+o0hED7md4M3ihRmW827zzlyCuHd
+n4uF01K0AtOmsx4Jw4uys4Z+xpIAnMJrwNUxL0JbOyCUI9zcLAfvZWsl+BmNr8NB
+HAhNnnjqqqcdDDA2XK5FoZg/1jlod4lFOsj5dbx76iBadSOZJbc2gUMEXkO3CGSM
+dMpIMmk5x7LrOth0zfPgW+WVGUIFnF1YBMcRf+GpAnxkZ+cOQsbhrUgQmYfkBjbM
+9Nw/A9+q3B3DbwbT3YEC/BxuEV+lZt2PP4POeGr6w2WsFMxsqmXJNE3yWY0cz3g1
+flcrVQ0ZL3f9ddJ7xmQ=
+=NH4v
 -----END PGP PUBLIC KEY BLOCK-----
