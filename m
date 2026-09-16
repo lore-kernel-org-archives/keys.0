@@ -1,74 +1,71 @@
 Received: from mail-wm2-f13.google.com (mail-wm2-f13.google.com [74.125.225.141])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 401A0442FCE
-	for <keys@linux.kernel.org>; Wed, 16 Sep 2026 20:09:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24153C1082
+	for <keys@linux.kernel.org>; Wed, 16 Sep 2026 17:51:11 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.client-ip=74.125.225.141
 ARC-Seal:i=1; a=rsa-sha256; d=subspace.kernel.org; s=arc-20240116;
-	t=1789589351; cv=none; b=G1glF2fTmiMtsHNfaVj6U53iITvFTL32PGECTNqrR7gI3P5AFYqZl1STOXlv7vMafe8DR4jqN8gcQiqFS8SF36ZL4iKAAbWnzHHMDQBP6yfgvF/Ibn1lI4S9f1yk2ZqDrN/nAP9lDcBoH7lms8nUo7iIymZE5DpE7epuKB3hgxk=
+	t=1789581093; cv=none; b=ZF7MY5LrcFS8zW/zaWJC4Tf3abivOrP5GaVXOmLbotBxeRwpw+wrs7oApffH44t8yuUUF4lJrSoQH7veIcWyDzygTbjKYinRtf9qerfBcpvkRM/oXmGyq2KI3AAgbMg76m/mrtXjofcHg7TykPKy6sG0Mv9uRXuBM+nmRxRGS9c=
 ARC-Message-Signature:i=1; a=rsa-sha256; d=subspace.kernel.org;
-	s=arc-20240116; t=1789589351; c=relaxed/simple;
-	bh=cFGwofezGppTk4+QpekUyFbFncV6/DaNfzT4sgkp0Js=;
+	s=arc-20240116; t=1789581093; c=relaxed/simple;
+	bh=Wj5nqDKkyFIqNN9bf2QoieX72G7hbCfDfvqc7jiTkDo=;
 	h=Date:From:To:Cc:Subject:Message-ID:References:MIME-Version:
-	 Content-Type:Content-Disposition:In-Reply-To; b=DdNnbeuy6klXY7hvFulkgZKYaKlRMXKH6g3xEFsbN6m7kftRsHcJRS8goaTGqq/VLo0uiqpeUw18DIYOYvAI8707sND+07rLC8eQ3vL0iU/lwc/VRfOsoTWlwPH4odQDel3qovveWjAEg264Sjk/qiGbd9anZjOJS5bbOfISPSI=
-ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=L7QjAfKs; arc=none smtp.client-ip=74.125.225.141
+	 Content-Type:Content-Disposition:In-Reply-To; b=L3bgPhEzDMwljqcYCiA4lDIwfi2XRhiB2dvM46lvudU8BmF5mvrmI83HIYKlAgnTcBdVAbNoLMvFr6pBiv8WOlpsKN0h6XeKstTCux6DUEMn1TMHKaX/yZF5HFobdSdn9DchMgcHmiBL7qSQiEqV6ChNQUyPOX0ksBOHaMhWbkw=
+ARC-Authentication-Results:i=1; smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com; spf=pass smtp.mailfrom=baylibre.com; dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b=jU8NOctS; arc=none smtp.client-ip=74.125.225.141
 Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="L7QjAfKs"
-Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e6c0fce17so892725e9.1
-        for <keys@linux.kernel.org>; Wed, 16 Sep 2026 13:09:04 -0700 (PDT)
+	dkim=pass (2048-bit key) header.d=baylibre.com header.i=@baylibre.com header.b="jU8NOctS"
+Received: by mail-wm2-f13.google.com with SMTP id 5b1f17b1804b1-49e79a408deso27735e9.2
+        for <keys@linux.kernel.org>; Wed, 16 Sep 2026 10:51:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1789589340; x=1790194140; darn=linux.kernel.org;
+        d=baylibre.com; s=google; t=1789581069; x=1790185869; darn=linux.kernel.org;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=cFGwofezGppTk4+QpekUyFbFncV6/DaNfzT4sgkp0Js=;
-        b=L7QjAfKs6ruq8XHGMmAhuU+V/NWEurXTNgLyC2o4xsKxRDOrWaFqVEcr5O289YbjJA
-         9/9Uc9eQmtFQdyUID5MqtTqsWkFLZJpGxuPRLQc9imdTDi+astVIlOU6emRjEDIHz9Vw
-         t3Ss+ejetiDvCD/VeAcCOjdxBiZmuwk7sKyynvZmdsqSasGuF+5O+tsrLxFc7BgMVACH
-         6oNrkDjLLhwkPlME5/1cxAXw5nTUN2X3uYQcb4gwSv6Nlt3bYTlyssJjrssH13LyOXdL
-         eAPkQFl1kyr5iOP50ezgRJcxpckkQrfC1GGKHn3oaZLamEtTtbFWeDCBZeG7q65pJsOz
-         eQLA==
+        bh=Wj5nqDKkyFIqNN9bf2QoieX72G7hbCfDfvqc7jiTkDo=;
+        b=jU8NOctShkGbNm+Rm9Ga1WPy8sOF0XMf1tUujmCBrdVlbjJLH5dPTO31tOn7Xlgv9I
+         LvdjyHG/iCujEAc0NjYtoTy01klvYeWnv53zhozeRhHseS38cRWrhJd+YfnuAYGJRQDM
+         eK0lRlYxrncemq9eR8IRhswcN+tqXQrtpxoDGImrA9Q+W7zTYmZuyOVYUY9wJwSoTo1y
+         acwEgBS+HCCyuzglZ+ezkrWT42kzMp81pYcQk7UOvS80ggb5HqblDq0LjOv+V8KEzQ5j
+         qJONXFQOdTzfcXL5DYbWThvpAZsJo3DMBSUWL29dVq5AdoJJQvaabnUsXCwsXx4pAGCt
+         551w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1789589340; x=1790194140;
+        d=1e100.net; s=20260707; t=1789581069; x=1790185869;
         h=in-reply-to:content-disposition:content-type:mime-version
          :references:message-id:subject:cc:to:from:date:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=cFGwofezGppTk4+QpekUyFbFncV6/DaNfzT4sgkp0Js=;
-        b=y6kN1oUhrUnpbx2xiI9ytXTpW/cjcIuzVJez6QLMpK7cYF5UIUsEYOl9OtBGfpsCJX
-         am0CZQdnLZiepnUHsrdwflrimORkVPaAm4Gpaz/0tP9kqD/6kv3M555JPgjkROkVaQ0B
-         aI1AC+9rMYdy7f7D8Ol31wKxoCQmyZRnvwLfLGQ0KcFwXa04x7xKsIWammDcU3PrVYeC
-         lbpjuiDspuLe3CLcZa8NBblPZSh+e+3Gq5Xh9xoived08Omqh5ayEphtYg2Aj2+jC5Ax
-         n3/NUlvPTLd6K8T7MKmyDFoQ0TUPM/ilRJfciyhbHKTZfS4rhaENefMxHSbeLv19oQh3
-         VxMw==
-X-Gm-Message-State: AFuF++nDI059gU18z6wN0TT53ga1PWbrKewKY7ZOTbsHE3HEDvnjH1TY
-	JH7t4Ysla4+SrK7APuXo0L91kQQEBxiQaFazZkLkXelK1Thihtrkjl0PyCP21L2fLbXD/KUxOQw
-	1qfk0
-X-Gm-Gg: AYBFou1hWTx29g0oFQQSLnw6wtWqKGs0tcthz53SMg5bujPFFLVByoHNat6BZs+dyEQ
-	LLfHX05l67alNcRM4TY2+/6waUNtCCr4jYzb75ZLvqYcmyPDsfx6OvYDrpLNwdfVDDBD6OQbzWv
-	Jf1+PNjQEHh/eIwVLKar2kdOv4tRpjZ3KTD0CknhTLbuBowoGNqPivNZeZ2gfeS1veq99dBdNg5
-	UJXrH9yGUCVfkIPMI+UEPlHOLFZD9QylSuKB70VKWJQGyE/ITXWa4w7fcG0FV7aADeZdZfZeGh8
-	nYfkzeAQUisGiQSjADz898GAxDwgjllrRaRMqP+JEjGQowtjOKtNPCWeJ3CrvwRIuDDkIR3yWiX
-	bxglS0Y5OdO3YUFK9s2u98Zasjc/9kHt+TjlCw/cbUp/BllPAPVY9AhkMohGMIlhHcEeO82HI3y
-	GGZJyHjn/BvDT5cfbvaEgcBfT50gbnQ5DtOb6EpypgvWlM8TgkkH992yOSJ6Qa+/Rx2IuK9amMi
-	kO+
-X-Received: by 2002:a05:600c:4e86:b0:49d:15b9:2a2a with SMTP id 5b1f17b1804b1-49eb72f3d08mr48227435e9.10.1789589340403;
-        Wed, 16 Sep 2026 13:09:00 -0700 (PDT)
+        bh=Wj5nqDKkyFIqNN9bf2QoieX72G7hbCfDfvqc7jiTkDo=;
+        b=cPUcwPpGrtzFyY0UbwahR1PAI9ZZpYMWFilZ0QAb2R3BrKDGEzx9VJaJK9IMKR78OX
+         LSmroJUI7woRTkotNzgmVKODx27DtnUfykPjXmQqViRI3T+lqnFspG3AV1g/J/Brvu27
+         3Ft429qjcWsX+mForD3bn6ZD502TC3ZnAjfQ04XcCEjq0lrhO6zXYA2rGm/VnOP57m1z
+         puNXS2KifRPuPCEuHJLRpuLn7uQQBVsBt9qfgRmpHqFH77+wBDYtJiALPdiRkZY13SeU
+         CkErrQ2i0oBt52jTtopd28F1Otxvn4F0HU0XKT/z4WvuH89MDK7QQAKpbgWBclMuWZAE
+         mqqQ==
+X-Gm-Message-State: AFuF++mWWVop8dlbAZoPt1NqJfkLSXXSAQfzeqi9jI2n2Sy7wP7Qxw2E
+	oIg0sQa9dgxzC89ihIbzgQLVXCHhhKFHCmukAWoU5Xvj9rYkXJtKimFKBxIhjNwcBhg=
+X-Gm-Gg: AYBFou13vNsaTIoviMuEgUuQ4OcH0W8QbR/T4pU19EB2F6emC0ZyZdWlOp31/0DAZ5g
+	2kuvKnFFUWY14hcp66vPPEBZds1Tpvi0dGNzk4KVsBNRmSDJ/O0ncEWby3NthTdQpGNahYnuz6W
+	tHoKyNRuVVWicOfCOowUWGAzpMJ6p1HfUhPbGVnHfmwqQZb/pxWewD1FKF6NI2Ruygee0NA8/xp
+	bpKDZnl/8raxkQ9XUs0zYfRvm6X2uzcHQ8m4WXHvPH1FZFIdrgDA1v9gBhYSyMxWjWYbz7daLoB
+	UAfVEmBqT60zDhv+OMEqB31Oh7CfPCmrBOawXCLrjI4Ea1rCvwpWEoqOQXv3UgWlfLRipJIa6U2
+	KMR+XSJZni2+2+rUR1VJWyl+ggFPup67ymRfH5Bnq+EzFf4RYPMiFqunV1oSno9Aum97WepL/bh
+	LAGyfsMjBdwgqM2brMysDqfPgvLPju77KLheA7ilGGA0JUYuHH4cbbL828thC4Y9m40aTIxLcF3
+	3YeO7gAosohth0=
+X-Received: by 2002:a05:600c:1986:b0:49e:8184:f619 with SMTP id 5b1f17b1804b1-49eb732e3bdmr44782785e9.22.1789581068448;
+        Wed, 16 Sep 2026 10:51:08 -0700 (PDT)
 Received: from localhost ([2a02:8071:56d1:2de0:1d24:d58d:2b65:c291])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49fbd776e1dsm3053385e9.1.2026.09.16.13.08.58
+        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-49fbd225898sm8169615e9.9.2026.09.16.10.51.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 16 Sep 2026 13:08:59 -0700 (PDT)
-Date: Wed, 16 Sep 2026 22:08:57 +0200
+        Wed, 16 Sep 2026 10:51:07 -0700 (PDT)
+Date: Wed, 16 Sep 2026 19:51:06 +0200
 From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
 To: "Rafael J. Wysocki (Intel)" <rafael@kernel.org>
 Cc: keys@linux.kernel.org
 Subject: Re: New PGP key signatures for Rafael Wysocki
-Message-ID: <aqr3LzDAxB13dmhy@monoceros>
+Message-ID: <aqrVNx2XrMCqJlcE@monoceros>
 References: <CAJZ5v0gDj_BJ05d9KJHWrsT23j+ogkPSYCZcohc9Y1CviLssLA@mail.gmail.com>
- <aqrVNx2XrMCqJlcE@monoceros>
- <CAJZ5v0hYs8EHr_ox657O0rBtfBEywahT+ZgdhEWGT-bU5X-qdg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -76,50 +73,54 @@ List-Subscribe: <mailto:keys+subscribe@linux.kernel.org>
 List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="p3zwydeeaajbvz6w"
+	protocol="application/pgp-signature"; boundary="puxcrgilvwuiancm"
 Content-Disposition: inline
-In-Reply-To: <CAJZ5v0hYs8EHr_ox657O0rBtfBEywahT+ZgdhEWGT-bU5X-qdg@mail.gmail.com>
+In-Reply-To: <CAJZ5v0gDj_BJ05d9KJHWrsT23j+ogkPSYCZcohc9Y1CviLssLA@mail.gmail.com>
 
 
---p3zwydeeaajbvz6w
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
+--puxcrgilvwuiancm
+Content-Type: text/plain; protected-headers=v1; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
 Subject: Re: New PGP key signatures for Rafael Wysocki
 MIME-Version: 1.0
 
-Hello Rafael,
+Hello,
 
-On Wed, Sep 16, 2026 at 07:58:25PM +0200, Rafael J. Wysocki (Intel) wrote:
-> On Wed, Sep 16, 2026 at 7:51=E2=80=AFPM Uwe Kleine-K=C3=B6nig
-> <u.kleine-koenig@baylibre.com> wrote:
-> > If you're going to LPC/OSSE, you can consider adding new UIDs without
-> > these comments and participate in the PGP keysigning[1] there, to get
-> > some trust on the new UIDs.
-> >
-> > [1] https://lore.kernel.org/all/lpcosse2026-keysigning@baylibre.com/
->=20
-> I'm going to take part in this, so do I still need to send the key to
-> you, or can you just add this new key of mine to the list?
+On Wed, Sep 16, 2026 at 01:13:47PM +0200, Rafael J. Wysocki (Intel) wrote:
+> Please update the pgpkeys repository with the attached key that has
+> acquired 3 new signatures (from Johannes Berg, Mika Westerberg and
+> Andy Shevchenko).
 
-I can take it from here.
+Actually it's 9 new signatures, that is 3 new signatures on each of the
+3 UIDs.
+
+If you create a UID next time, I suggest to not use the comment parts,
+see
+https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-harmful.html
+for some explanation.
+
+If you're going to LPC/OSSE, you can consider adding new UIDs without
+these comments and participate in the PGP keysigning[1] there, to get
+some trust on the new UIDs.
 
 Best regards
 Uwe
 
---p3zwydeeaajbvz6w
+[1] https://lore.kernel.org/all/lpcosse2026-keysigning@baylibre.com/
+
+--puxcrgilvwuiancm
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmqq91YACgkQj4D7WH0S
-/k79VAf/T2EJ4mJ64UrxUvQvOvrcSK+Yjipiiii6EtrTK/Dx2HA49a1yyVqHwqnw
-PDK7W52p/xunYwEy+tCoPTlWyxIaJh+p/Wkl68/AXpevvrz0/OpUcqutlNV/JCi1
-7XWb+5luVfqvfLmovgJE02vIzXZXsEy2DGPeseU2KtS1JE8FPhV86bsSUNT0bC+X
-vzLPk0ZgLIKm4P8+n/KwhsFnvYOCvFmrRBtc9nM6m5I+G3hU+S8bW79tzr/skk+r
-BvCO3pG9Hj8X+dIags+XNpPl01hpK+dZ0AP8XrqqiGkyrF+5RghTWyzo+RnvkJrA
-FzzdggYzR9qeKkp3QG1Q1XxfcfuJZg==
-=D6dd
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmqq1wcACgkQj4D7WH0S
+/k5oDAf/U6D5wxb78101ZfEjvtmos7KcdJ9RHQFM1znqkiljpGsKHKcYJrKMeLdt
+WvV0beCnZ4NeHytwpOggztv4mzm2Z553SbuniMFVnIELADkmkMOTwRt/GHKCK+N0
+0eGqcclzMxS9pEW2UQ5WLlImDH1RI+wFr/JTw5MK5jBHoSOJgdOwVl7LjZNFXJfQ
+3B1mylFJqJLR5nu9LLLK2kFFnHgKm14isPMHgXTpVKKWte/671dH7GeY/uW36E71
+OZ1/An8cfUuN1hm9NwDEH5boZ/+MPbSP9PYOmUO80bgMDPKOZhsIpPdZuYmEblVk
+qo52aQl3wGUEfGyeXM0+FP8XXjIL6Q==
+=RaS8
 -----END PGP SIGNATURE-----
 
---p3zwydeeaajbvz6w--
+--puxcrgilvwuiancm--
