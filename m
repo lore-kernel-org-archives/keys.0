@@ -1,92 +1,100 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.45
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792746774;
-	b=tUQssljq5m5PQAkj7zwhWqaXyl3BrNPqMc0BAw1drluaSkt10FJQqpvxazMTyLJw3PcK
-	 Jk0oE3OLfKozLhrsCd7JpaSigRsEUdioi2/xuQaKH7JcMXdUQd6K8wzfK7UTqePEkH0Z/
-	 Vbu9JEOqKa7pOJBuqVyrUe8KiBRSjSANTScHndBcWcE58ss8BBZk3zsWr6lcnsmcv1Aj+
-	 OkCT85hltAWHnTpSmRe20uwzSgf6GxNkmqQ2CeYE2CmxaBetE4npRH/VuqVWoDTwsz1Kt
-	 iGmkSIlkhiK3lV0QJhm3EE0wlYmmN/ZH23B+xMEIjchkrqNhKPBcmYjRWR38gZTsBLA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792746774;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1792743417;
+	b=osBj67h2WRjX8PVIYFOYz58qes8686hrdhelzKVrnTuXSSuTHQDCrhkdzDjvrWs7Vjyw
+	 MN+TFRv7NIotxX0MsuFIEP/KuZm2P5HD4/Te1yvrd0Gr7g1oZd4bYHrK7/Sd9GO22dcPB
+	 9T8ooa6AJiWk85Qtp4qX/bBGBYGRnS2TaEgfMhkuaFY/Mh7g1+Z+xVl7uC0zuXCc+s2hU
+	 qWlLbx+dtlGeSHPf5aI/07xFah5N8kcKDJ4rxyBJTera2t2bU9c2OnZVYijLyhQTwZXhx
+	 DEIP3gxWmgrRdg4mFbEJOeR6JtxhsGCddN2uyc5lIIigPctG6C7CW8njfYeh+aXjnLA==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792743417;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=x09HZJcXbhukFFa7zcL7tm3Tge2zJkCXK9Nik3vx+pk=;
-	b=Th01FatalrJkZjLcqS2DobPoxhmmL1jb8AZf8Tfqxz+LcBxcw0BvVXL0RQKnzdXCg41T
-	 ODbTrj3X/zM+qgAsl/OLEl1m/kfHtCUxV0PpL3m+qFvDu3m+tkf7ch0L7WnsIePnFbOjG
-	 lzCqrhk77byp5ZqREsSQwgBkb07g6zjt5LPxAeq8pnsh17Xjm/IftLi30BJNn9oGuDE8O
-	 H2jkh4YQvnZmpxjdZLpyL4bvI6Rx8VZ8e2V+X8Wbus9WoUcgACOALDknA/wjTiHaORwr4
-	 HlHYv+gqg3Tru1U833PUxnpDqep68jruThT55ZtoYVDWILe5Ms0vGtXruNq4pF6xDsg==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=baylibre.com;
-	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=TidrwgSq;
-	arc=none smtp.remote-ip=209.85.128.45
-Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
+	 X-Forwarded-Encrypted:X-Gm-Message-State:X-Gm-Gg:X-Received:
+	 MIME-Version:References:In-Reply-To:From:Date:X-Gm-Features:
+	 Message-ID:Subject:To:Cc:Content-Type:Content-Transfer-Encoding;
+	bh=w3AC09FqkK9Bfm/5SsT07rwVzFka2v2SpKr+6nI7k64=;
+	b=tZdA3M64NkqE32kYi3OAoMHplLNYwFwy69Kol/F33KWM5vh5zzVVaj0ySmEKSyfreX1J
+	 yCT2s6FPKPYPOv0oh17rob8Qc8xTO+S/xKr0DU1ulQHYwvCpkbNksbXadZzxjczytUYvy
+	 fU8qeD4Zjtge/lPRB+awdiXkGz59YIUcFdamfiaDbaAlgL93sRCs0jbusevar/HsLacD7
+	 Us0xPydn8Xrw1NhAZRlzdlVJRBiPGKfXlAt9ELxDjbaKxjjEEwvlYWkOWP39EMU0Kf8cW
+	 Q4H8o+OepOsGarhjBAtU8DX8gVr3emml1CKQC6Za/jCC2uTyfhh5MRSLS2r2GQ9Bgnw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=flipper.net;
+	spf=pass smtp.mailfrom=flipper.net;
+	dkim=pass header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b="8ZzuHKg/";
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.208.46
+Received: from mail-ed1-f46.google.com (mail-ed1-f46.google.com [209.85.208.46])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9D93606A31A
-	for <keys@linux.kernel.org>; Fri, 23 Oct 2026 09:12:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E9D93606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 164ED606A31A
+	for <keys@linux.kernel.org>; Fri, 23 Oct 2026 08:16:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 164ED606A31A
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=quarantine dis=none) header.from=flipper.net
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=flipper.net
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=TidrwgSq
-Received: by mail-wm1-f45.google.com with SMTP id 5b1f17b1804b1-4a210470b49so5161865e9.2
-        for <keys@linux.kernel.org>; Fri, 23 Oct 2026 02:12:53 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=flipper.net header.i=@flipper.net header.a=rsa-sha256 header.s=google header.b=8ZzuHKg/
+Received: by mail-ed1-f46.google.com with SMTP id 4fb4d7f45d1cf-6af8620a7d2so672326a12.0
+        for <keys@linux.kernel.org>; Fri, 23 Oct 2026 01:16:56 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1792743415; cv=none;
+        d=google.com; s=arc-20260327;
+        b=e7Icc1Mes5WfEiXzCCXAuKI4YrmY9aVdRVrnCVl+Q0EN9dSmpl7HF19EuSwLPPXO43
+         AA+/rdk/mOy1sQ5exhi5OcbD65XVw6vXVyoXyYqsr8BbnKXvrrk+PsyY3A6Wgl0S6Z7/
+         MrTsMzk6KdbzY00fSSBp//4oWPgflLCFKOxM1LAHR6CgtaZH7bxw6miXl12rg8NwOl2X
+         mZ3zm5PPFEixHyMUkzu+NOTp2zDxXIiTKdzK2Wo5gkMN001peeuGwcWhVXY//MBYkShU
+         EvTZXXHEfy7dmQLrbEcj0CIv8xu3BRlthy/Yd17I5PoFUVv37QLtHQdh50GrBa1YBnsP
+         6SOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=w3AC09FqkK9Bfm/5SsT07rwVzFka2v2SpKr+6nI7k64=;
+        fh=2EsjNTYI3tDRb6SNUp4KK2CcFYWVb9CQHVZhita/9Tg=;
+        b=oyzeVqnZoCshvz0KNCotjlGwuVgzmuE0NFrNz2h/IAEc2K3257UozCRzsvYeovEiww
+         k4Y/pc+SavCIQLZs2JE7DeuzIfINjgWYqclndhHtJX5w/esrKa0NEImP0z03m/hP8Htk
+         TXmIsxz9I3BXHtypx+KAzLvsCarAL79+YaI9lOtAkWVhtVYIV+/auG/m+19uhuFoSMpG
+         IyQQUCWiM0wXnD7nOhc+2KhN6RnflyLTc0vXki9kiZqfVxnrsK9lTDdTfzPnb9akloCY
+         9wQOJ6n2DrT85JZPQlb0Lc1mmUgynrnPvazr7BJe4zYuPbTUGC+czEhLPTetD8am8nYW
+         TMBw==;
+        darn=linux.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1792746772; x=1793351572; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=flipper.net; s=google; t=1792743415; x=1793348215; darn=linux.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=x09HZJcXbhukFFa7zcL7tm3Tge2zJkCXK9Nik3vx+pk=;
-        b=TidrwgSqaDwKS8G2H8ImlnYWgRkZa+AXF9BfmJRSbEeuEmbwjD3Oc4JvZf9yRwCP2P
-         lFdhDpDyr/fWZOBcyO4kZAAZbOiXDJVdOGXI7+jwYoes8sbou91pTFlFAzXQwfO4PdLF
-         Pj59H0+3NWJlCgsA4ynX9oaQhAi09tfK69Z2bdB02FYID86IxeGfRtqad8uopWAT+ffJ
-         uBdAdUVRJCoofcI14aDEGqBGCoTuYvijN6RTSdA3zaCAzhiTWCxWhmnBPFH/awtudnQx
-         kiCWswadN/5oGDVFUueM3xh1e/wpCIx5WnmECPGzaGs0ZXj+LQO0CVha8QLQgeYkIoux
-         TyiQ==
+        bh=w3AC09FqkK9Bfm/5SsT07rwVzFka2v2SpKr+6nI7k64=;
+        b=8ZzuHKg/aTxW+yHzGmaL0CPPyEs0mdTGHJwdIJpiwb3SH5xUWC/TNwE3GeNNUKWJYm
+         Fn5N8OJaDGpe1YoTSnZKWuyhHiMPzBcoc1n9PRDBqRtefvOsEoF8x2llTfu3PaKREa1f
+         qBTmWRVCbmyTr3wN6dswJry6u14kuKi2REQPG8XcELtwYhAvDpOmRg2639eZqqXO2lKW
+         tjXoOEKfoQvY4xOxfFnEZtrbErPD8KDGvKW7WEqXIOUzUr5IpSe/ygPB6c3kDDM2cwdx
+         iwN7+WvieKX+2U4q4xMIZJlM9zPHy95ZZazpYRrwne9QsmktwlYpRWgabspJ6LhyqzUZ
+         ec5Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1792746772; x=1793351572;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1792743415; x=1793348215;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=x09HZJcXbhukFFa7zcL7tm3Tge2zJkCXK9Nik3vx+pk=;
-        b=P4u6ZcMvfWPD8gJwUkHBH6NLowUXZVLsZ1WwNPmmukEpg48euW24x/Q8xztwcVR8ry
-         v+EtmnE11vS1OBCjuJG+YxAHoGzIY4wxev+vClGeOVSFLBxTUSiTMzEAmxIymfJVuOuQ
-         YTSCtwIQZBg2HMQGaWmT815ZmC9Ef6aj3/Abmojy/57DZLFDSu2JXQmkFHMDJDul+2xj
-         9ziDbN1LaoFfSQhLLJuEwwiKcOAcgd9TZ6rLGvZuQZAhl5G0qdOmwqChPhxFFiSSX7Ca
-         ITNQsC+gESDG/jFLovcEuBXVNZLVaR88kLn9jiipsPsz8pLbQF91aluDUSCenEerNG77
-         wX4Q==
-X-Gm-Message-State: AFq9FYKiX1cpbPwRknRz8iQquQV8a3geFBn5GpwsVbWL5pcbJXgI/f3R
-	j41izr3NMOZvuC3ftz9Q9XLEyOaigHn4ERyMwMAcgxONpgnWBfgZf/13IH2LdGl5x/0=
-X-Gm-Gg: AYBFou1FpTfFQXAg+38Gyqqa/LELpt2Yi9clfhkIg8mGKcMv/yrImxqbvIvvDuoEcfQ
-	d2QdCjGr0mjBfsfkqV6jq+8gkZ3WWSK8Gveg4b+zaKdMXFLE3Byftz5nZYCOcg+p8JwapbQoU6x
-	Ez+MnR2hWKtdkvpVkhj1myQkXPxCvAr9SgZ7Hr6hoAnzUGF8e/aOEnrXf8oticQjk5xrMJVn252
-	74fha8eZ6SYrMI3hbtI/KRtCm31SOkw1+1qHaXdt7LddiNIfHBpkGzN2g4PaUxnGEwgS1218lhK
-	6ASMi8zP7JVq7sXYLVEX4WNZBED0f8dUdDRruMlHQkFzlBUAinx9+OXsxxiHNeRstzAAdsTrOOG
-	u9wJzMxGqC1DrwUBU2n7jkhqTEZjih1EG2FjPWPCfjvVNBHQ5gM8w0XCedc0QU9sZQ5gl8uULT0
-	4e04AJrr+1tW9L3eqL4BSBq7zZUO/VzuuBwCsx/eawXPH1YutolVEJp5g8WM9SUKQNK3o80hSDc
-	/69m5s99PTooRuLCL6iNFW+i7FzVdaBLDyCOqG/H0l+mlT1FG0ML+une5E75kUbNwUyLRIp/ykX
-	E1dw35R9BQk3BUQgoUM/1tBjsDCkfKuXRsbM7WjS01A=
-X-Received: by 2002:a05:600c:350e:b0:4a0:1c0e:b057 with SMTP id 5b1f17b1804b1-4a211c7fb6bmr26494565e9.4.1792746772135;
-        Fri, 23 Oct 2026 02:12:52 -0700 (PDT)
-Received: from localhost (p200300f65f19a9045816c66224fa2d94.dip0.t-ipconnect.de. [2003:f6:5f19:a904:5816:c662:24fa:2d94])
-        by smtp.gmail.com with UTF8SMTPSA id 5b1f17b1804b1-4a2153caceesm22784085e9.1.2026.10.23.02.12.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Oct 2026 02:12:50 -0700 (PDT)
-Date: Fri, 23 Oct 2026 11:12:49 +0200
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Will Deacon <will@kernel.org>
-Cc: keys@linux.kernel.org
-Subject: Re: will@kernel.org
-Message-ID: <atskGlwV_Zp4fxPy@monoceros>
-References: <amNtKaEO-HMnhrYE@willie-the-truck>
- <amOm00f_J8bZFw_f@monoceros>
- <amXv_ez4FAu6jmXc@willie-the-truck>
+        bh=w3AC09FqkK9Bfm/5SsT07rwVzFka2v2SpKr+6nI7k64=;
+        b=c8A+LcSgp+iMN/5YRifMSgUAC48sZzos3fa3yBQq59d0tNUUA6dleZMKnJbPid4/Kp
+         0A5Fj7sLTiDU/CXLraxs04b+Pli4sRXOIJQIT0XeRgDCEGXBlTOLX0UmrQmj2M8Z0x3x
+         SH7OB8BquWrv4x/3VYQNdBP+NwtouA6uYXdSyGi0oL/aw+M5+vdq5PzmUomijUdQ6asV
+         k2iXTb6DwXBhkIhD8zy7wa95x7ktPfpQEwuDWIfF19am8KSUZYo+x9tm7h+PuHJPT0cG
+         wg458M6UBXtv0YIYmEDtCjreYYmXrjWtXw7P/kVTe3aON6wB+tbXM2vPs8pia2NRB8+9
+         V74Q==
+X-Forwarded-Encrypted: i=1; AKwUvBw6xTCcn870D5ReixeJ/qzaalcMAIeAh5LOX+539EcOyTqxDBcvFLglVofored717oanJva@linux.kernel.org
+X-Gm-Message-State: AFq9FYLNiIeQxVJQm/iaLljvu5jYmAvqkCXiyjQAGsO/D7sCZdQIa25i
+	xwWh1cuZQmZhrBVxsSmvmIZw/xycqwGb7HYS08hgz5kKrF400ivlbMCN+NBn85XldyKbmMktMD2
+	dK8x7ykmhU5DD5bpmx5VEQCmBiR2qrxX21Yayk+6Fc/30cvAK9IEozymabz5l
+X-Gm-Gg: AYBFou0pMt56jZ1h3WcTBz9oUTQseKd2OGZXxeu+yMXbKdYSgR/hUlbU4cOBj+NA/gr
+	9Ng6HkNSOf/DI3037JI6YJewcgaESSIqJy8coMiyP6KsufTLHM6nQvu7u8eDcpWYCCHvVvARZq+
+	+wWa40E6Y7zxwY+EFT+AL/F3Bo0n4v1OBhvvtI/qOuxo16ZNmT4faz6k6qNt5+8qKWbKTvGN260
+	QrSAxAK3eNMRnPOs1L1J8PAYz0kpMmd8LCbcxSSzFuEifnnKyU961N6VcaYdqnLn5GsKncWMPkX
+	5B3SuQOf03sNC+Tf8/vsKfk/E8X2eKAfukxjKl1pBNrb7eOt5Ccbamro4k+tHhQdvYcXmfn60+n
+	CMgwdfN1yVmEshr7WYFX2jIc8a/E0vSSbNIgiwZh2QvgRfsE6UQLPENuuCgBAeV+3Aotsiw==
+X-Received: by 2002:a17:907:d07:b0:c46:5c4c:7f66 with SMTP id
+ a640c23a62f3a-c46a8fe3a5cmr231149866b.14.1792743413928; Fri, 23 Oct 2026
+ 01:16:53 -0700 (PDT)
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -96,54 +104,69 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="jguwmeh4bzyhpsgx"
-Content-Disposition: inline
-In-Reply-To: <amXv_ez4FAu6jmXc@willie-the-truck>
-
-
---jguwmeh4bzyhpsgx
-Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
-Content-Disposition: inline
+References: <c3904a796a9db39caadbed7192c5d4e6@alchark-surface.localdomain>
+ <ed2bf4b8-a66d-4a9a-864f-8b7cc2c43bc8@kernel.org> <atsPUPMOiSQkfY2y@monoceros>
+In-Reply-To: <atsPUPMOiSQkfY2y@monoceros>
+From: Alexey Charkov <alchark@flipper.net>
+Date: Fri, 23 Oct 2026 12:16:43 +0400
+X-Gm-Features: AclHuK-aMpLbAXOazp1ulNyqRPmSiNECJTGbt5DG4vSEypL2FLPQNqeio_TJaZc
+Message-ID: <CAKTNdwFkzvbcpkSFDtXRCbrCDLVHjFvSWwVh-dU0FbiApvBeWQ@mail.gmail.com>
+Subject: Re: alchark@flipper.net
+To: =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+Cc: Krzysztof Kozlowski <krzk@kernel.org>, keys@linux.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Subject: Re: will@kernel.org
-MIME-Version: 1.0
 
-Hello Will,
+Hi Krzysztof, Uwe,
 
-On Sun, Jul 26, 2026 at 12:31:09PM +0100, Will Deacon wrote:
-> On Fri, Jul 24, 2026 at 07:59:29PM +0200, Uwe Kleine-K=F6nig wrote:
-> > Also one of your identities uses a UID comment. See
-> > https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-=
-harmful.html
-> > for learning why this is bad.
->=20
-> I'm not sure what I can do about that, but at least this appears to fall
-> into the "unnecessary" case from that link. I could revoke the UID (I no
-> longer have access to my @arm.com address), but I vaguely remember that
-> was also not a good idea?
+On Fri, Oct 23, 2026 at 11:43=E2=80=AFAM Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@baylibre.com> wrote:
+>
+> Hello Krzysztof,
+>
+> On Fri, Oct 23, 2026 at 09:11:29AM +0200, Krzysztof Kozlowski wrote:
+> > On 22/10/2026 16:29, alchark@flipper.net wrote:
+> > > -----BEGIN PGP PUBLIC KEY BLOCK-----
+> > >
+> >
+> > This anonymous email address does not exist in the keyring, nor in the
+> > maintainers file. Please read the docs about purpose/usage of the
+> > keyring first.
+>
+> The mail had no real name attached, I guess because some howto was
+> followed that uses mail(1) or something similar. The certificate has
+> proper UIDs and
+>
+>         linux$ git shortlog --author=3D"Alexey Charkov" -sn v6.0..linus/m=
+aster
+>             91  Alexey Charkov
+>
+> which is IMHO good enough.
 
-IMHO you should revoke it. You're losing the signatures, but your
-remaining UIDs are signed well enough, so that should be OK. Other than
-that I'm not aware of bad side effects, i.e. all the signatures done
-with your key are still considered valid.
+Indeed, I was following the README.rst from the keyring repository [1]
+word for word, and it calls for the key to be sent via mail(1) inline
+with no extra arguments. If that's not the expected submission format,
+I'm happy to send a patch to update that doc.
 
-Best regards
-Uwe
+The docs encourage a key to be submitted to the keyring if one is in
+MAINTAINERS or regularly submits patches to other maintainers, both of
+which apply: my gmail.com uid in the submitted key is listed in
+MAINTAINERS [2] and has valid signatures putting it into the web of
+trust. I also regularly submit patches from my flipper.net uid [3]
+which I used to send the key here, and which also carries valid
+signatures from people in the keyring.
 
---jguwmeh4bzyhpsgx
-Content-Type: application/pgp-signature; name="signature.asc"
+Note that the docs don't specify which email address the key should be
+sent from - perhaps that also warrants an update. However, I don't
+believe the "From:" header reveals much about a person's identity; the
+signed UIDs in the key do.
 
------BEGIN PGP SIGNATURE-----
+[1] https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/tree/README.rst#=
+n79
+[2] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree=
+/MAINTAINERS#n3888
+[3] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/log/=
+?qt=3Dauthor&q=3Dalchark%40flipper.net
 
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmrbJQ4ACgkQj4D7WH0S
-/k6jBwf+NpzAKXDWvGnqUtn2fLyo3tAFUrs5vtABA74fLlRon/Lz5B6RI0T/MVrB
-In8+hIxx7s7oyJWlSViWf5alqVc9etBDmHIKyvc4EoTBZkAC4lZe+KTavmZG1oKc
-Zs3Jy4ArQ/Pd1Xoz1KVpN4N+lbBiX5vWkfIEqFSw5bMRxcJn7QXP8lLIuOyMprIG
-07zME/bfam48z0SyLv6/B1wX6P2bp8KjZgaUnl3fbHdRsLtC9DTDnxqQpUbDAUgN
-aif7HzahvJRffsXVQY/g8LklffhBavvVSZcNedGwl2+9l+HgiO1csR/3l5BpSMHX
-0tRyozYoJUo4XfaAUzKCo0K4GixT2Q==
-=Nxwk
------END PGP SIGNATURE-----
-
---jguwmeh4bzyhpsgx--
+Best regards,
+Alexey
