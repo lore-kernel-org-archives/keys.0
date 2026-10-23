@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792740069;
-	b=FANe0UlAGSMxNrW3h/fOFYZojs/y4pVIFUVGYqVTogCN8xZFsxLaCzwzwRvPY5Xg8Mcg
-	 21U1HHLhccgy4dmpv9Djt6dB4g3LMe/OWvuKpkIsSivR00NXv6dPI08JlQTq0Lmchkjmw
-	 FbgkxHozvqbYn5ga0hBwlgb40JRoahvEwux1x7mqPAoMr9as2c3K1LbQPL0v8D0SHH6IY
-	 YFLt3VfWKL6PoDM3MvYDK4WuZ6sqRP5NY8ZpPeO9WfR7TjcFgUle6KOvJG1yntbjO3f24
-	 O7xbJiDwXgNYeaZApX465uQz0EHIjN/ysXURIFWHkgX0z8lVSrjuVbpxtKp/r6gvTPA==
+	t=1792739848;
+	b=YHP6elvSC9UbhW6UF4LCkjzgvofZ8r7UX9IzJPzrEdSXrXPxB21ov0f1Fxt7soMAhMNb
+	 s9b882JNyBGHVhY9YlQLsbqiDH9cuFnj6sJb2EVbEMYDAkUUvFwxfdc1/52yIEu1endWw
+	 IFLdwm5ibBszFgt3k3gQjIS7uPkDpwjIUaBqaXE2HiCfuFmJa4BZUUeEyLWBU8Ej+SSK8
+	 YQOOiqJPCIC0dItZU9ZBF/b7hfLNMDbfp898+CC6yIzQ0SZ4X5kiLetyg97AArZJcOqXD
+	 PDt0/25NPoWjma6RbNkCgNcjYX2mJO2uwfiqv+mpwrZoXdoQM8VgpzdRIgMkgns6JQg==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792740069;
-	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:From:
-	 Content-Language:To:Subject:Autocrypt:Content-Type:
-	 Content-Transfer-Encoding;
-	bh=F1aypyxl0jb1pKApdKHiAfqV+F+7nIYu+rzH9GO7vAA=;
-	b=byg6ZgiP1ixviv91pl/DZQHW58Y3P5xz6JF3se2mdDuLotSHy3+QP7BX3VyjaN52EGEr
-	 cX3DObRdJKYwCzvgSNpvo6zv5lzzeZXwrsXzEVoUu//zBYKH4wSGNmEkgFWfN1NUZSCii
-	 JtiBOx2SD51uq79gJgx41NL5ijd4QkLKKoPhKEWAg8u2UgstgFurAKg7LeLEqAlZlptnm
-	 idW+nyTQn6NMC7Jf8d1I/hiQj5avgNJkYxnEGZkmDXQKbSI8BrEUZ6MQnTlGL9deJgy6n
-	 lHEzmWlROyMs9QBUDThk1OxVFZzLckY8uW/yxNSO6KAz2Fze5u2b9z3BjCKCIwBI5HA==
+	a=rsa-sha256; c=relaxed/relaxed; t=1792739848;
+	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
+	 Subject:From:To:References:Content-Language:Autocrypt:In-Reply-To:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=M1ZG4R2mLcZq0oB0G39F9HciZ/WdgltSWEQGd4AIcXY=;
+	b=N5/A7giw4YRqS7SfGk79AtmLEDmgEtLtqC2FEYI9RnIe/qkZ98MY4KcA5h+SADfv1xwX
+	 bW5zg2f9T4g4KE6mc/P3eZSI04nE6WL/hFtePau4+KM4VRS69to18nUD3edo2oqZ0ul4B
+	 hQlRywSGJwlEenIGTudBYfxu6vZUf8u8dB1XUiovjsfBGTIq8FkhUAsn/TNI06sl4abk3
+	 P92XVzWpetxgDOCNW7ChDFxMO2NHMV8wVbDuJj8tg+u7c9uXX6uJERIRwFeqolEyPLfcx
+	 wXzUSXc2qBPxz8ywbpT/FXvE9Y8hFRNO1I8FOEiDDqEEyskTMklw4odTn2lahaKI98A==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Vx42huUl;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fU701keI;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01DBD606A31A;
-	Fri, 23 Oct 2026 07:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7223A606A332
+	for <keys@linux.kernel.org>; Fri, 23 Oct 2026 07:17:28 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Vx42huUl
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DA21F01825;
-	Fri, 23 Oct 2026 07:21:06 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fU701keI
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64221F031EF;
+	Fri, 23 Oct 2026 07:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792740068;
-	bh=F1aypyxl0jb1pKApdKHiAfqV+F+7nIYu+rzH9GO7vAA=;
-	h=Date:From:To:Subject;
-	b=Vx42huUlLCUQgvONGB4LpRAEeMtdmnKMsSqfLOQmVMXueHe3pcTNTsuOjn7HBO3vi
-	 kCiqPcjtLJBLodjFCMDAgunU1dzBkWn2wEKu4RBFlHoRmmncIO/CT25fjumm0pDUXz
-	 J0thV+ptZBnFyshGAPHQH7psOqvJ+oOunIHQEQnHvmfmbA6FxD3J0PCSu+EzWN3hSA
-	 uqIkVA7vh6PpUhHn6tqiQagIhptr6zwtavObiqNTFsaKS6JUVqaiVsRRVhyUAmn+sn
-	 LIRGrR1xiBaFzRMta8ErghL13ImDRs85OK7dvpwP6tmrTQEm/yky1u/IQVNEaJvOvW
-	 /OX8Tu+TFug2w==
-Message-ID: <26137926-0e7d-4429-99ac-7ca51d4fe8bd@kernel.org>
-Date: Fri, 23 Oct 2026 09:21:05 +0200
+	s=k20260515; t=1792739848;
+	bh=M1ZG4R2mLcZq0oB0G39F9HciZ/WdgltSWEQGd4AIcXY=;
+	h=Date:Subject:From:To:References:In-Reply-To;
+	b=fU701keIKflbCoj4q8IgUrMaCxKTgbLvH+rLkrDhYXU3xaS94KWSUr+ZgO4UOhWBu
+	 HnSqH5eCBVuduz3FeW2EGE/NBjx3Lo1i38fS8IliutwnWJ8+MRM2A9zbYU9GsGRrz5
+	 nEBVhgSx3I/hZ8TYFDAP0FttwGqFNF+H8OJT7YnM5HHLM5dJUoHlzBHmRbr8AiqWjj
+	 oVEaGo8uQcwLCkF6m/UyFANfcAHVVoE4uiJAgq5pyues+UW1w7xf1kS+hZP8KBGJax
+	 z7xyDDlH2+c1wHQAY1M5zuMsc5OPgBbDb1PsNQe5xdVVy4EAPGCKV5pxyW/SCZuezJ
+	 c/JPH4Gf4j7LA==
+Message-ID: <edc1f693-a3ba-45c2-a428-2a65842eaca5@kernel.org>
+Date: Fri, 23 Oct 2026 09:17:24 +0200
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -52,12 +52,11 @@ List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
+Subject: Re: Updated key
 From: Krzysztof Kozlowski <krzk@kernel.org>
+To: keys@linux.kernel.org, Konstantin Ryabitsev <mricon@kernel.org>
+References: <20261010-quaint-prompt-barracuda-ddf9d5@quoll>
 Content-Language: en-US
-To: keys@linux.kernel.org, Konstantin Ryabitsev <mricon@kernel.org>,
- =?UTF-8?Q?Uwe_Kleine-K=C3=B6nig?= <ukleinek@kernel.org>,
- Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Subject: Commits in keyring without trackable emails
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
  cFgcqTTuNHjAvxtUG8pQgGTHAObYs6xeYJtjUH0ZX6ndJ33FJYf5V3yXqqjcZ30FgHzJCFUu
@@ -101,23 +100,18 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
+In-Reply-To: <20261010-quaint-prompt-barracuda-ddf9d5@quoll>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-Hi,
+On 10/10/2026 13:03, Krzysztof Kozlowski wrote:
+> One UID removed, new signature
+> 
 
-A few recent commits like bbecf3f1a77b ("Add AE1C2FBEA7DB42E1 (Troy
-Mitchell)") have message Id which points nowhere.
+I don't see updates in repo related to this key update, so maybe it was
+missed. I also see a few others - like from Marek Behun and Andy
+Shevchenko - missing.
 
-Last three commits:
-
-https://lore.kernel.org/r/7ia41p9k58ci.fsf@castle.c.googlers.com/
-https://lore.kernel.org/r/010001a153609a07-82ca770b-3c4e-41e2-922a-92aa9475eee8-000000@email.amazonses.com
-
-https://lore.kernel.org/r/20261015152222.000053c6@gmail.com/
-
-How were these updates received? Why aren't they on keys@ mailing list?
--- 
 Best regards,
 Krzysztof
 
