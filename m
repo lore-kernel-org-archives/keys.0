@@ -1,47 +1,47 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1792739848;
-	b=YHP6elvSC9UbhW6UF4LCkjzgvofZ8r7UX9IzJPzrEdSXrXPxB21ov0f1Fxt7soMAhMNb
-	 s9b882JNyBGHVhY9YlQLsbqiDH9cuFnj6sJb2EVbEMYDAkUUvFwxfdc1/52yIEu1endWw
-	 IFLdwm5ibBszFgt3k3gQjIS7uPkDpwjIUaBqaXE2HiCfuFmJa4BZUUeEyLWBU8Ej+SSK8
-	 YQOOiqJPCIC0dItZU9ZBF/b7hfLNMDbfp898+CC6yIzQ0SZ4X5kiLetyg97AArZJcOqXD
-	 PDt0/25NPoWjma6RbNkCgNcjYX2mJO2uwfiqv+mpwrZoXdoQM8VgpzdRIgMkgns6JQg==
+	t=1792739493;
+	b=tKgOpPUMVdZ4//vFIbd0uI7UIzNg7u+a5l2tOn0C0bXirHC32jgiiVXn6eZo8BwgnEnO
+	 pbKy3J1b/zVyWHSusxhRj4YPNALAtM7gayaBjGAkvIpZePEgiGZwfsAWk3P1CQ4dQH9Nt
+	 1VBsHopFulcR6OoD4qNPsF0uMTRjpwGOBqx/ICoiYs+XObZp+ryiiLYne0ECftt6wRgBG
+	 7Qbi8kkhpJa9qiejlRLwdlZZ+8nm6XN+x9iRCZb5g1rDkfTLJZiZokRgCK1IPkSWZoPqE
+	 bg0xJ3+v6XNpyxnR57R7Wic3Ong+7ul5RWCqegtsIISfUtPQ2Q1Hb4hwyTqrEMjIDAA==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1792739848;
+	a=rsa-sha256; c=relaxed/relaxed; t=1792739493;
 	h=Received:DKIM-Signature:Message-ID:Date:MIME-Version:User-Agent:
-	 Subject:From:To:References:Content-Language:Autocrypt:In-Reply-To:
+	 Subject:To:References:From:Content-Language:Autocrypt:In-Reply-To:
 	 Content-Type:Content-Transfer-Encoding;
-	bh=M1ZG4R2mLcZq0oB0G39F9HciZ/WdgltSWEQGd4AIcXY=;
-	b=N5/A7giw4YRqS7SfGk79AtmLEDmgEtLtqC2FEYI9RnIe/qkZ98MY4KcA5h+SADfv1xwX
-	 bW5zg2f9T4g4KE6mc/P3eZSI04nE6WL/hFtePau4+KM4VRS69to18nUD3edo2oqZ0ul4B
-	 hQlRywSGJwlEenIGTudBYfxu6vZUf8u8dB1XUiovjsfBGTIq8FkhUAsn/TNI06sl4abk3
-	 P92XVzWpetxgDOCNW7ChDFxMO2NHMV8wVbDuJj8tg+u7c9uXX6uJERIRwFeqolEyPLfcx
-	 wXzUSXc2qBPxz8ywbpT/FXvE9Y8hFRNO1I8FOEiDDqEEyskTMklw4odTn2lahaKI98A==
+	bh=aElrae/QrutZX/H302rd0KEK6lF1fSl9mGgvSJ4y7+o=;
+	b=uLlVo7X6c/qbrxy9Q8mBjPFEMDz1fI1xIgGNTjfWRN6hE6ujEuWoX8j6HNF1nheO/p1K
+	 akxKGXXxuMi4HtDZoMuRW5stcj3awYkW3MXhakp5ke1IbO5Gwu18OQLrpHKWch4IpfIKY
+	 +zd2V/tPk+Lu/VuHXaSA3XvbyvC3OajLDVh60TghVHXaxTik6HQPxarHacpYNQ4vZH7Z+
+	 TRzg9g7l9pmFN4yTIGrheEMQnqaifBjulvHjYn+Ti9cqIVISmEH10yP3g5ge5b1EhrXma
+	 87NPz7Je1US60di0Yo37XbTogFaENClbxDtzjZz+qcH6m7gVfPDOjTHdD40N+RtVCiw==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fU701keI;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mUZFA8J3;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7223A606A332
-	for <keys@linux.kernel.org>; Fri, 23 Oct 2026 07:17:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025E8606A31E
+	for <keys@linux.kernel.org>; Fri, 23 Oct 2026 07:11:32 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=fU701keI
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E64221F031EF;
-	Fri, 23 Oct 2026 07:17:26 +0000 (UTC)
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=mUZFA8J3
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F921F031F5;
+	Fri, 23 Oct 2026 07:11:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
-	s=k20260515; t=1792739848;
-	bh=M1ZG4R2mLcZq0oB0G39F9HciZ/WdgltSWEQGd4AIcXY=;
-	h=Date:Subject:From:To:References:In-Reply-To;
-	b=fU701keIKflbCoj4q8IgUrMaCxKTgbLvH+rLkrDhYXU3xaS94KWSUr+ZgO4UOhWBu
-	 HnSqH5eCBVuduz3FeW2EGE/NBjx3Lo1i38fS8IliutwnWJ8+MRM2A9zbYU9GsGRrz5
-	 nEBVhgSx3I/hZ8TYFDAP0FttwGqFNF+H8OJT7YnM5HHLM5dJUoHlzBHmRbr8AiqWjj
-	 oVEaGo8uQcwLCkF6m/UyFANfcAHVVoE4uiJAgq5pyues+UW1w7xf1kS+hZP8KBGJax
-	 z7xyDDlH2+c1wHQAY1M5zuMsc5OPgBbDb1PsNQe5xdVVy4EAPGCKV5pxyW/SCZuezJ
-	 c/JPH4Gf4j7LA==
-Message-ID: <edc1f693-a3ba-45c2-a428-2a65842eaca5@kernel.org>
-Date: Fri, 23 Oct 2026 09:17:24 +0200
+	s=k20260515; t=1792739492;
+	bh=aElrae/QrutZX/H302rd0KEK6lF1fSl9mGgvSJ4y7+o=;
+	h=Date:Subject:To:References:From:In-Reply-To;
+	b=mUZFA8J3Wqv9nSDSK0QxXgVV3Beit5eFHL+5aWwoVzBf5N+X+det1o0CfwLyswEsf
+	 OCe8Nx2ClKOfLEv8Fzi9pE7jS4MtPcLO6DMvlb6Ekg3CpN6jNkaIfxwCIbgBFMHYW/
+	 ZfAlsv7vjDx7yFdAUF+/6eyzsGj5XwsL8KEKcwpq1m2E/SLu+P6W2Spfq4qa6YeTij
+	 MM/jGreP9TJbgEbuP/TcySU60erLfVgUGrHhpR4gSOTET5aiXUMYrkRo/2f6VYCiCu
+	 Arvfp8/cDcBynbbU0JHGSfZANO8/bkvzibxGbLxUXLJKw3uav0nw5OXwruvl7/TzZ/
+	 2p6Bi34b8fBLg==
+Message-ID: <ed2bf4b8-a66d-4a9a-864f-8b7cc2c43bc8@kernel.org>
+Date: Fri, 23 Oct 2026 09:11:29 +0200
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -52,10 +52,10 @@ List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: Updated key
+Subject: Re: alchark@flipper.net
+To: alchark@flipper.net, keys@linux.kernel.org
+References: <c3904a796a9db39caadbed7192c5d4e6@alchark-surface.localdomain>
 From: Krzysztof Kozlowski <krzk@kernel.org>
-To: keys@linux.kernel.org, Konstantin Ryabitsev <mricon@kernel.org>
-References: <20261010-quaint-prompt-barracuda-ddf9d5@quoll>
 Content-Language: en-US
 Autocrypt: addr=krzk@kernel.org; keydata=
  xsFNBFVDQq4BEAC6KeLOfFsAvFMBsrCrJ2bCalhPv5+KQF2PS2+iwZI8BpRZoV+Bd5kWvN79
@@ -100,17 +100,17 @@ Autocrypt: addr=krzk@kernel.org; keydata=
  K9bCVaboTA2T77QYkRcRJYSsO1alGX0ome/hMLD1daXlkrNUp1HWa3K4iytLRXjCSIorWiGs
  n+q3krnpXu3TFkA8qtOFZMdnIiFuiq1yLT8hptsV5xh1TA2nsVvSYiaCr3q4s4BKjS/KrLDb
  qoxzw8ISjdUp4pA85vb6YLCmb39NgidD+7PmAr65lBNveIFynTgsja1rRQ4=
-In-Reply-To: <20261010-quaint-prompt-barracuda-ddf9d5@quoll>
+In-Reply-To: <c3904a796a9db39caadbed7192c5d4e6@alchark-surface.localdomain>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 10/10/2026 13:03, Krzysztof Kozlowski wrote:
-> One UID removed, new signature
+On 22/10/2026 16:29, alchark@flipper.net wrote:
+> -----BEGIN PGP PUBLIC KEY BLOCK-----
 > 
 
-I don't see updates in repo related to this key update, so maybe it was
-missed. I also see a few others - like from Marek Behun and Andy
-Shevchenko - missing.
+This anonymous email address does not exist in the keyring, nor in the
+maintainers file. Please read the docs about purpose/usage of the
+keyring first.
 
 Best regards,
 Krzysztof
