@@ -1,70 +1,70 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=198.175.65.17
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=192.198.163.11
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793290117;
-	b=4+4AzpZjn4ZIcRGToy7AL9qW+6sR6ak1MPF6pe75m0pcXjXnqzWvWwnUxVGLJvZfqjGJ
-	 SXbsRa1PG2nQ6wqF7bPUHL7EN9GzMIcFCQ23/ChSE8y6H8i+NQcqypWdK7LVdCf8bpYgt
-	 MTCDRjdMOZgyFUTgIV+DBJKeJM9CH5lPNWHDsuAmaSsqnNXhQZxxhaKbUqoCcqKeXh3zo
-	 EK+Y356NI779BQZw3p5c3glqfQLV1sl45M6TTQmXQrzALwWbzbtFmkVShGLU2uOWxPi+q
-	 Dp3TvU882U8UpN1779z1+Epl5eV3L2fFm59xsaGaxMMdiLf7SlszTTp4CHdlXxbyCuA==
+	t=1793290488;
+	b=nlkQYBQNj+NDk136csz03dAMlKM698gXlC+dK3ZLL2sXcjAkiRUJCiowmGgjXF3GsrXD
+	 ZuDO8KfeNuTPQV/WiM4QFBgHA7Zzl8s7fm2/jGPFrDjtvhG8C0pleu7jlntWYKAUDMrRg
+	 uFQWDrT8kf58432judcy9cuUmCxCZHDg63swdn+ehpQmUU1A+EH+TiOsgyJyEfO7iLa50
+	 dXfXiuVkVG0FsFsR7MFbOv71aWNlwHiC/GZFfaWDrvlW7G1IoIy8a75nGXtI8AtBe0oFK
+	 pWt9N29YNjgF+DvUysRZ9lNC0I+f/5BzXUSK1c8HxjICc+pzC8wHsA5nWcsAtjwLJ2g==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793290117;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793290488;
 	h=DMARC-Filter:DKIM-Signature:X-CSE-ConnectionGUID:X-CSE-MsgGUID:
 	 X-IronPort-AV:X-IronPort-AV:Received:X-CSE-ConnectionGUID:
 	 X-CSE-MsgGUID:X-ExtLoop1:X-IronPort-AV:Received:Date:From:To:Cc:
 	 Subject:Message-ID:MIME-Version:Content-Type:Content-Disposition;
-	bh=PeFmS1CV2yuJUAshOwDo5HBO3udItyhSJz8Q3Oe2Qcg=;
-	b=vi6T/uD+lMaZNEEkcAdEAA5Vd+49Yuwzv1aa8a2UIl6wMUvl82dmOjQMu8+iBFi5DR/b
-	 NAg52oZWKjTeXpJ6MnaaenstRbRFmKhK5GJrzyxfG0YH4ZvTu3JtkpJ8BYqPwpBMWMnAG
-	 OlvcGtm4SClO9gX6c+EXhLBkLEb7VTRKhcAO27mNfzWk4DYbMwSNQ56urBgmZX0a/i8q3
-	 Po9V+Qu2kUmy8Wt4U7J6QHJAWT1w5PAoxW0FgLNgB5AmjudclWwnMJp/OqNLgRGziWxmf
-	 T7OolV9CE//BPmoe9TzBStgPE5l1SvYzVoZAsloynUXIaY4MEs2e2jXe0cVYpKThsAQ==
+	bh=w8vWDrt53SiVNNtMJ0i91CIdnOXL/phTNfzNsSjaYMk=;
+	b=Ol2EHmtly8bYJd+2U+cxr9mbmf9h916XRZu5breR0VS2DnlSzistFHwT5g0DkcEu+ouf
+	 xIIUq4HhcWHQHc35FzPtGh5EyXfIRabBlP6DG3JS6sF2fh6kUCc4JKc0LjT/QHd4bvePR
+	 81TPgcrQP8V7UHS6LwyZMNf0NZcnwsLi+HEYCSigVV36re2Nseijy2yZ868kB9fRizRh8
+	 iA8yMxeWGLvNxIjZuQK5pT4Dcb/Q+fYpufRrr1hh5RYcqBqdnHRvB9YOTUNWeBvhJU9Zh
+	 UW4BzX309hu90U9wiV8S37TJgpa3meitVS4+0wnGSFTEipJ+F5Qt5DRtAp1ziEW+7IA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
 	dmarc=pass header.from=intel.com;
 	spf=pass smtp.mailfrom=intel.com;
-	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Wf7aajav;
-	arc=none smtp.remote-ip=198.175.65.17
-Received: from mgamail.intel.com (mgamail.intel.com [198.175.65.17])
+	dkim=pass header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b="g7fXsV/i";
+	arc=none smtp.remote-ip=192.198.163.11
+Received: from mgamail.intel.com (mgamail.intel.com [192.198.163.11])
 	(using TLSv1.2 with cipher ECDHE-ECDSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB6160A262A
-	for <keys@linux.kernel.org>; Thu, 29 Oct 2026 16:08:36 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org BFB6160A262A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E637B606A31A
+	for <keys@linux.kernel.org>; Thu, 29 Oct 2026 16:14:46 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org E637B606A31A
 Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=intel.com
 Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=intel.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=Wf7aajav
+	dkim=pass (2048-bit key, unprotected) header.d=intel.com header.i=@intel.com header.a=rsa-sha256 header.s=Intel header.b=g7fXsV/i
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1793290117; x=1824826117;
+  t=1793290487; x=1824826487;
   h=date:from:to:cc:subject:message-id:mime-version;
-  bh=PeFmS1CV2yuJUAshOwDo5HBO3udItyhSJz8Q3Oe2Qcg=;
-  b=Wf7aajavcX5GhWmSKVDyQXZzZd/p0cCxvTkPKmZ8pNCW+l3mP5kTwJQ+
-   FFaSthSKEsxq1zHL40F8Ls4G3nyzDNy4xf8fp3PXZFiHVZoia4NSED7WA
-   lbY4ZXeb+a6t5YsXiJwFk398K22896wA6Q4UWjwYyOOkfPtUXXna7ZckO
-   pl1Wm0anmEbmDcWig/JSt1hhhTelKGj4tvT/iewNfELa2gGnpog6c1DD2
-   qFn8nQPagSC/+i1sa+crVIMpb5ptenryHtml5Vl0C4n9Y5pWptM/grGfx
-   YR7LBKjN2rCBhHo1P7LwOcOpyeOKxrAvEEHXQ8a0vmUqtowWnFnsIudJ4
-   A==;
-X-CSE-ConnectionGUID: Epgf080cTp67HU2Z1cSiLA==
-X-CSE-MsgGUID: 80PNftFvRzmi7Y+d3PsuqA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11949"; a="2056172"
+  bh=w8vWDrt53SiVNNtMJ0i91CIdnOXL/phTNfzNsSjaYMk=;
+  b=g7fXsV/iK11d4zPoWQ+alBQjtz+rKwNt1UfBlDXcfFAWmDJ0eZw0OimB
+   IwwAHrRjJMet8hrX8fSiDtyABXVecYTO7dJl+QEgOy/zgC6bHSBbUMBiW
+   a+TfIj403sCpGHyazqqTIYyqA+j+DH02ve6IYATcJZOliN1Gc56WbaAYp
+   VhnjCVrzn+irG6+RgDbWFOhUpEYcpoqyiour6KLKImEEL5G9KuHflvmex
+   Iitke07ar5F3+dZRB6MaW0uMAjdxCAck/DTZKtJtDcaavV7jvTOouEzCr
+   gVBVDV5SDhb3RV4o7KGfpu+YV9it1y1o2TjdqinxX8PHy1bq6a5I8TkMa
+   Q==;
+X-CSE-ConnectionGUID: BgZNXozaQ6iO2JkVxADVig==
+X-CSE-MsgGUID: 31gaeqGYTnm2OCSen6NASw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11950"; a="1951841"
 X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
-   d="asc'?scan'208";a="2056172"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
-  by orvoesa109.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 09:08:28 -0700
-X-CSE-ConnectionGUID: jeqUoFLWQ5CWLxJGzUtmEQ==
-X-CSE-MsgGUID: inDN7wA4TzKtKpR9vGIVmQ==
+   d="scan'208";a="1951841"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+  by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 29 Oct 2026 09:14:46 -0700
+X-CSE-ConnectionGUID: qceOUUwGTamuUJIUxPnV+A==
+X-CSE-MsgGUID: 7/YO64jsRr6dQpCovHfssg==
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="6.27,184,1787036400"; 
-   d="asc'?scan'208";a="5111515"
+   d="scan'208";a="5065907"
 Received: from yilunxu-optiplex-7050.sh.intel.com (HELO localhost) ([10.239.47.46])
-  by orviesa003.jf.intel.com with ESMTP; 29 Oct 2026 09:08:26 -0700
-Date: Fri, 30 Oct 2026 00:02:15 +0800
+  by orviesa007.jf.intel.com with ESMTP; 29 Oct 2026 09:14:45 -0700
+Date: Fri, 30 Oct 2026 00:08:34 +0800
 From: Xu Yilun <yilun.xu@intel.com>
 To: keys@linux.kernel.org, keys@kernel.org, yilun.xu@intel.com
 Cc: yilun.xu@linux.intel.com
 Subject: Update GPG Key for yilun.xu@intel.com
-Message-ID: <auNuB60WlocyKt33@yilunxu-OptiPlex-7050>
+Message-ID: <auNvguFnRHlRmEMU@yilunxu-OptiPlex-7050>
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -74,18 +74,8 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="Z3IOmithjdfIbGu7"
-Content-Disposition: inline
-
-
---Z3IOmithjdfIbGu7
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-
-
---Z3IOmithjdfIbGu7
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="E2C8D72186AC3949.asc"
 
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 
@@ -181,5 +171,3 @@ raiPxrOwXNkT6QOFEgKrVjlnQBeFtTjXG38sYkQxR5V4mRHCvqGSgg63wFQ9O7Ot
 JUI78lVWYWu2XQdzfqkBme7hXOnmadRKZ+k=
 =XZTm
 -----END PGP PUBLIC KEY BLOCK-----
-
---Z3IOmithjdfIbGu7--
