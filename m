@@ -1,92 +1,101 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.221.54
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793353794;
-	b=4VxaAzjM+6sLW/RQipQIrGD/Ee9XYlOCB0mO2BPcxSKCQcmVXHH4ZE1NjxiRcJZyYPkO
-	 uc+GMMH/PvSKXGEBIP3PEhOU2AzUwVw7cQ3+jKaCgh1xMptX1FX0hU9i9teL9HBKGm2yv
-	 86fuJ0B9CiY7ZvGJaeRVaCWam8+yhva5QiXiBEFdzgEnAN6GzrLo1fMSpVa/zDStQZXTV
-	 3x3JmGA2Z2llLBgUwrIFV+sPBpM7y2dOmUBrAnqu79ajSrpEkDh1aZO1yKkzCestFD7Te
-	 I9TxspYhI5KyEoOnAd8XxGkyqevReKUTXON2eH/Nk8vRdmZ+RebaM4v/dcMQOP6gdow==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793353794;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.169
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793362156;
+	b=xNALzT6uDHNaC4+ybkUWFBMxtATpI5b1l+weT1xAnWfMp+ChqvbC8dpUgzVo2x8dvbu0
+	 5/ZE06kQwyVky7/bvj2sj6a1xO2Rl3ew7cKc4GQsbikXlPC1W+WycraWgPwYk8/s3Yv8x
+	 4B2SXYOPgEbuWOybcPcauUg0h/b9+NgXTX0vJLAl9oU8gR1wa+SCOHYAAaSCBzmICjyJc
+	 r1OdzJHW45sHRU3zI3EhwLk7MGvaViq+opkLQQ2ZAaNdNMNStMOCuVSqFQm7Bq+uOtNuf
+	 9Qn9HvlvkmWSAGXw6dPqK4cG3mn+d6ajr9TaepoM6HPPJvoN3gnU7MfZWMH1FZ2iRow==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793362156;
 	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
-	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
-	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To;
-	bh=VldkL4jvrlQrjlDgheZzTpVJnBCmR0ti5g2g/Mt1y68=;
-	b=HyCZElvWhKQi5tKJm6lh2mfqmCiYmjwQENfK04YiIgpSDovDNvG/88KWBfUPfK+u+X0a
-	 4umnO+hrIQxwGsFKM+xUJVakX7D0S8PmSTtZRJdB/OxTqhsBF1QTicUwJNs/guaGNopEa
-	 kGl0t9aTbhWunD/UCnvVir9za6LY+XAQblAD4mv3xM50fQN8/F9pLbqcwv23Idaj+MkUJ
-	 UL7ip2/F8guu1ux16WFcxli1lYYtRor+NZnKWT7bJKFzg5E6a50nOcE681zsIET1XI97v
-	 wpTStsHczWaPWc6gfN9Ha3qPTqqrctoaMk/hMKwjAgJrkLn5RYZ/lUUf5w5oSMtBqIQ==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dmarc=none header.from=baylibre.com;
-	spf=pass smtp.mailfrom=baylibre.com;
-	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=LKkwQBdN;
-	arc=none smtp.remote-ip=209.85.221.54
-Received: from mail-wr1-f54.google.com (mail-wr1-f54.google.com [209.85.221.54])
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:MIME-Version:References:
+	 In-Reply-To:From:Date:X-Gm-Features:Message-ID:Subject:To:Cc:
+	 Content-Type:Content-Transfer-Encoding;
+	bh=Saxdh/mStWALww68ao01BtqgSUfn3YOFlz1JPFIfzlo=;
+	b=LM+yBCEuC2HH6ioNkcTv/jXGGpJd16mF9wseqhxL1dlWCwLgKWK/SDVrReuD2TzoqW66
+	 2bhOyxvGtz+v3B1p0QIwvpTEWC6PEABshjAXbzwDqEA/anhNsgtmf6bb3hE3rJGjQ7EEr
+	 /yI/9DBKeVoi1kQG2quTbWQ9+XsDNx7gYe99BlKlXPuCOEs+xrVv2hRLX13xWVWIc4aME
+	 L7mbnPuW7Qb/tJwpoqnWYMito2TPg1USIaFJMmUbdtGGEE2nZSeKVgwo0h/zIHxzwY6Ar
+	 tAa4ljOkOjnnrTuUlVEjFTho0WpDT1n9Qtklfxgluwgm3BsMlDLbVHUm03IzUOcaSOQ==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dmarc=pass header.from=gmail.com;
+	spf=pass smtp.mailfrom=gmail.com;
+	dkim=pass header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=quaBicG4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=209.85.222.169
+Received: from mail-qk1-f169.google.com (mail-qk1-f169.google.com [209.85.222.169])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E3B9606A329
-	for <keys@linux.kernel.org>; Fri, 30 Oct 2026 09:49:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 8E3B9606A329
-Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1E1606A31C
+	for <keys@linux.kernel.org>; Fri, 30 Oct 2026 12:09:16 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org 3E1E1606A31C
+Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=gmail.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=gmail.com
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=LKkwQBdN
-Received: by mail-wr1-f54.google.com with SMTP id ffacd0b85a97d-48dfc0421d9so415966f8f.1
-        for <keys@linux.kernel.org>; Fri, 30 Oct 2026 02:49:53 -0700 (PDT)
+	dkim=pass (2048-bit key, unprotected) header.d=gmail.com header.i=@gmail.com header.a=rsa-sha256 header.s=20260707 header.b=quaBicG4
+Received: by mail-qk1-f169.google.com with SMTP id af79cd13be357-93e503815adso54697285a.1
+        for <keys@linux.kernel.org>; Fri, 30 Oct 2026 05:09:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1793362155; cv=none;
+        d=google.com; s=arc-20260327;
+        b=ThFE7DPTfzjMr+tIMThamSYNHCVRb8kVrTTFCF8mxtusewV3TZYW7d3+lC33uyxdWa
+         r/NNI8JUgaK/Z1+Ska92t012WYQ0+0IQcJKIY3UpO/1rCHFi/rkM/C9Z6cIIt5a/uevm
+         M26PFkq8+fCc74V8XjFjzmT1R5gyzys70cBr4SCCeHxxPUrx82Yv16jDnufMEMldY/jl
+         LSi9+T0eStGPvTZiNyLFLZoJwvzqGgnGE7WDmofs1QmLhMQg3VYKeybhPjLXaHoTJ9JZ
+         22C3PGORPj8jUPYeSVqo1hdEy1bdA/oAw4QAJgnNovWKYkaj+E4FAC2yqo/+XOAOiRYx
+         WdRQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20260327;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:dkim-signature;
+        bh=Saxdh/mStWALww68ao01BtqgSUfn3YOFlz1JPFIfzlo=;
+        fh=OOJj1McAMApbcvUfv67YQqPTUJyGV4llB5XppZXqlHM=;
+        b=gAveTDllv97vh9qki1YRLZF9DkTRiIQrQ1UHmzz63PSH/cRHR8hvhpke7giWGcIQUZ
+         vI58RIBy7NLxsEimrr6ctbuKuMV1VGi/YxJK9mGDp7odUq6PbDe5uMUxBWloaMQQRv/T
+         WGk5JgkSvQSrtXa+790ZC9YbuazI7+JLMulvGNWblPZEdr6gieRMjq6753qikkMkkv//
+         87zrw1OHLD3b4s0bl6i62OIAIJgR4J5M7NbOY9foyQsFAqscz1JhLwl2WjeHQiXU/ySG
+         i5f3wQcf+DX3nKK1+bdCDWAIOBeqwcJ4wt91Indn27LY9pNqYCtXSRe79SUIgqGAuMIV
+         z1SQ==;
+        darn=linux.kernel.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=baylibre.com; s=google; t=1793353792; x=1793958592; darn=linux.kernel.org;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+        d=gmail.com; s=20260707; t=1793362155; x=1793966955; darn=linux.kernel.org;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:from:to:cc:subject
          :date:message-id:reply-to:content-type;
-        bh=VldkL4jvrlQrjlDgheZzTpVJnBCmR0ti5g2g/Mt1y68=;
-        b=LKkwQBdNv3/Ri4AIvn7xYKVBAH5wM8K2Kjc0ByKaEpM1PXHHglLGPwMVYsXBCqBhTz
-         pAKIeOKHQyngMFDRXSknODe4mqDqGmsLzZ0UvC56tYt4bybunwuJwflD2vtJrueG68nI
-         4bNPm6xBS/FbRNBSLAgzN69dkZyl+S80A5z/AjZ3+FynFfY6Q+TcsL/fAv8M0dpHYuu+
-         vz46y9RrqNq/tPi99DUzAVbvv1RmqWfvgFFxIAXdMpgXhOr1fF4/3sP6vFQ7hA+1XZZs
-         ME5CNfTYSiW99S4cMvY0eRdNO+qWFEeMWUUn6zrlgLTxvBgZ/xoV/DyzSs7Lu7BCJgBG
-         8d2g==
+        bh=Saxdh/mStWALww68ao01BtqgSUfn3YOFlz1JPFIfzlo=;
+        b=quaBicG465L8OxrYa/uv641zlnSds2i9VFRKPmos0+65v/vkKxgYhvh3F1OF97tzCU
+         sTY1tA7FptZOe7VU0zZ6msLB8r3SzfIXhmeQPS7pPy0szrw6Ilj3AxY62Ub5kC61bXUU
+         1Oc5XgZu5KiDS197P6KHQZyRx0IKKoWv6FJgsO3X+cDC6UOSPsOWmHbH1EbELZzO1Uyh
+         3H6ZUaEwCcrv9VQ2GiZ4uQ4x/aU+kNvrO/LzavlYBTaQRP+FIQuk7nfJ7S1Lg9aL45yT
+         hciBOP2l6tZ9XT8LaulmBYk0MV8A0O/szerW1Ta32TQQARMD3vxTmo9dan8FGdetK4nX
+         CzHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20260707; t=1793353792; x=1793958592;
-        h=in-reply-to:content-disposition:content-type:mime-version
-         :references:message-id:subject:cc:to:from:date:x-gm-gg
+        d=1e100.net; s=20260707; t=1793362155; x=1793966955;
+        h=content-transfer-encoding:content-type:cc:to:subject:message-id
+         :date:from:in-reply-to:references:mime-version:x-gm-gg
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
          :content-type;
-        bh=VldkL4jvrlQrjlDgheZzTpVJnBCmR0ti5g2g/Mt1y68=;
-        b=qyIveCx4huuppMt1ruLAPsE4j9QeRLZF0xcBNfKD1xBcC1jP4EnR+u6bS626DmM6hQ
-         MWyoWThE1udA9pIrf1aG4rxCaIA+IWnRQagpT2qgFgrNzglkWYSJDbVvKJotSGvTTyk5
-         iRAeSf+GsyDas9mTy8HE1k5pU1s4NXYuMidZ6GiN6wFdNN2UFhzf4mS6QeH4/Uqhz1TA
-         4HPPuE2xYzJUEm0OlZrq/r2eG6IHrT3GjGr/rI8qWP/WhDx4AnkcIHptDdT3Ek1QZVVY
-         Vs2UA+FwUOkmMsEdnkkjoyln+35IhHcHnBAkbBAqQ17H8DmDkweEodxkSq7B4sp3vJUY
-         TQhA==
-X-Gm-Message-State: AFq9FYLWGZr+zOLLvmGYA3jimCf5xCQ2jInN8aZusr5iMGmG6zlMQWYm
-	X1R0yNDdf0JECp83by0H5pNDwa1V0+X2DuwwGRoTgNxMB0ywwCl77kA+0WeaNueg6jumrS2kfiO
-	2g/lrLbo=
-X-Gm-Gg: AYBFou3E60KDA0mV2HkT+H6kEs+YiQT0tCnhEOb8WVXUxHMr8uToB5UGNmIypKNvvNH
-	kJYcDhZDrDiyZsmjDG3mukbUP1e65Q1PmKvkqgkItL9kg9TlyJNGyE43+ysD0UcRMfIX7R1ggXV
-	ko2p3CZ3B2wAmmOveSDtC0WxjOdWxqZTYspRkP+a97i+mkxDGhLU7Bt9yEJVJYXWUoBWGBy8oAf
-	oleCGcvO6+8h1kxYWPW3/ho467O5XBDOq/OJGNzcGxcGQR8XabmgFmJs6IZrLQmeYZn4Icj2Dh7
-	n6We+DPW6S9nHD7oxqA8QOjolTABWuLeCs1yHxDtLjR8ZvD05UX09rWlEXbVXrAjb3uQ5++pK+Y
-	02HdFd44Ubmoz4+4N9vgYcddqpTQN0MhCAdiwhlj3dUe3m64wuLez3ghs5zMU28sj4N2RV+97Vw
-	IBsAiDmvU1O5ONi0sSSftkETVJ+qmJJEGKV8JeoZz60Ldh2aHUAcpc3NkPYqQUdZirvoBMMfXdy
-	pCQkHpHA3k0rYT57MK6Qi6s38E+3M3hY1ESpDledHVCA9CLAh+exabL1uSB3aibiPH6z2HpPcMc
-	UlbIv7fGx/8p4CeyyN2rsnl6V/q64JAEjNaBn2PbdtJfBHLQOtu9Vz9ec6oxJ5SzbIh/LHgdUFP
-	aoivX/Fn+OUVj+1Z1
-X-Received: by 2002:a05:6000:2085:b0:48e:824:f0b9 with SMTP id ffacd0b85a97d-48e6e5250cfmr3978110f8f.45.1793353791840;
-        Fri, 30 Oct 2026 02:49:51 -0700 (PDT)
-Received: from localhost (p200300f65f19a904f4ce339f1421d16f.dip0.t-ipconnect.de. [2003:f6:5f19:a904:f4ce:339f:1421:d16f])
-        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-48e71ba2415sm2448012f8f.50.2026.10.30.02.49.50
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Oct 2026 02:49:50 -0700 (PDT)
-Date: Fri, 30 Oct 2026 10:49:49 +0100
-From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-To: Daniel Pereira <danielmaraboo@gmail.com>
-Cc: keys@linux.kernel.org, Jonathan Corbet <corbet@lwn.net>
-Subject: Re: PGP key submission: Daniel Pereira da Silva (pt_BR documentation)
-Message-ID: <auRmkYkwHuQNY8BZ@monoceros>
-References: <CAMAsx6fF0nS6E4YG3LwcDpecymph9n_QTU0L9M7KWrztEqEgqw@mail.gmail.com>
+        bh=Saxdh/mStWALww68ao01BtqgSUfn3YOFlz1JPFIfzlo=;
+        b=wPUQ8AuYMHtYfBihsGSqTPxHjBH8xdiySTrj20GJWp14c84qarxoflxFzsuy28qQWa
+         WJ47d/maLu84rAdiirxe/7M4KxGA64NEbVRd3T2v+9SyyNa3PcifurG01sDUsisDe3zn
+         kd9hyY5gGyGUCMJURv6oNCvLXarxR4gpdn/L344J907uuU+zaRGGks2rmUMARhs07jnk
+         /LLge+jjZMR8TIJfAc/rhFnlLTQMpOMQ9D8DzptyYJVcyAyNt3iE1A4smWIJ7UAKFDRM
+         6yz0KhokVV9TWOUgzGsLD6BwJ/PbOsULM4NRpyG7AaeNZ3VsEqpHNuWr5LdUCEEMJHfN
+         IBdA==
+X-Gm-Message-State: AFq9FYLSwwV973iGhwzM97iJjpMxQlIR/d2q//0M7GPeCCut6MiwC9qQ
+	SJ2DEFsAi4kmvG2AulKW3lOqOMdqxH8UHjn8lXxnsQicuSl1qDYO87qh2QFGDKaFHg9drMe8H3s
+	rd/aEuc6zxrs+EBxZ9lqssZax6ZN4z7o=
+X-Gm-Gg: AYBFou0HfTapyCFXojmbTGEci9EO70XjRsDzV26LAQ/lj0SR5gH03JyNAaJ590xuup5
+	YXjI29F2rHk69HdhnaqW+XffVk6obCx0SvxwmZpYiaaXPL4dR8wxVGZnIjHM8GhVwQCyOSar4+e
+	oHM8wmekA4dIVxVUcElZuz7IapXPW7BoGNSeuZW3n94tiFWv1U4hMJGjz1zHv0rQbY+UAJ/cVAb
+	BLRWpd+FNLwz52VCyfAnqyTBA5AdUCnTPTsp75YF/yENzsG+0+r2RAAn+IgEirqtOaNaa/drGJ+
+	IfF8y36GuAcfqQR8/TMa3d4pZCLXYmAEjqT/rDk2WBZYVuAW4fBlmOLtZdpMNp6M/NCp52ebRSO
+	DpgR+fnqMA5bkXsNqcWGfhv/y0lWClP7OrEfkO+OacahJxu28zEAk4upRdJ33BvxqBCt3FauTJT
+	ySF1txPHa1EdXXmsYHr4TMX8dOjYaKqf/ZLMawrG2W33NC58AJCCOoh0IZlltdwTg4WMUNw3xP0
+	Y5Mh0aTXyw+tnXf5KmWwdov
+X-Received: by 2002:a05:620a:258f:b0:939:6dfa:48fd with SMTP id
+ af79cd13be357-944217a105amr317960485a.51.1793362155050; Fri, 30 Oct 2026
+ 05:09:15 -0700 (PDT)
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -96,63 +105,44 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="lrbfqikpqkssc5dp"
-Content-Disposition: inline
-In-Reply-To: <CAMAsx6fF0nS6E4YG3LwcDpecymph9n_QTU0L9M7KWrztEqEgqw@mail.gmail.com>
-
-
---lrbfqikpqkssc5dp
-Content-Type: text/plain; protected-headers=v1; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+References: <CAMAsx6fF0nS6E4YG3LwcDpecymph9n_QTU0L9M7KWrztEqEgqw@mail.gmail.com>
+ <auRmkYkwHuQNY8BZ@monoceros>
+In-Reply-To: <auRmkYkwHuQNY8BZ@monoceros>
+From: Daniel Pereira <danielmaraboo@gmail.com>
+Date: Fri, 30 Oct 2026 09:09:04 -0300
+X-Gm-Features: AclHuK8CAhrHpvw-oWG0G5_FZpk6DyJO2CsDbhp-JXrMhnewxrTRJ5AUDOEBbdc
+Message-ID: <CAMAsx6fB7CxM3ok1Aq+S6jo4tfqZg0EaWaVFm4fgzEBap2=7pw@mail.gmail.com>
 Subject: Re: PGP key submission: Daniel Pereira da Silva (pt_BR documentation)
-MIME-Version: 1.0
+To: u.kleine-koenig@baylibre.com
+Cc: keys@linux.kernel.org, corbet@lwn.net
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Hello Daniel,
+On Fri, Oct 30, 2026 06:49 AM, Uwe Kleine-K=C3=B6nig
+<u.kleine-koenig@baylibre.com> wrote:
+>
+> The UID of this certificate is:
+>
+>         Daniel Pereira da Silva (Linux Kernel Maintainer pt-br) <danielma=
+raboo@gmail.com>
+>
+> . I recommend reading
+> https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-ha=
+rmful.html
+> and then maybe consider adding a UID without a comment as "Linux Kernel
+> Maintainer pt-br" isn't something that really identifies you in the long
+> term.
+>
 
-On Wed, Oct 28, 2026 at 07:25:22PM -0300, Daniel Pereira wrote:
-> I am submitting my PGP public key for inclusion in the kernel developer
-> keyring. It carries signatures from Jonathan Corbet and William Breathitt
-> Gray, and I am the pt_BR documentation maintainer.
->=20
-> Name: Daniel Pereira da Silva
-> E-mail: the address I am sending this from
-> Fingerprint: D295 744A 0A6E 684B 60EC 1892 6C05 8AEE CCBC 7A7C
-> Expires: 2028-10-27
+Hi Uwe,
 
-The UID of this certificate is:
+I am resending this message because it did not reach
+keys@linux.kernel.org, due to a problem with my email provider.
 
-	Daniel Pereira da Silva (Linux Kernel Maintainer pt-br) <danielmaraboo@gma=
-il.com>
+Unfortunately I cannot change or remove the old UID, because the
+signatures from Jonathan Corbet and William Breathitt Gray are on it,
+and a signature covers the exact UID text. Those signatures are not
+easy to get again, so I prefer to keep the old UID.
 
-=2E I recommend reading
-https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-harm=
-ful.html
-and then maybe consider adding a UID without a comment as "Linux Kernel
-Maintainer pt-br" isn't something that really identifies you in the long
-term.
-
-Otherwise the certificate looks fine. (Note, I don't think the above
-criticism is bad enough to prevent your certificate being added to the
-kernel keyring.)
-
-Best regards
-Uwe
-
---lrbfqikpqkssc5dp
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmrkaC8ACgkQj4D7WH0S
-/k63qwf5AWfuPlH618yGCanaNgp6pdvJL/u3Bj/V57ZMXzVjK5Vr+dn4dM8N3dl8
-Y9ZkzTOEmzdaW0xGiGettwMq/R6HZdJ9mJG9f20rhnHnvqMvIxEn04nk0oRbGDpb
-I6ZnOFm3+j0pk4iCLCZr8Z2TguSZC0J4Jo9TjUkkF2EX+cQs4qqU8PtyhIKwMh2a
-8dYiyPBNhp7Y0v2KmCLS5b1Jxe9qH/qXp7aCWRzwWPzJRThVmXJrHLJq70KbjNuv
-Z2hbX0M0E40vt1YSiNDSUpbpmuqc2U+Ou17KVl9mJdylsE1nBZlFdisqZvKSwbOo
-Ef/Vo+Tj0W696QCh8CbPwLAfB8bs2g==
-=tmQY
------END PGP SIGNATURE-----
-
---lrbfqikpqkssc5dp--
+Thanks,
+Daniel
