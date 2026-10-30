@@ -1,50 +1,83 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=91.218.175.229
-ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793399951;
-	b=ip2cBpPXRHzK5UZI+vrXq2l12xO8WRraeUly/1WDb1thQ+vaLLWUiS+0OpOfKMKkzAw2
-	 1+cW6cCOJ7Wy2UjOi6Zk3VS9f8IDfOOlyGoYfmz4ty7Uk6DQobhlh17we81WhzkwIuptS
-	 tF/C5ZtlzN3MEoq1rwECgoyYr6W8WPxsWKOWX5RYOAagUOk82O1aQN2beMCCf/wCe1qd1
-	 tgXpJu41lGCRRh3/Z/kXJrhxBLwCNN83H+0aXgM+OV3U0GYS4nOnQhbVEyRKSLwqXKyxS
-	 6xINerk/49va3XKH7LzZXUnpVU5bDZIM2BZVAnZ1PKWYhjcA+sLRq06U3EADnf6OSNA==
-ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793399951;
+Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
+	t=1793400140;
+	b=eBYIWP1uZHveS5jn8UMLx3wbDzm4UmgllvIPAmXWuFVGPMWTzxATNKdWyCvBZ4VKZHqf
+	 kiVtw9HL9oxeq+XX0r3IQ8EtCy3QIYHcvnIpHEgjgXWOXrBX5Hx9ob1miMI64FcjCWbue
+	 e/vLNZ0Zp6bMnxUtEEpvKfrA7SQ463/Us5FzH8Hg6zN3HrQeDSZukgP43+g+SQs/1hSX2
+	 hrKh+zRyYHdPHxK0YbXrqcIEMEZC9cmTSqzwUXiDBgKhw7KmvnKbV6DaKs55nNhh7IOUH
+	 P7q0vCMBqqSZBYtUxM965S4SbZZaRxLvvh6VOMb5/uhj2yzqK1KM0IlemRWS1+qB5+w==
+ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793400140;
+	h=Received:Delivered-To:Received:DMARC-Filter:X-Envelope-To:
+	 DKIM-Signature:X-Envelope-To:Received:X-Mizu-Trace-ID:X-Migadu-Flow:
+	 MIME-Version:Date:Content-Type:From:Message-ID:TLS-Required:Subject:
+	 To;
+	bh=eI008hSVKSpjmZdtMkdkMPMCCT+jNxpaJ9UKeXAYEnY=;
+	b=XQ7T6we1DOl67byI+ltW4rGYokmXnipGqPUXo++aCQhhwg3EiC6WEab+0NElCJHSMKkl
+	 Q3t/moS5fPxoBJ0Gz2RCvrVfIvUmp6v7AyfSSrmbqaF67fA5BiN4qnwEZAHkbBfAtLWUm
+	 aBr9Mx2UGeM+YPTLNRKD5Of3pthaKBY8aQ2k4eM+1goz8CAKlvxp68UZUvjSQBQ9/ZDxw
+	 EJJESIsqYS7MqR7G1T5Rlx2z1y+2eb7TbudvaHcdz4a94mwiz0ycUqI6i7lWVp0CG5kzp
+	 dAFhsHy8YSU2oo/LXyy/vGkttq8/rKUpydA6xXQIjIAa2bEhskoBWMz8U0JO6/dfynw==
+ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Au1xD9c4;
+	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
+Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature ECDSA (prime256v1))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2343F606A31A
+	for <keys@linux.kernel.org>; Fri, 30 Oct 2026 22:42:18 +0000 (UTC)
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Au1xD9c4
+Received: by smtp.kernel.org (Postfix)
+	id A85C31F0093A; Fri, 30 Oct 2026 22:42:18 +0000 (UTC)
+Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=91.218.175.251
+ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
+	t=1793400138;
+	b=knMwAd8T6Sh3ow3HSiZgm/34WDYS+wVMu9EderAJ2ODuFWhgilkYbASIoXPL97A3vx6c
+	 x03iMyrNsVNCskwvILa3Jy8AgtMfY5M54Nf/T28RpRnk+NssYSWLzH3kakHoxP29o71V9
+	 P3XC1jPjTGA7j3Ar0THhuFESbYpVdDFq1Sq1Sxm0xnqxIgWQlwVtu5wwyHXe4X91vp41q
+	 A/thV8IkLvrYDsTFir3fdxYorTBW3t9Ewat9vJSX18NykPCx0d4w/t/z4JD1ykV6Dl0aj
+	 w4KsTNUBT0eqnBX+WDYsF3ZVXre+4gYfNeK04oqww9d26KqgFr6ZnD6sijui0FELhag==
+ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
+	c=relaxed/relaxed; t=1793400138;
 	h=DMARC-Filter:X-Envelope-To:DKIM-Signature:X-Envelope-To:Received:
 	 X-Mizu-Trace-ID:X-Migadu-Flow:MIME-Version:Date:Content-Type:From:
 	 Message-ID:TLS-Required:Subject:To;
-	bh=8Y+BNL/UdF711zq0UDRANrdh55SFIRE5fSdFi3bpehA=;
-	b=nuzsTWEIoHd+BnqMFke+mgVX8JdsWPYjBYVRCccrGr6N+QTJmKMg85FZeOHAe3fdFQz9
-	 qO2dHacjAo30zpyXk83+dE28PgtMoPjB78EBv2H05a5z+dfL5AK1gQrFbWV5Olh6Lmlgd
-	 G1wMiOe/d2SV9CtTOMhtTG6PmzJpwMt6WxCk8F7ajARN/OZgzT/rhN0eSb2iY/28/+axo
-	 UTJqmokZrryaJgxi1JRFUdDK9TF6PRcZ5VXXkLKDOGPPY13KXoKdsKIW3k9nCnwCuGf1Q
-	 D2ebnlIMx3w7Kr2qvU3qtafTasnsTJCN8W2izh2z+QxQub9YbLe4P0z3Ugofs7r17cw==
-ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	bh=eI008hSVKSpjmZdtMkdkMPMCCT+jNxpaJ9UKeXAYEnY=;
+	b=0QSLI/WgwsEoPvjU6QkkU2rxJ/5xyIfJ/VvcBBuT2kVXwzcvduxG70qqQI38ir2wSOFU
+	 8LzrAnBtgBQNjP6KAR0w4awi8C+HKfsOuLHT6fensrvp/pUBu2XQdTDEBqTyo56qDoUW9
+	 DGriMAy9GP1q7aii7lGtM9PJ8sRI2ObPC/kBSTfDS26dpcBOHg40/COPk5JTWXMszUx+X
+	 awLKhWr55lADK9BWqqsIBmN6LnB7w1OxaXMLZON7WXHKQRiPphABOZu4x9WZPCVSUSVsX
+	 HYXUFSkYkcLbvREXINyYUkwNz5mGJKUHjM8/Pz7n0nYGp0hGU+dYvXafkQQIw85Jo7w==
+ARC-Authentication-Results: i=1; smtp.kernel.org; 
+	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Au1xD9c4;
 	dmarc=pass header.from=linux.dev;
 	spf=pass smtp.mailfrom=linux.dev;
-	dkim=pass header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ie+XPzcI;
-	arc=none smtp.remote-ip=91.218.175.229
-Received: from mta0.migadu.com (out-229.mta0.migadu.com [91.218.175.229])
+	arc=none smtp.remote-ip=91.218.175.251
+Received: from mta0.migadu.com (out-251.mta0.migadu.com [91.218.175.251])
 	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD683606A31A
-	for <keys@linux.kernel.org>; Fri, 30 Oct 2026 22:39:09 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org DD683606A31A
-Authentication-Results: smtp.subspace.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
-Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=linux.dev
-Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=ie+XPzcI
-X-Envelope-To: keys@linux.kernel.org
-DKIM-Signature: a=rsa-sha256; bh=8Y+BNL/UdF711zq0UDRANrdh55SFIRE5fSdFi3bpehA=;
+	by smtp.kernel.org (Postfix) with ESMTPS id E87B91F000C1
+	for <keys@kernel.org>; Fri, 30 Oct 2026 22:42:16 +0000 (UTC)
+Authentication-Results: smtp.kernel.org;
+	dkim=pass (1024-bit key, unprotected) header.d=linux.dev header.i=@linux.dev header.a=rsa-sha256 header.s=key1 header.b=Au1xD9c4
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org E87B91F000C1
+Authentication-Results: smtp.kernel.org; dmarc=pass (p=none dis=none) header.from=linux.dev
+Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=linux.dev
+X-Envelope-To: keys@kernel.org
+DKIM-Signature: a=rsa-sha256; bh=eI008hSVKSpjmZdtMkdkMPMCCT+jNxpaJ9UKeXAYEnY=;
  c=simple/simple; d=linux.dev;
  h=from:to:subject:date:message-id:mime-version:content-type; s=key1;
- t=1793399948; v=1; x=1794004748;
- b=ie+XPzcI7b/uBszUr2ouSCkxp+1ibDq2Bi7MwJAKtCV5zgfAzHpu4hocPj7k3ZHWCRza52xZ
- axKDAwOfmzkZQjIy7BmF+VWT+UEJax824Sd45c7YGL0g38W2ZUD2u+gQiHXSiGJ+jmZmHTNe+ol
- J/lMeNmkyOIx4sFerhodKPoE=
-X-Envelope-To: keys@linux.kernel.org
-Received: by smtp.migadu.com with ESMTPS id ecd43902c67c8104;
-	Fri, 30 Oct 2026 22:39:08 +0000
-X-Mizu-Trace-ID: ecd43902c67c8104
+ t=1793400134; v=1; x=1794004934;
+ b=Au1xD9c420oZTfz9f6xAibWkBxOzeTm9zkesXGnsbDBCnO65dVHi/jhH2yqExLVjfGAkolDd
+ woxIV9ZeriSOZNRyp2lKw2zT4X1WWsA6BcD5ZMXcG0I1xdJzr6EfJJyC93xD5ssBzSN0U6fIDsC
+ WGj9Fugs6y4AcW6GO3AaWQic=
+X-Envelope-To: keys@kernel.org
+Received: by smtp.migadu.com with ESMTPS id d1f2ec73096747d4;
+	Fri, 30 Oct 2026 22:42:13 +0000
+X-Mizu-Trace-ID: d1f2ec73096747d4
 X-Migadu-Flow: FLOW_OUT
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
@@ -55,21 +88,24 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Date: Fri, 30 Oct 2026 22:39:07 +0000
+Date: Fri, 30 Oct 2026 22:42:12 +0000
 Content-Type: multipart/mixed;
- boundary="042704d7-fb80-4779-97a7-99094604907b-1"
+ boundary="f6022c39-dd70-48fd-87d2-dcd1c4e66216-1"
 From: "Shakeel Butt" <shakeel.butt@linux.dev>
-Message-ID: <db9e9e93a212e6d5baa2c2e05cf31126223f016d@linux.dev>
+Message-ID: <5adc132cac7eaa7118c33d3a3376de16030be6dc@linux.dev>
 TLS-Required: No
 Subject: shakeel.butt@linux.dev
-To: keys@linux.kernel.org
+To: keys@kernel.org
 
---042704d7-fb80-4779-97a7-99094604907b-1
+--f6022c39-dd70-48fd-87d2-dcd1c4e66216-1
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: quoted-printable
 
+Please find attached signed pgp keys.
 
---042704d7-fb80-4779-97a7-99094604907b-1
+thanks,
+Shakeel
+--f6022c39-dd70-48fd-87d2-dcd1c4e66216-1
 Content-Type: text/plain; name="shakeel-butt-signed.asc"
 Content-Disposition: attachment; filename="shakeel-butt-signed.asc"
 Content-Transfer-Encoding: base64
@@ -182,4 +218,4 @@ UFI0R3hTQUFBQUEKQUFRQURtMWhiblV5TERJdU5Tc3hMakV5TERBc013SWJJQUFLQ1JDK3Nu
 Ukd4RFAxOU90UkFRQ3dVUFJYVUdmUQp1T2kybTYydFU5cGd0NEt0Y2w5U2xSUERoT3psUTNH
 NDl3RC9VR2dwVmZjRmEvRDhib3BVcWRYV3FCMHpuYWRWClNiL29HL0lCaTlyaGF3ND0KPWFn
 a2YKLS0tLS1FTkQgUEdQIFBVQkxJQyBLRVkgQkxPQ0stLS0tLQo=
---042704d7-fb80-4779-97a7-99094604907b-1--
+--f6022c39-dd70-48fd-87d2-dcd1c4e66216-1--
