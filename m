@@ -1,53 +1,51 @@
 Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=100.103.45.18
 ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
-	t=1793742063;
-	b=Y7/4gn9nZkgI3okSpEHgwQnQwXpvSE0cGdbEsO3rJjZ5b0gRTfSni4//gYLn8osvN7hZ
-	 BBGijtTjOBUP419OZXjMHBweCo03wwjEbAAR9F5AMASYhQFNKhoWvBmBPrYGs97Dpuq6u
-	 c8AL6zGCaeub6SjNc3acYepGuHdZajk1cAB9eep31jrYzwxDPdxnVUIbeuNkhC0/Fs7GB
-	 s3bJ6wDkl089re0g42GGft98J8X+3a0K7sUBBOu/FdwxlbpPdBEWLu3dxE6SxPsnRj04H
-	 gIGsFPAfYBbc9jc++jkrG0SHSqXPlxlmZ2me82r5V73VQfKW9zOslyMXZti6IZ+PiNA==
+	t=1793757574;
+	b=Uf+3mXaRFFQLvRndX/aHZqIR4dUV8G0i24Xtjt9zWmyJp4HoObn5p0H5By/0XUByePuM
+	 71hnT0mIrpNhElKRg760pQ5y2TMier7nZGAdI84jy+tXiovF+zDVDLUDxMsfMdJZtRUqd
+	 d9nOWd5MOgowAYYF6lnv7qcEsYVZJOZdrpihSfO8F9vb37TikZ8bKOCMkAoeqz1AcHYOF
+	 C8zQQIlTWJ9n+pilvSUdMGTSBdbbJ0JF1D2NVQ9ICxNfKw/bSFi4eok8IKSOh5jdq2L67
+	 a7UOApwMuqIdPndreGNOaVXkQ/XfV+TytvtVnFG/ulR3udNcqP7hxcIoALP89mzhxuQ==
 ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793742063;
-	h=Received:DKIM-Signature:From:To:Cc:In-Reply-To:References:Subject:
-	 Message-Id:Date:MIME-Version:Content-Type:Content-Transfer-Encoding:
-	 X-Mailer;
-	bh=CGmjDXBfvMfy0fT9KIaSadB5ieH9giidsrA/2I2YXaY=;
-	b=BAu1wxn8E2uMk1Uqq5ISW0i/KalcawPl5NiF14nM8Len/bqPPFJA5RSmAQXkCI7FTFJW
-	 YfB7CcjrhD0LmApLAG+hr1+txm28G+f91uqdUMogde8GqnNggxepIC4byJsT8z1vxOhAz
-	 NL4gXrsD+2Muh4e3IKd7TyAmOcXuArbLiuf6bh+dfYOoF3G+IWMQ45tgiJ4N7egOxK6In
-	 Ney30/4MNudZwjccttPjbwv3z+BVhEFSCpjHPEKAooR/0zflehKKLwFM8ozwdPIc3SQ8f
-	 gQWOHej4pX5VwYF5Eh9rSJgDqBg6vmCRGtuUhWb3unaC5+KwCKMFCgHseNN9rZUmRMg==
+	a=rsa-sha256; c=relaxed/relaxed; t=1793757574;
+	h=Received:DKIM-Signature:Date:From:To:Cc:Subject:Message-ID:
+	 References:MIME-Version:Content-Type:Content-Disposition:In-Reply-To;
+	bh=nx/j7VfQ3iCOgleKNTGllxVs/S6Zxsdw238VuN96wa4=;
+	b=d+CEYpobbH+HwFbpzNyvNLiK7tOtGj07Cy88thV2F5dQZR46TwRUmgAC9d8vOTd07br/
+	 G0TQpqIoOyDvIyQf41ms2YcgLdcrtoaHNDdKWvVwZVDJml1Amoxi+l5wmGL+gWSSV9m9w
+	 Y/a2bs1WxiBCnyAuZYx/XVHY8O30t6Iqv0Di2sP1MkkAU3Ba+28zyWURnZlH5t3MaiOMZ
+	 hrREb6UF9b4qZ88Me4y9a3AQaNr+Qw1y4a3x2NvhDP2J41KwZMAw28DKsDRb5Sk3q0Ipk
+	 3TLJ0SjFUYLzPqVkkeHkrS23+8HdDk5oGO1SENDWYvCjEL4ghFBNUpW3Lj5MOXhlxUA==
 ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
-	dkim=pass header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZHmkd0i;
+	dkim=pass header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pi3qGIg9;
 	arc=none smtp.remote-ip=100.103.45.18
 Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28660606A31B
-	for <keys@linux.kernel.org>; Tue,  3 Nov 2026 21:41:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DF7D606A326
+	for <keys@linux.kernel.org>; Wed,  4 Nov 2026 01:59:34 +0000 (UTC)
 Authentication-Results: smtp.subspace.kernel.org;
-	dkim=pass (1024-bit key, unprotected) header.d=linuxfoundation.org header.i=@linuxfoundation.org header.a=rsa-sha256 header.s=korg header.b=AZHmkd0i
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB851F000C1;
-	Tue,  3 Nov 2026 21:41:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linuxfoundation.org;
-	s=korg; t=1793742062;
-	bh=CGmjDXBfvMfy0fT9KIaSadB5ieH9giidsrA/2I2YXaY=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date;
-	b=AZHmkd0i/6FHaFncPm7odsP2r1l/av2xwoLwMUtGZQJpdA8DaIn0UaFRz/hFqHUgI
-	 Wk4BzL201jW/2AGv2lMSLlCcZmChwmg3jS+ofnZYF2PbG3Gz/9vUTto1IfgHksZqGA
-	 79TJkhVdDN1ZYTRsKijagm4W3c0vjNkoVokvCLtA=
-From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-To: keys@linux.kernel.org, 
- =?utf-8?q?Uwe_Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
-Cc: Inki Dae <daeinki@kernel.org>, Daniel Wagner <wagi@monom.org>, 
- Janosch Frank <frankja@linux.ibm.com>
-In-Reply-To: <20261103111832.426885-2-u.kleine-koenig@baylibre.com>
-References: <20261103111832.426885-2-u.kleine-koenig@baylibre.com>
-Subject: Re: [PATCH] Drop the signatures bound by SHA-1 that were added by
- mistake
-Message-Id: <179374206164.1492835.15816225867538160.b4-ty@b4>
-Date: Tue, 03 Nov 2026 16:41:01 -0500
+	dkim=pass (2048-bit key, unprotected) header.d=kernel.org header.i=@kernel.org header.a=rsa-sha256 header.s=k20260515 header.b=Pi3qGIg9
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127461F00A15;
+	Wed,  4 Nov 2026 01:59:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kernel.org;
+	s=k20260515; t=1793757574;
+	bh=nx/j7VfQ3iCOgleKNTGllxVs/S6Zxsdw238VuN96wa4=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To;
+	b=Pi3qGIg9z+d7TVJy4/JtH7X9FXynumzU84wZsjywHkI1RH14gRnzaZcBDIdIJFHFn
+	 cD4I4c501ybMQnqa9gkh5PoSo+EkrFgff+aJYWzfyQNB1M5jHV1CfWnBGtAGksRWBM
+	 KGj7ly65a2Jtq0n39/wQJax41v2AGm9vYOyPLAONPVfANZKgPb18gkxjGGipPfrQJ7
+	 FWkn2pVgIuvKJ9GMv5/GhW/wT/t32frismuYjIQJ5UdXtPYlf55LhRyPFR3hMSSmyC
+	 wBmxlku1AkdRJzsPZd2hiKHE7gELA8dBkfmlGR1MvgpvqPevUf8icVfRaFD7HTwOXN
+	 iOYmcwpvIxObw==
+Date: Tue, 3 Nov 2026 20:59:32 -0500
+From: Konstantin Ryabitsev <mricon@kernel.org>
+To: Kameron Carr <kameroncarr@linux.microsoft.com>
+Cc: keys@linux.kernel.org
+Subject: Re: OpenPGP Key
+Message-ID: <20261103-enchanted-mutant-avocet-2eae8b@meerkat>
+References: <bb0b0936-a411-498f-adc0-8152e2ce661d@linux.microsoft.com>
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -57,27 +55,13 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-X-Mailer: b4 0.17-dev-ce4c1
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bb0b0936-a411-498f-adc0-8152e2ce661d@linux.microsoft.com>
 
+On Mon, Nov 02, 2026 at 10:16:48AM -0800, Kameron Carr wrote:
+> Attached is my OpenPGP public key.
 
-On Tue, 03 Nov 2026 12:18:31 +0100, Uwe Kleine-König wrote:
-> These went into the keyring (or were wrongly kept) between commit
-> 197f700ffbe9 ("korg-update-pgpkeys: keep SHA-1 certifications when
-> importing a key") and its revert in commit 848775a173c1 ("Revert
-> "korg-update-pgpkeys: keep SHA-1 certifications when importing a key"").
-> 
-> This affects the following certificates:
-> 
-> [...]
+Added.
 
-Applied, thanks!
-
-[1/1] Drop the signatures bound by SHA-1 that were added by mistake
-      https://git.kernel.org/pub/scm/docs/kernel/pgpkeys.git/commit/?id=4e74d032c4bd0068d381aef8128886bd29ae1163
-
-Best regards,
--- 
-Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-
+-K
