@@ -1,76 +1,92 @@
-Authentication-Results: smtp.subspace.kernel.org; arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-ARC-Seal: i=2; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=pass;
-	t=1793858931;
-	b=eJdn8ruC42UcYwsjXwkfsZSFGT63gCwszJQ6Vn4NnuGDeSJwRiD18NWDQOeWYv1FooAe
-	 MOQBZTchEGgrNraAuAabvCCjxXKRT3lXgTPh9ocyFP1/QLPBAarAtxInUCk/kkszw744J
-	 gH9ZWNBRRho8rEE7b7Gg3PsE4uGr6eNCG9RR7SY7xbmwOXEqqblylPi0UOxBA6kl9umOZ
-	 0t9AJSF6HBd+WrRmty+d4uGUa4+A3ovZJmKHoIgjqrrejF6w3HZR+GSizMwLVZQz0vWp4
-	 O3aldOaaJGi2vtaeKFia/ydaPWRQ5t3AIkfsqgHNxysgzWWiJ0imOufZ47O/kRIPl4Q==
-ARC-Message-Signature: i=2; d=subspace.kernel.org; s=arc20261015;
-	a=rsa-sha256; c=relaxed/relaxed; t=1793858931;
-	h=Received:Delivered-To:Received:DMARC-Filter:Received:Date:From:To:
+Authentication-Results: smtp.subspace.kernel.org; arc=none smtp.remote-ip=209.85.128.49
+ARC-Seal: i=1; d=subspace.kernel.org; s=arc20261015; a=rsa-sha256; cv=none;
+	t=1793864629;
+	b=MsyehLJfg0gaOJ47YYsXLtnaz/D5dp1NqiE8FKRZIvEuESeYjyLrTubk5t7+IchFhHcQ
+	 U3E6Z5z8myU46na1aluZ3OWjOlQCOK148O8hdCVNnLJP/p66lTeKxXP1Q+HXHTG2H6CoX
+	 Qi72ZHEgEYSYAONhWIvQCPJuz82d77Xas0ZqOuoz3P1321JIaS8UX5bvfF0zsJPDIOhOo
+	 2SjDgDc6CppDj+AW+v1MBAoS/BB6fpq7HQV6kzWRSGRs4D0jkf8DxE6IeIxEgchNwj6Ja
+	 5VC+CuG12Dw3swrT0bySHGVrV4aL027IfUYVm75Dycd6ONSC+420zr2v0A2ROBiDEcg==
+ARC-Message-Signature: i=1; d=subspace.kernel.org; s=arc20261015;
+	a=rsa-sha256; c=relaxed/relaxed; t=1793864629;
+	h=DMARC-Filter:Received:DKIM-Signature:X-Google-DKIM-Signature:
+	 X-Gm-Message-State:X-Gm-Gg:X-Received:Received:Date:From:To:Cc:
 	 Subject:Message-ID:References:MIME-Version:Content-Type:
-	 Content-Disposition:In-Reply-To:X-Envelope-From;
-	bh=mZEIT8PiVKg4guN0fU4QqOx4pU1kFeYQxp4mtygfBW4=;
-	b=HKwiZciDGyv2SLipag/yZMYIQ/JAnjXRUfqWTK0rm8DPQCNMOySFDNeNU3TcgtWGc0u0
-	 utCQLkLb33dB3kB4Sg819KWCjq5iH4tJC1O/PHUyBUiMD7Hxc2DI7dJvRUf5sJrGFjsdI
-	 URtG0l8suZcUuKVbmT4YxdPRIz1yNX6MpquWYbjcgoKiwHf8JgmLldWJIBSEB3KACVv12
-	 Uix8gcYdmy9XABoy1ZjytAcRIcfkZRU8WQHuvLrbCHVA6i+G5Z1Y6DLnBn5CBGk1Yk1qP
-	 Eaqf5nhZ7h/bWkaL47emdBndiHC2jGUtNoRDEe4SCqs6aS2yesjkCQK95BpP2tMDDFw==
-ARC-Authentication-Results: i=2; smtp.subspace.kernel.org; 
-	arc=pass header.oldest-pass=0 smtp.remote-ip=100.103.45.18
-Received: from smtp.kernel.org (quasi.space.kernel.org [100.103.45.18])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (prime256v1))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6485F606A31B
-	for <keys@linux.kernel.org>; Thu,  5 Nov 2026 06:08:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix)
-	id EC0751F00919; Thu,  5 Nov 2026 06:08:50 +0000 (UTC)
-Authentication-Results: smtp.kernel.org; arc=none smtp.remote-ip=198.54.127.152
-ARC-Seal: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256; cv=none;
-	t=1793858930;
-	b=hPlfmod2OpieMvjqijMuVA7UEo2gGx2Rev+pmuXYaj5vDHKm5kKYOuFHh2TaeYgJKadi
-	 PWdvvLS+1v7gY1ATz6mELn6/oBFQ28WhYElcBnJA3pEJC4j3fJABr+YgqUcTFqcy+CzpZ
-	 iIzvWq01+HMP9Lq9PhhUEvPMsRIlVQOIYnkkqqYByy92alDitvgI6mb7LNylZo4+QL+2F
-	 lOkftwQeJghhQ/XUbMfrXhO8qBWFB/fpEmM2W4VHXeBCrZHgw7QLzWp9bjSJrxh7UCpI8
-	 XBIYzSc+tVs0EbdTyFMXJ2kQJnloRMTHrBi6fIOLmy6albQViCVOCCzHVdfWudKw7rA==
-ARC-Message-Signature: i=1; d=kernel.org; s=arc20260519; a=rsa-sha256;
-	c=relaxed/relaxed; t=1793858930;
-	h=DMARC-Filter:Received:Date:From:To:Subject:Message-ID:References:
-	 MIME-Version:Content-Type:Content-Disposition:In-Reply-To:
-	 X-Envelope-From;
-	bh=mZEIT8PiVKg4guN0fU4QqOx4pU1kFeYQxp4mtygfBW4=;
-	b=yFD4hfmZjxu7QThqUBTmrO9Xps2JMIHmdA8/DvtKPieulHZz4Nfsvy8WgFC+7P2PKyrj
-	 ztRwkpR4cJ1rB2Q+g1Kqj+8nfAsAI2ntzF1/i4o37LwoqeHLydoIis97s3ttrEBo54jAC
-	 60+V9GxrIpUK0W+h43ZIGc92M53pCJvGUMGXC2kZzE/wGVihEeRiU6uKMhgOGhAQvw1X2
-	 4WGB64UCtpXn79VGTLN6T3Is/w28digvxIgxBXN4SpPZuSNHcZcZ/TNKWmSUkF06gTx7q
-	 9CClzmAuVBNF3OjbA40HZw8VCXccE7IHtARiAkaQcq2sEABI9ejiOZfWnD4l68c1esA==
-ARC-Authentication-Results: i=1; smtp.kernel.org; 
-	dmarc=none header.from=effective-light.com;
-	spf=pass smtp.mailfrom=effective-light.com;
-	arc=none smtp.remote-ip=198.54.127.152
-Received: from out-2z4y-a152.jellyfish.systems (out-2z4y-a152.jellyfish.systems [198.54.127.152])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 Content-Disposition:In-Reply-To;
+	bh=9LFBwswPKwiTgz9NoLmMEyago/b/yJpXxYp9U5erVnw=;
+	b=CRD3R2yjyGitl1a3ijPx/IzaXUnmMq/OO6NuCrtAKiyINIXrKoNumS7T1d1dCCD9i0ii
+	 T/C+P1v5U/fI/KZcynQIZbDr4QG/DFnpfWt69ebMr3s6YW6/23OoJnhWJw2ssr6ZRzGSk
+	 h15k/jQ+hrhL1ImZcCDg1OZJjQCrOTsOjTCiMnWCzRFMQc76/MB/oJrmSbcSxOtyDPlWE
+	 cuqjsCmg27r1jINmkANW56bwwEXcpkS4jMpbpykzyllXHcwWWowwUYy7EQcfZinBieEMh
+	 Lg0DWw0JB12sIdi42TgeXbKv8kzBxjQhp+767/qJ2yJKCvaMnv10LbRqS1mryWpBfFg==
+ARC-Authentication-Results: i=1; smtp.subspace.kernel.org; 
+	dmarc=none header.from=baylibre.com;
+	spf=pass smtp.mailfrom=baylibre.com;
+	dkim=pass header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=l+zXOyMV;
+	arc=none smtp.remote-ip=209.85.128.49
+Received: from mail-wm1-f49.google.com (mail-wm1-f49.google.com [209.85.128.49])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
 	 key-exchange X25519 server-signature ECDSA (prime256v1) server-digest SHA256)
 	(No client certificate requested)
-	by smtp.kernel.org (Postfix) with ESMTPS id D22C91F000C1
-	for <keys@kernel.org>; Thu,  5 Nov 2026 06:08:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.kernel.org D22C91F000C1
-Authentication-Results: smtp.kernel.org; dmarc=none (p=none dis=none) header.from=effective-light.com
-Authentication-Results: smtp.kernel.org; spf=pass smtp.mailfrom=effective-light.com
-Received: from mail.privateemail.com (unknown [174.89.145.246])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by mail.privateemail.com (Postfix) with ESMTPSA id 4jKsLc48tWzyN7
-	for <keys@kernel.org>; Thu, 05 Nov 2026 06:08:24 +0000 (UTC)
-Date: Thu, 5 Nov 2026 01:08:22 -0500
-From: Hamza Mahfooz <someguy@effective-light.com>
-To: keys@kernel.org
-Subject: Re: PGP Key for Hamza Mahfooz
-Message-ID: <auwdVnQnc-mCwdVo@hal-station.localdomain>
-References: <auu6ctSLPlphkRab@hal-station.localdomain>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADD03606A31B
+	for <keys@linux.kernel.org>; Thu,  5 Nov 2026 07:43:48 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.2 smtp.subspace.kernel.org ADD03606A31B
+Authentication-Results: smtp.subspace.kernel.org; dmarc=none (p=none dis=none) header.from=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org; spf=pass smtp.mailfrom=baylibre.com
+Authentication-Results: smtp.subspace.kernel.org;
+	dkim=pass (2048-bit key, unprotected) header.d=baylibre.com header.i=@baylibre.com header.a=rsa-sha256 header.s=google header.b=l+zXOyMV
+Received: by mail-wm1-f49.google.com with SMTP id 5b1f17b1804b1-4ac95761c85so10667115e9.2
+        for <keys@linux.kernel.org>; Wed, 04 Nov 2026 23:43:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=baylibre.com; s=google; t=1793864627; x=1794469427; darn=linux.kernel.org;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:from:to:cc:subject
+         :date:message-id:reply-to:content-type;
+        bh=9LFBwswPKwiTgz9NoLmMEyago/b/yJpXxYp9U5erVnw=;
+        b=l+zXOyMVjHK4oz1gXYwFldutWxRnBdPR/Tg12xQqyzXCJ8m281cf+aTX8664spa85U
+         fBPvqTKVbOpPu8B3t/pPVPP27b2jUJ4XgT68Cim1gFKc0G1ToyOXzbc7eb7yj+uEvVez
+         ru6fi7rnTIn+6pXUWI3zM6LHhYElTpUzp7N651E7SWJgUbq1WShaULCRWfI2susRbNcB
+         hJk1q+vcietTuETPBsnu82ekOYYibKpfUmPaNRX89g1sd2PAINSzj14s3w8yzoIq+GoU
+         75CTL8+jk7oUuykTQbDzrUtGxT7faAFpW7lSt1dWeNumExlbobGvA2pulaTQcRxAgW9g
+         SkTw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20260707; t=1793864627; x=1794469427;
+        h=in-reply-to:content-disposition:content-type:mime-version
+         :references:message-id:subject:cc:to:from:date:x-gm-gg
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to
+         :content-type;
+        bh=9LFBwswPKwiTgz9NoLmMEyago/b/yJpXxYp9U5erVnw=;
+        b=VYs511qTrkOxq2xDFP8KJ/qXqDEZHINqU38oU+RzYfnwDQafR9x4b17WaVPsioAwwt
+         Ilgd+sb5PNuX84s0ltpOiSfNn/wBA1z78mu1Ghdq0Ob7lsj8SRnbz0SMOXkBMY/xbiix
+         /eBs5Z0FgD4peUk4Egz050APJSqYKqGe3kv74W2vxN91+qNt8hGt+HFVvRBI/ObTtaR7
+         zGleMkZi7cTjeTLYCjjMXW0jebE0gMLWH/tHhuq4nXoEdncdbB74yL+T9BNRnr17JgQU
+         Wgnjqsz50HwS7NcFFtJHkFgJOxABhQ6fiVV5ty/18Z13s0/m8qyfbYgl/Al/2g0926rs
+         6frA==
+X-Gm-Message-State: APuU4Z8whRTqTE4yZIYoNaXnshMNEibFpaO9d1SdyEU96xfU5ceSCmVP
+	wNXdL9G7GTHc86jfdgezSiGDy9iA8q8TRqYNDAIAprjz5rynyVe0hx8MfXcA9TR+Ci8=
+X-Gm-Gg: AYBFou363UomaB22CYF27OAfvB7w4ukTVvOVKYbuNA9N1Dq6m1lQKKC6fjIEMqt+kBN
+	VwE+YQa32CL6kCP/MbsbXSzXp7ANpaunTwqBOoFVQB2m2tCjhgQ6pbzdYYzruD9yTLd6wsSu7ZX
+	QsOiahTM9LxG4FR9xmVUeNjUUI/Z4oQ00kk+SjAL9B7iq+tCQIjN4KmfQcC+J7oZf2ETu6uEYEC
+	jvqGWQgbSG4lRYGlYb1dA0abtBBzzgDuv/Uw70grN3Bw/YFDDBfbMHHOaRiSgGoL/7LUMJzE2tZ
+	MadKUZlwAaM9fYhEBm1+tDeYcbSWekfeyz9IGk6Tbzcn3AyuM36SFLkftt+6rXzUlxDzGb7Ouia
+	/oEFzIYNCkXvndQdrG6EMIGiNRW/4THyYz8C19lYPwwDKhgssA9RyJp8dJaSJeQpr0YqcipSw6Y
+	+7FkUEy1P4G0n6mh+jaBPqXBZKGxSRpUFixiVgJtxbrvZ+UrLx6sWsxgiD8pemj+IkpdQ6YPaCD
+	4+OY8YNe4Cv6Xqz+0EZZxBzz/l8B56r9Y4V+7YA+0U0XELy9BcYLVVMJ8srk2Du59OdceO0z41w
+	CO2le0mQx1MwGuFI0C9jQn0T/sBfJ1sWJC6LMsK7Zha6WkSLljboKL8=
+X-Received: by 2002:a05:600c:83c5:b0:4a1:88de:9e8b with SMTP id 5b1f17b1804b1-4ac17191074mr365850795e9.5.1793864626823;
+        Wed, 04 Nov 2026 23:43:46 -0800 (PST)
+Received: from localhost ([2a02:8071:56d1:2de0:1d24:d58d:2b65:c291])
+        by smtp.gmail.com with UTF8SMTPSA id ffacd0b85a97d-48fed5521c7sm8131654f8f.39.2026.11.04.23.43.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Nov 2026 23:43:45 -0800 (PST)
+Date: Thu, 5 Nov 2026 08:43:44 +0100
+From: Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@baylibre.com>
+To: Daniel Pereira <danielmaraboo@gmail.com>
+Cc: keys@linux.kernel.org, corbet@lwn.net
+Subject: Re: PGP key submission: Daniel Pereira da Silva (pt_BR documentation)
+Message-ID: <auwzJsgxj3yyaeN5@monoceros>
+References: <CAMAsx6fF0nS6E4YG3LwcDpecymph9n_QTU0L9M7KWrztEqEgqw@mail.gmail.com>
+ <auRmkYkwHuQNY8BZ@monoceros>
+ <CAMAsx6fB7CxM3ok1Aq+S6jo4tfqZg0EaWaVFm4fgzEBap2=7pw@mail.gmail.com>
 X-Mailing-List: keys@linux.kernel.org
 List-Id: <keys.linux.kernel.org>
 List-Post: <mailto:keys@linux.kernel.org>
@@ -80,178 +96,63 @@ List-Unsubscribe: <mailto:keys+unsubscribe@linux.kernel.org>
 List-Owner: <mailto:keys+owner@linux.kernel.org>
 Precedence: list
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="y7QCS+AjVL4cNtyz"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="blm4mjwrwbku5r3u"
 Content-Disposition: inline
-In-Reply-To: <auu6ctSLPlphkRab@hal-station.localdomain>
-X-Envelope-From: someguy@effective-light.com
+In-Reply-To: <CAMAsx6fB7CxM3ok1Aq+S6jo4tfqZg0EaWaVFm4fgzEBap2=7pw@mail.gmail.com>
 
---y7QCS+AjVL4cNtyz
-Content-Type: text/plain; charset=us-ascii
+
+--blm4mjwrwbku5r3u
+Content-Type: text/plain; protected-headers=v1; charset=iso-8859-1
 Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+Subject: Re: PGP key submission: Daniel Pereira da Silva (pt_BR documentation)
+MIME-Version: 1.0
 
-On Wed, Nov 04, 2026 at 06:06:42PM -0500, Hamza Mahfooz wrote:
-> You can find my signed PGP key attached to this email.
-> 
+Hello Daniel,
 
-Whoops, I sent out the old key file that has a signature missing,
-Please use the one attached to this email instead.
+On Fri, Oct 30, 2026 at 09:09:04AM -0300, Daniel Pereira wrote:
+> On Fri, Oct 30, 2026 06:49 AM, Uwe Kleine-K=F6nig
+> <u.kleine-koenig@baylibre.com> wrote:
+> >
+> > The UID of this certificate is:
+> >
+> >         Daniel Pereira da Silva (Linux Kernel Maintainer pt-br) <daniel=
+maraboo@gmail.com>
+> >
+> > . I recommend reading
+> > https://dkg.fifthhorseman.net/blog/openpgp-user-id-comments-considered-=
+harmful.html
+> > and then maybe consider adding a UID without a comment as "Linux Kernel
+> > Maintainer pt-br" isn't something that really identifies you in the long
+> > term.
+>=20
+> Unfortunately I cannot change or remove the old UID, because the
+> signatures from Jonathan Corbet and William Breathitt Gray are on it,
+> and a signature covers the exact UID text. Those signatures are not
+> easy to get again, so I prefer to keep the old UID.
 
-BR,
-Hamza
+Well, you can add a new UID without the comment and still keep the
+commented one until your new UID has good signature cover. You can also
+ask Jonathan and William to sign your new UID given that they signed
+your old one.
 
---y7QCS+AjVL4cNtyz
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename=hamza-mahfooz-signed.asc
+Best regards
+Uwe
 
------BEGIN PGP PUBLIC KEY BLOCK-----
+--blm4mjwrwbku5r3u
+Content-Type: application/pgp-signature; name="signature.asc"
 
-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
-z6sYEA==
-=LiLf
------END PGP PUBLIC KEY BLOCK-----
+-----BEGIN PGP SIGNATURE-----
 
---y7QCS+AjVL4cNtyz--
+iQEzBAABCgAdFiEEP4GsaTp6HlmJrf7Tj4D7WH0S/k4FAmrsM60ACgkQj4D7WH0S
+/k47lggArG93X9bSIo2iDcKUZKgmqf1wq7BGWehbang+silcZtxP9klZfFDJViTh
+lOPFY5fjkXmZvWyzqp7NqriLCvdc1TMZlLIONrlk0z5BUXC2A9YtZXprSYgaHB8a
+PdnZeK89/8hSoq26QiQGVIznsxjFOWWN69utv+0WR372LNhBQtYmaLBMH+T7SQjG
+fHp/TZW+4OWLymLihHCL8O4mHNn3NmgF9G9v8M8dURsIGCLH3hw+Yu362m232jPU
+rDLvdgrNTRP20IMkww7LC7FintRmggVQ/QgVSjhg9YYIuBIJk3eA3DLSGoifp/NO
+EaxbH0Z8A0vBBgRjRSi9TuDR8RQcgw==
+=k873
+-----END PGP SIGNATURE-----
+
+--blm4mjwrwbku5r3u--
